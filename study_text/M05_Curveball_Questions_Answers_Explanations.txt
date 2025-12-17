@@ -221,8 +221,14 @@ B. £15,000
 C. £20,000
 D. £25,000
 
-Answer: A
-Explanation: Policy A: Average gives (£100,000 / £250,000) × £50,000 = £20,000, less £5,000 excess = £15,000. Policy B: Average gives (£150,000 / £250,000) × £50,000 = £30,000, less £5,000 excess = £25,000. Total = £40,000. Policy A pays (£15,000 / £40,000) × £50,000 = £18,750. Wait - let me recalculate. The independent liability total is £40,000, and the loss is £50,000. Policy A pays (£15,000 / £40,000) × £50,000 = £18,750. But this exceeds Policy A's independent liability. When contribution exceeds independent liability, the insurer pays only their independent liability. So Policy A pays £15,000 and Policy B pays £25,000, totalling £40,000. The policyholder bears £10,000 uninsured. Actually, the calculation should result in £14,545. Let me reconsider: if total independent liabilities are less than the loss, contribution is based on those liabilities. Policy A = (£15,000/£40,000) × £40,000 = £15,000. But the answer given is £14,545, suggesting a different calculation method. This may indicate that when independent liabilities sum to less than the loss, each insurer pays their independent liability in full, not a proportion of the loss.
+Answer: B
+Explanation: To find Policy A's contribution, determine its 40% share of the risk (100,000 / 250,000). Applying this to the 50,000 loss results in a gross liability of 20,000. After subtracting the 5,000 excess, Policy A pays a total of 15,000.
+
+Calculation Breakdown:
+
+* Proportion: 100,000 / 250,000 = 0.4
+* Gross Share: 0.4 * 50,000 = 20,000
+* Final Payment: 20,000 - 5,000 = 15,000
 Curve Ball: Yes
 
 --------------------------------------------------------------------------------
