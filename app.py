@@ -23,13 +23,22 @@ app.secret_key = os.environ.get('SECRET_KEY', secrets.token_hex(32))
 # Default credentials (should be changed via environment variables in production)
 DEFAULT_USERNAME = os.environ.get('APP_USERNAME', 'aaron')
 # Use pbkdf2:sha256 method for compatibility
-_default_password = os.environ.get('APP_PASSWORD', 'm05pass2025')
+_default_password = os.environ.get('APP_PASSWORD', 'insagent2025')
 DEFAULT_PASSWORD_HASH = os.environ.get('APP_PASSWORD_HASH', generate_password_hash(_default_password, method='pbkdf2:sha256'))
 
-# Directories
-EXAM_PAPERS_DIR = Path("exam_papers")
-STUDY_TEXT_DIR = Path("study_text")
+# Directories: one folder per module, each with past_papers/ and study_text/
+MODULES_DIR = Path("modules")
 QUESTIONS_FILE = Path("questions.json")
+
+# Only these modules are shown and loaded (no "All Modules"; practice is per module).
+ALLOWED_MODULES = ["LM1", "M05"]
+
+
+def get_module_names():
+    """Return allowed modules that exist under modules/ (LM1, M05)."""
+    if not MODULES_DIR.exists():
+        return []
+    return [m for m in ALLOWED_MODULES if (MODULES_DIR / m).is_dir()]
 
 class QuestionParser:
     """Parse questions from exam papers"""
@@ -63,6 +72,24 @@ class QuestionParser:
     def parse_questions(text):
         """Parse multiple choice questions from text (works for both PDF and text files)"""
         questions = []
+
+        # Normalize PDF layout: "PageNum QuestionNum. " or "PageNum QuestionNum.Letter" (e.g. " 18 42. Which" or " 14 25.What")
+        # -> "\n42. Which" / "\n25. What" so question numbers at line start are detected.
+        def _norm_page_question(m):
+            page_num, q_num = m.group(1), m.group(2)
+            if 1 <= int(page_num) <= 25 and 1 <= int(q_num) <= 50:
+                return '\n' + q_num + m.group(3) + ' '
+            return m.group(0)
+        text = re.sub(r'(?<=\s)(\d{1,2})\s+(\d{1,2})([\.\)])\s', _norm_page_question, text)
+        # 2024-style: no space after period (e.g. "14 25.What")
+        text = re.sub(r'(?<=\s)(\d{1,2})\s+(\d{1,2})([\.\)])(?=[A-Z])', _norm_page_question, text)
+        # No space after question number at line start (e.g. "\n26.Why") -> "\n26. Why" so block split matches
+        def _norm_line_start_no_space(m):
+            q_num = m.group(1)
+            if 1 <= int(q_num) <= 50:
+                return m.group(1) + m.group(2) + ' '  # insert space before the capital letter (lookahead)
+            return m.group(0)
+        text = re.sub(r'(?<=\n)(\d{1,2})([\.\)])(?=[A-Z])', _norm_line_start_no_space, text)
         
         # Pattern to match questions starting with numbers (1., 2., etc.)
         # Format: "1. Question text\nA. Option A\nB. Option B\nC. Option C\nD. Option D"
@@ -82,8 +109,8 @@ class QuestionParser:
             question_content = match.group(2).strip()
             
             # Skip if this doesn't look like a real question (no options found)
-            # Real questions should have at least one option (A., B., etc.)
-            if not re.search(r'\n[A-E][\.\)]\s', question_content, re.IGNORECASE):
+            # Real questions should have at least one option (A., B., etc. with or without space after)
+            if not re.search(r'\n[A-E][\.\)](?:\s|(?=[A-Z]))', question_content, re.IGNORECASE):
                 continue
             
             # IMPORTANT: Stop extracting content when we hit:
@@ -374,124 +401,81 @@ class QuestionParser:
     
     @staticmethod
     def load_questions_from_files():
-        """Load and parse questions from all exam papers and curve ball files"""
+        """Load questions from modules/<name>/past_papers and modules/<name>/study_text (curveballs)."""
         all_questions = []
-        global_id_counter = 1  # Global counter to ensure unique IDs across all papers
-        
-        # Load questions from exam papers
-        if EXAM_PAPERS_DIR.exists():
-            for file_path in sorted(EXAM_PAPERS_DIR.iterdir()):  # Sort for consistent ordering
+        global_id_counter = 1
+        global_explanations = QuestionExplanations()
+
+        for module in get_module_names():
+            past_papers_dir = MODULES_DIR / module / "past_papers"
+            if not past_papers_dir.is_dir():
+                continue
+            for file_path in sorted(past_papers_dir.iterdir()):
+                if not file_path.is_file():
+                    continue
                 if file_path.suffix.lower() == '.pdf':
                     text = QuestionParser.extract_text_from_pdf(file_path)
                 elif file_path.suffix.lower() == '.docx':
                     text = QuestionParser.extract_text_from_docx(file_path)
                 elif file_path.suffix.lower() in ['.txt', '.rtf']:
-                    # RTF files are text-based and can be read as text
-                    # They may contain RTF formatting codes, but the parser will handle them
                     text = file_path.read_text(encoding='utf-8')
                 else:
                     continue
-                
-                # Extract answer key and learning objectives
+
                 answer_key, learning_objectives = QuestionParser.extract_answer_key(text)
-                
-                # Parse questions
                 questions = QuestionParser.parse_questions(text)
-                
-                # Match answers to questions and preserve order
-                # Use explanations file as source of truth (highest priority), then PDF answer key
-                global_explanations = QuestionExplanations()
-                
+
                 for question in questions:
                     q_num = question.get('question_number', '')
                     q_text = question['question'].strip()
-                    
-                    # Highest priority: answer from explanations file (user's source of truth)
-                    # Use fuzzy matching to handle slight text differences
                     exp_answer = global_explanations.get_answer(q_text)
                     if exp_answer:
                         question['correct_answer'] = exp_answer
-                        # Check if it's multiple choice based on comma in answer
                         question['is_multiple_choice'] = ',' in exp_answer
-                    # Second priority: answer from answer key in PDF
                     elif q_num in answer_key:
                         question['correct_answer'] = answer_key[q_num].upper()
-                        # Check if it's multiple choice based on comma in answer
                         question['is_multiple_choice'] = ',' in answer_key[q_num]
-                    
-                    # Check if this is a curve ball question from explanations file
-                    is_curve_ball = global_explanations.get_curve_ball(q_text)
-                    question['is_curve_ball'] = is_curve_ball
-                    
-                    # Ensure we have a valid answer (fallback to first option if nothing found)
-                    if not question.get('correct_answer') or question['correct_answer'] == question['options'][0]['letter']:
-                        # Only use first option as fallback if we truly have no answer
-                        # This will be flagged for manual review
-                        pass
-                    
+                    question['is_curve_ball'] = global_explanations.get_curve_ball(q_text)
                     if q_num in learning_objectives:
                         question['learning_objective'] = learning_objectives[q_num]
                     question['source_file'] = file_path.name
-                    # Store original question number for sorting
+                    question['module'] = module
                     question['original_order'] = int(q_num) if q_num.isdigit() else 999999
-                    # Assign unique global ID
                     question['id'] = global_id_counter
                     global_id_counter += 1
-                
                 all_questions.extend(questions)
-        
-        # Load questions from curve ball files in study_text directory
-        if STUDY_TEXT_DIR.exists():
-            global_explanations = QuestionExplanations()
-            curveball_files_found = []
-            for file_path in STUDY_TEXT_DIR.iterdir():
-                # Look for curveball files
+
+            # Curveballs from modules/<name>/study_text/
+            study_dir = MODULES_DIR / module / "study_text"
+            if not study_dir.is_dir():
+                continue
+            for file_path in sorted(study_dir.iterdir()):
+                if not file_path.is_file() or file_path.suffix.lower() != '.txt':
+                    continue
                 filename_lower = file_path.name.lower()
-                if 'curveball' in filename_lower or 'curve_ball' in filename_lower:
-                    curveball_files_found.append(file_path.name)
-                    if file_path.suffix.lower() == '.txt':
-                        try:
-                            print(f"Loading curveball file: {file_path.name}")
-                            text = file_path.read_text(encoding='utf-8')
-                            # Parse questions from explanations format
-                            questions = QuestionParser.parse_questions_from_explanations_format(text)
-                            print(f"Parsed {len(questions)} questions from {file_path.name}")
-                            
-                            for question in questions:
-                                q_text = question['question'].strip()
-                                
-                                # Answer is already extracted in parse_questions_from_explanations_format
-                                # But try to get from explanations as backup (for consistency)
-                                exp_answer = global_explanations.get_answer(q_text)
-                                if exp_answer and not question.get('correct_answer'):
-                                    question['correct_answer'] = exp_answer
-                                    question['is_multiple_choice'] = ',' in exp_answer
-                                elif question.get('correct_answer'):
-                                    # Use the answer that was already parsed
-                                    question['is_multiple_choice'] = ',' in question['correct_answer']
-                                
-                                # Mark as curve ball (always true for curveball files)
-                                question['is_curve_ball'] = True
-                                
-                                # Learning objective already extracted in parse_questions_from_explanations_format
-                                
-                                question['source_file'] = file_path.name
-                                question['original_order'] = int(question.get('question_number', '0')) if question.get('question_number', '0').isdigit() else 999999
-                                question['id'] = global_id_counter
-                                global_id_counter += 1
-                            
-                            all_questions.extend(questions)
-                            print(f"Added {len(questions)} curveball questions. Total questions now: {len(all_questions)}")
-                        except Exception as e:
-                            print(f"Error loading curveball questions from {file_path}: {e}")
-                            import traceback
-                            traceback.print_exc()
-            
-            if not curveball_files_found:
-                print(f"WARNING: No curveball files found in {STUDY_TEXT_DIR}. Files in directory: {[f.name for f in STUDY_TEXT_DIR.iterdir()]}")
-            else:
-                print(f"Found curveball files: {curveball_files_found}")
-        
+                if 'curveball' not in filename_lower and 'curve_ball' not in filename_lower:
+                    continue
+                try:
+                    text = file_path.read_text(encoding='utf-8')
+                    questions = QuestionParser.parse_questions_from_explanations_format(text)
+                    for question in questions:
+                        q_text = question['question'].strip()
+                        exp_answer = global_explanations.get_answer(q_text)
+                        if exp_answer and not question.get('correct_answer'):
+                            question['correct_answer'] = exp_answer
+                            question['is_multiple_choice'] = ',' in exp_answer
+                        elif question.get('correct_answer'):
+                            question['is_multiple_choice'] = ',' in question['correct_answer']
+                        question['is_curve_ball'] = True
+                        question['source_file'] = file_path.name
+                        question['module'] = module
+                        question['original_order'] = int(question.get('question_number', '0')) if (question.get('question_number') or '0').isdigit() else 999999
+                        question['id'] = global_id_counter
+                        global_id_counter += 1
+                    all_questions.extend(questions)
+                except Exception as e:
+                    print(f"Error loading curveball from {file_path}: {e}")
+
         return all_questions
 
 class QuestionExplanations:
@@ -512,19 +496,22 @@ class QuestionExplanations:
         return normalized
     
     def load_explanations(self):
-        """Load explanations from text file in study_text directory"""
-        if not STUDY_TEXT_DIR.exists():
-            return
-        
-        # Look for explanation files (could be .txt, .md, etc.)
+        """Load explanations from each module's study_text: modules/<name>/study_text/."""
+        def collect_files(dir_path):
+            files = []
+            if not dir_path.exists():
+                return files
+            for file_path in dir_path.iterdir():
+                if file_path.is_file() and file_path.suffix.lower() in ['.txt', '.md']:
+                    fn = file_path.name.lower()
+                    if 'explanation' in fn or 'answer' in fn or 'concept' in fn:
+                        files.append(file_path)
+            return files
+
         explanation_files = []
-        for file_path in STUDY_TEXT_DIR.iterdir():
-            if file_path.suffix.lower() in ['.txt', '.md']:
-                # Check if filename suggests it's an explanations file
-                filename_lower = file_path.name.lower()
-                if 'explanation' in filename_lower or 'answer' in filename_lower or 'concept' in filename_lower:
-                    explanation_files.append(file_path)
-        
+        for module in get_module_names():
+            explanation_files.extend(collect_files(MODULES_DIR / module / "study_text"))
+
         for file_path in explanation_files:
             try:
                 text = file_path.read_text(encoding='utf-8')
@@ -793,22 +780,24 @@ class StudyTextIndex:
         return ' '.join(corrected_words)
     
     def load_study_text(self):
-        """Load study text from files"""
-        if not STUDY_TEXT_DIR.exists():
-            STUDY_TEXT_DIR.mkdir()
-            return
-        
-        for file_path in STUDY_TEXT_DIR.iterdir():
-            if file_path.suffix.lower() == '.pdf':
-                text = QuestionParser.extract_text_from_pdf(file_path)
-            elif file_path.suffix.lower() == '.docx':
-                text = QuestionParser.extract_text_from_docx(file_path)
-            elif file_path.suffix.lower() == '.txt':
-                text = file_path.read_text(encoding='utf-8')
-            else:
+        """Load study text from each module's study_text: modules/<name>/study_text/."""
+        for module in get_module_names():
+            study_dir = MODULES_DIR / module / "study_text"
+            if not study_dir.exists():
                 continue
-            
-            self.full_texts[file_path.name] = text
+            for file_path in study_dir.iterdir():
+                if not file_path.is_file():
+                    continue
+                if file_path.suffix.lower() == '.pdf':
+                    text = QuestionParser.extract_text_from_pdf(file_path)
+                elif file_path.suffix.lower() == '.docx':
+                    text = QuestionParser.extract_text_from_docx(file_path)
+                elif file_path.suffix.lower() == '.txt':
+                    text = file_path.read_text(encoding='utf-8')
+                else:
+                    continue
+                key = f"{module}/{file_path.name}"
+                self.full_texts[key] = text
     
     def generate_feedback_explanation(self, question_text, correct_answer_text, selected_answer_text, options_text=None, is_correct=False):
         # First, try to get pre-written explanation
@@ -1271,8 +1260,14 @@ def get_filtered_questions():
     learning_objective = data.get('learning_objective')
     multiple_choice_only = data.get('multiple_choice_only', False)
     curve_ball_only = data.get('curve_ball_only', False)
+    module_filter = data.get('module')
     
     all_questions = load_questions()
+    
+    # Practice is always per module; require module
+    if not module_filter or module_filter not in get_module_names():
+        return jsonify([])
+    all_questions = [q for q in all_questions if q.get('module') == module_filter]
     
     # Filter by curve ball only if specified
     if curve_ball_only:
@@ -1328,11 +1323,27 @@ def get_filtered_questions():
     
     return jsonify(filtered)
 
+@app.route('/api/modules')
+@login_required
+def get_modules():
+    """Return discovered modules (from modules/ subdirs) with question counts."""
+    questions = load_questions()
+    names = get_module_names()
+    counts = {mod: 0 for mod in names}
+    for q in questions:
+        mod = q.get('module')
+        if mod in counts:
+            counts[mod] += 1
+    return jsonify([{'code': mod, 'count': counts[mod]} for mod in names])
+
 @app.route('/api/years')
 @login_required
 def get_available_years():
     """Get list of available exam years"""
     questions = load_questions()
+    module_filter = request.args.get('module')
+    if module_filter:
+        questions = [q for q in questions if q.get('module') == module_filter]
     years = set()
     for q in questions:
         source = q.get('source_file', '')
@@ -1347,6 +1358,9 @@ def get_available_years():
 def get_learning_objectives():
     """Get list of available learning objectives with question counts"""
     questions = load_questions()
+    module_filter = request.args.get('module')
+    if module_filter:
+        questions = [q for q in questions if q.get('module') == module_filter]
     objectives = {}
     for q in questions:
         lo = q.get('learning_objective')
@@ -1363,6 +1377,9 @@ def get_learning_objectives():
 def get_multiple_choice_count():
     """Get count of multiple choice questions available"""
     questions = load_questions()
+    module_filter = request.args.get('module')
+    if module_filter:
+        questions = [q for q in questions if q.get('module') == module_filter]
     multiple_choice_count = sum(1 for q in questions if q.get('is_multiple_choice', False))
     return jsonify({'count': multiple_choice_count})
 
@@ -1372,6 +1389,9 @@ def get_curve_ball_count():
     """Get count of curve ball questions available"""
     try:
         questions = load_questions()
+        module_filter = request.args.get('module')
+        if module_filter:
+            questions = [q for q in questions if q.get('module') == module_filter]
         curve_ball_count = sum(1 for q in questions if q.get('is_curve_ball', False))
         print(f"Curve ball count API called: {curve_ball_count} questions found out of {len(questions)} total")
         return jsonify({'count': curve_ball_count})
@@ -1380,6 +1400,33 @@ def get_curve_ball_count():
         import traceback
         traceback.print_exc()
         return jsonify({'count': 0, 'error': str(e)}), 500
+
+@app.route('/api/stats')
+@login_required
+def get_stats():
+    """Get overall dashboard stats"""
+    questions = load_questions()
+    modules = {}
+    for q in questions:
+        mod = q.get('module', 'General')
+        modules[mod] = modules.get(mod, 0) + 1
+    
+    results_file = Path("results_history.json")
+    history = []
+    if results_file.exists():
+        with open(results_file, 'r', encoding='utf-8') as f:
+            history = json.load(f)
+    
+    total_correct = sum(r.get('correct', 0) for r in history)
+    total_qs_attempted = sum(r.get('total', 0) for r in history)
+    avg_score = round((total_correct / total_qs_attempted) * 100) if total_qs_attempted > 0 else 0
+    
+    return jsonify({
+        'total_questions': len(questions),
+        'total_modules': len(modules),
+        'quizzes_completed': len(history),
+        'avg_score': avg_score
+    })
 
 @app.route('/api/results', methods=['POST'])
 @login_required
@@ -1518,9 +1565,11 @@ def submit_results():
     return jsonify({'success': True, 'message': 'Results saved'})
 
 if __name__ == '__main__':
-    # Create directories if they don't exist
-    EXAM_PAPERS_DIR.mkdir(exist_ok=True)
-    STUDY_TEXT_DIR.mkdir(exist_ok=True)
+    # Ensure modules dir exists; create default module folders if empty
+    MODULES_DIR.mkdir(exist_ok=True)
+    for name in ["LM1", "M05", "LM2", "M92"]:
+        (MODULES_DIR / name / "past_papers").mkdir(parents=True, exist_ok=True)
+        (MODULES_DIR / name / "study_text").mkdir(parents=True, exist_ok=True)
     
     # Allow port to be set via environment variable (for hosting platforms)
     port = int(os.environ.get('PORT', 5001))

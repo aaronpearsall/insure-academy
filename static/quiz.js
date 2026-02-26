@@ -151,7 +151,7 @@ function showQuestion() {
         }
         
         optionDiv.innerHTML = `
-            <span class="option-label">${option.letter})</span>
+            <span class="option-label">${option.letter}</span>
             <span class="option-text">${option.text}</span>
         `;
         
@@ -579,17 +579,18 @@ function finishQuiz() {
 
 function getModeDescription() {
     const options = JSON.parse(sessionStorage.getItem('quizOptions') || '{}');
+    const modSuffix = options.module ? ` · ${options.module}` : '';
     if (options.curve_ball_only) {
-        if (options.count) return `${options.count} Curve Ball Questions`;
-        return 'All Curve Ball Questions';
+        if (options.count) return `${options.count} Curve Ball Questions${modSuffix}`;
+        return `All Curve Ball Questions${modSuffix}`;
     }
     if (options.multiple_choice_only) {
-        if (options.count) return `${options.count} Multiple Selection Questions`;
-        return 'All Multiple Selection Questions';
+        if (options.count) return `${options.count} Multiple Selection Questions${modSuffix}`;
+        return `All Multiple Selection Questions${modSuffix}`;
     }
-    if (options.count) return `${options.count} Random Questions`;
-    if (options.year) return `${options.year} Past Paper`;
-    if (options.learning_objective) return `Learning Objective ${options.learning_objective}`;
+    if (options.count) return `${options.count} Random Questions${modSuffix}`;
+    if (options.year) return `${options.year} Past Paper${modSuffix}`;
+    if (options.learning_objective) return `Learning Objective ${options.learning_objective}${modSuffix}`;
     return 'Unknown';
 }
 

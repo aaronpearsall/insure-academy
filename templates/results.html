@@ -1,60 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M05 Exam Question Practice - Results</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance Agent - Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>M05 Exam Question Practice</h1>
-            <div class="header-actions">
-                <a href="/logout" class="btn-secondary">Logout</a>
-            </div>
-        </header>
+  <div class="app-layout">
 
-        <div class="results-content">
-            <div class="results-card">
-                <div class="results-summary">
-                    <div class="score-circle">
-                        <div class="score-number" id="finalScore">0</div>
-                        <div class="score-total">out of <span id="finalTotal">0</span></div>
-                        <div class="score-percentage" id="scorePercentage">0%</div>
-                    </div>
-                    
-                    <div class="results-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">Correct:</span>
-                            <span class="stat-value correct" id="correctCount">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Incorrect:</span>
-                            <span class="stat-value incorrect" id="incorrectCount">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Total Questions:</span>
-                            <span class="stat-value" id="totalCount">0</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">IA</div>
+        <span class="logo-text">InsureAgent</span>
+      </div>
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-title">Menu</span>
+        <a href="/" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="/history" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          History
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/logout" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </aside>
 
-                <div class="results-actions">
-                    <button id="reviewBtn" class="btn-primary">Review Answers</button>
-                    <button id="historyBtn" class="btn-secondary">View History</button>
-                    <button id="newQuizBtn" class="btn-secondary">Start New Quiz</button>
-                </div>
-
-                <div id="reviewSection" class="review-section hidden">
-                    <h2>Question Review</h2>
-                    <div id="reviewContent"></div>
-                </div>
-            </div>
+    <!-- Main -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">Quiz Results</h1>
         </div>
-    </div>
+        <div class="topbar-right">
+          <div class="user-avatar">A</div>
+        </div>
+      </header>
 
-    <script src="{{ url_for('static', filename='results.js') }}"></script>
+      <main class="page-content">
+        <div class="results-layout">
+
+          <!-- Score Hero -->
+          <div class="score-hero">
+            <div class="score-circle">
+              <div class="score-number" id="finalScore">0</div>
+              <div class="score-total">out of <span id="finalTotal">0</span></div>
+            </div>
+            <div class="score-percentage" id="scorePercentage">0%</div>
+
+            <div class="results-stats">
+              <div class="stat-item">
+                <span class="stat-label">Correct</span>
+                <span class="stat-value correct" id="correctCount">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Incorrect</span>
+                <span class="stat-value incorrect" id="incorrectCount">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Total</span>
+                <span class="stat-value" id="totalCount">0</span>
+              </div>
+            </div>
+
+            <div class="results-actions">
+              <button id="reviewBtn" class="btn btn-primary">Review Answers</button>
+              <button id="historyBtn" class="btn btn-secondary">View History</button>
+              <button id="newQuizBtn" class="btn btn-secondary">New Quiz</button>
+            </div>
+          </div>
+
+          <!-- Review Section -->
+          <div id="reviewSection" class="review-section hidden">
+            <h2>Question Review</h2>
+            <div id="reviewContent"></div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='results.js') }}"></script>
 </body>
 </html>
-

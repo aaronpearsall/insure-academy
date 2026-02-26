@@ -1,15 +1,18 @@
-# M05 Exam Question Practice App
+# Insurance Agent
 
-This app helps you practice multiple choice questions from insurance law exam papers with detailed feedback.
+A study app for practising multiple choice questions for insurance exams. Designed to support multiple modules (e.g. CII and similar qualifications). Add your own exam papers and study materials to practise any module.
+
+**Disclaimer:** This app is not affiliated with or endorsed by the Chartered Insurance Institute (CII) or any other examining body. It is a personal study tool. You are responsible for ensuring your use of any materials complies with copyright and the terms of the materials you use.
 
 ## Setup
 
-1. **Upload Exam Papers**: Place your exam papers (PDF or text files) in the `exam_papers/` directory
-   - **Recommended: Use `.txt` files** for more reliable parsing (see `EXAM_PAPER_TEXT_FORMAT.md` for format guide)
-   - PDFs are supported but may have parsing issues with page breaks and formatting
-2. **Upload Study Text**: Place your study text materials (PDF or text files) in the `study_text/` directory
-3. **Upload Question Explanations** (Optional): Place a text file with "explanation", "answer", or "concept" in the filename in the `study_text/` directory. The app will use these pre-written explanations instead of searching the study text. See `study_text/EXPLANATIONS_FORMAT.txt` for format examples.
-4. **Install Dependencies**: Run `pip install -r requirements.txt`
+1. **Modules**: All content lives under **`modules/`**. Each module (e.g. LM1, M05, LM2, M92) has two folders:
+   - **`modules/<name>/past_papers/`** – Exam papers (PDF, DOCX, TXT) for that module.
+   - **`modules/<name>/study_text/`** – Study materials, curveball question files, and explanation files for that module.
+   - See **`modules/README.md`** for the full layout. Use `.txt` for reliable parsing (see `EXAM_PAPER_TEXT_FORMAT.md`).
+2. **Adding a module**: Create `modules/<NewName>/past_papers/` and `modules/<NewName>/study_text/`; the app picks it up automatically.
+3. **Question explanations**: Put files with "explanation", "answer", or "concept" in the name inside the module’s `study_text/` folder. See `study_text/EXPLANATIONS_FORMAT.txt` for format (in the repo root or under a module).
+4. **Install Dependencies**: Run `pip3 install -r requirements.txt`
 5. **Set Login Credentials** (Optional): Set environment variables for custom credentials:
    - `export APP_USERNAME=your_username`
    - `export APP_PASSWORD=your_password`
@@ -20,7 +23,7 @@ This app helps you practice multiple choice questions from insurance law exam pa
 
 **Default Credentials:**
 - Username: `aaron`
-- Password: `m05pass2025`
+- Password: `insagent2025`
 
 **Important:** Change these credentials before hosting online by setting environment variables.
 
@@ -31,18 +34,31 @@ This app helps you practice multiple choice questions from insurance law exam pa
 - Detailed explanations with study text references
 - Marking system to track your progress
 - Concept explanations and definitions
+- Practice is per module; add papers in `modules/<name>/past_papers/` and `modules/<name>/study_text/` (e.g. LM1, M05, LM2, M92)
 
 ## File Structure
 
 ```
-m05/
-├── exam_papers/          # Upload your exam papers here
-├── study_text/           # Upload your study text here
-├── app.py               # Flask backend
-├── static/              # Frontend assets
-├── templates/           # HTML templates
-├── requirements.txt     # Python dependencies
-└── deploy.sh            # Quick deployment script
+insurance-agent/
+├── modules/                  # All content by module (no mixing)
+│   ├── LM1/
+│   │   ├── past_papers/      # LM1 exam papers (PDF, DOCX, TXT)
+│   │   └── study_text/       # LM1 study text, curveballs, explanations
+│   ├── M05/
+│   │   ├── past_papers/
+│   │   └── study_text/
+│   ├── LM2/
+│   │   ├── past_papers/
+│   │   └── study_text/
+│   ├── M92/
+│   │   ├── past_papers/
+│   │   └── study_text/
+│   └── README.md
+├── app.py
+├── static/
+├── templates/
+├── requirements.txt
+└── deploy.sh
 ```
 
 ## Updating the Live App
@@ -64,4 +80,3 @@ After making changes to your files:
 3. **Railway will automatically redeploy** when it detects the push to GitHub (usually takes 1-2 minutes)
 
 **Note:** Make sure Railway is connected to your GitHub repository and has auto-deploy enabled (this is the default).
-

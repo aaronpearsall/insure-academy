@@ -1,96 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M05 Exam Question Practice - Select Quiz</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance Agent - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>M05 Exam Question Practice</h1>
-            <div class="header-actions">
-                <a href="/history" class="btn-secondary">Practice History</a>
-                <a href="/logout" class="btn-secondary">Logout</a>
-            </div>
-        </header>
+  <div class="app-layout">
 
-        <div class="selection-content">
-            <div class="selection-card">
-                <h2>Select Quiz Mode</h2>
-                
-                <div class="selection-section">
-                    <h3>Practice by Number of Questions</h3>
-                    <div class="button-group">
-                        <button class="quiz-btn" data-mode="count" data-value="10">10 Questions</button>
-                        <button class="quiz-btn" data-mode="count" data-value="20">20 Questions</button>
-                        <button class="quiz-btn" data-mode="count" data-value="50">50 Questions</button>
-                        <button class="quiz-btn" data-mode="count" data-value="100">100 Questions</button>
-                    </div>
-                </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">IA</div>
+        <span class="logo-text">InsureAgent</span>
+      </div>
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-title">Menu</span>
+        <a href="/" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="/history" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          History
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/logout" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </aside>
 
-                <div class="divider">OR</div>
-
-                <div class="selection-section">
-                    <h3>Practice by Past Paper Year</h3>
-                    <div class="button-group" id="yearButtons">
-                        <div class="loading-years">Loading years...</div>
-                    </div>
-                </div>
-
-                <div class="divider">OR</div>
-
-                <div class="selection-section">
-                    <h3>Practice by Learning Objective</h3>
-                    <div class="button-group" id="learningObjectiveButtons">
-                        <div class="loading-years">Loading learning objectives...</div>
-                    </div>
-                </div>
-
-                <div class="divider">OR</div>
-
-                <div class="selection-section">
-                    <h3>Practice Multiple Selection Questions</h3>
-                    <div class="button-group">
-                        <button class="quiz-btn" data-mode="multiple" data-value="all">All Multiple Selection Questions</button>
-                        <button class="quiz-btn" data-mode="multiple" data-value="10">10 Multiple Selection Questions</button>
-                        <button class="quiz-btn" data-mode="multiple" data-value="20">20 Multiple Selection Questions</button>
-                        <button class="quiz-btn" data-mode="multiple" data-value="50">50 Multiple Selection Questions</button>
-                    </div>
-                </div>
-
-                <div class="divider">OR</div>
-
-                <div class="selection-section">
-                    <h3>Practice Curve Ball Questions</h3>
-                    <div class="button-group">
-                        <button class="quiz-btn" data-mode="curveball" data-value="all">Curve Ball Questions</button>
-                        <button class="quiz-btn" data-mode="curveball" data-value="10">10 Curve Ball Questions</button>
-                        <button class="quiz-btn" data-mode="curveball" data-value="20">20 Curve Ball Questions</button>
-                        <button class="quiz-btn" data-mode="curveball" data-value="25">25 Curve Ball Questions</button>
-                    </div>
-                </div>
-
-                <div id="selectionConfirmation" class="selection-confirmation hidden">
-                    <div class="confirmation-content">
-                        <h3>Selected Quiz Mode</h3>
-                        <div id="selectedInfo" class="selected-info"></div>
-                        <div class="confirmation-actions">
-                            <button id="startQuizBtn" class="btn-primary">Start Quiz</button>
-                            <button id="changeSelectionBtn" class="btn-secondary">Change Selection</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-section">
-                    <p>Questions are randomly selected from all available exam papers.</p>
-                </div>
-            </div>
+    <!-- Main -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">Dashboard</h1>
         </div>
-    </div>
+        <div class="topbar-right">
+          <div class="user-avatar">A</div>
+        </div>
+      </header>
 
-    <script src="{{ url_for('static', filename='selection.js') }}?v=3"></script>
+      <main class="page-content">
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div>
+                <div class="stat-card-value" id="statTotalQuestions">—</div>
+                <div class="stat-card-label">Questions Available</div>
+              </div>
+              <div class="stat-card-icon blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div>
+                <div class="stat-card-value" id="statModules">—</div>
+                <div class="stat-card-label">Modules</div>
+              </div>
+              <div class="stat-card-icon purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div>
+                <div class="stat-card-value" id="statQuizzes">—</div>
+                <div class="stat-card-label">Quizzes Completed</div>
+              </div>
+              <div class="stat-card-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div>
+                <div class="stat-card-value" id="statAvgScore">—</div>
+                <div class="stat-card-label">Average Score</div>
+              </div>
+              <div class="stat-card-icon red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module (required: LM1 or LM2; no mixing) -->
+        <div class="module-tabs-row">
+          <span class="module-tabs-label">Module</span>
+          <div id="moduleTabs"></div>
+        </div>
+
+        <!-- Practice Modes -->
+        <div class="section-card">
+          <div class="section-label">Practice by Question Count</div>
+          <div class="btn-grid">
+            <button class="quiz-btn" data-mode="count" data-value="10">10 Questions</button>
+            <button class="quiz-btn" data-mode="count" data-value="20">20 Questions</button>
+            <button class="quiz-btn" data-mode="count" data-value="50">50 Questions</button>
+            <button class="quiz-btn" data-mode="count" data-value="100">100 Questions</button>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-label">Practice by Past Paper Year</div>
+          <div class="btn-grid" id="yearButtons">
+            <span style="color:var(--text-muted);font-size:13px;">Loading years…</span>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-label">Practice by Learning Objective</div>
+          <div class="btn-grid" id="learningObjectiveButtons">
+            <span style="color:var(--text-muted);font-size:13px;">Loading objectives…</span>
+          </div>
+        </div>
+
+        <div class="section-card" id="multipleSelectionSection">
+          <div class="section-label">Multiple Selection Questions</div>
+          <div class="btn-grid">
+            <button class="quiz-btn" data-mode="multiple" data-value="all">All Available</button>
+            <button class="quiz-btn" data-mode="multiple" data-value="10">10 Questions</button>
+            <button class="quiz-btn" data-mode="multiple" data-value="20">20 Questions</button>
+            <button class="quiz-btn" data-mode="multiple" data-value="50">50 Questions</button>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-label">Curve Ball Questions</div>
+          <div class="btn-grid">
+            <button class="quiz-btn" data-mode="curveball" data-value="all">All Available</button>
+            <button class="quiz-btn" data-mode="curveball" data-value="10">10 Questions</button>
+            <button class="quiz-btn" data-mode="curveball" data-value="20">20 Questions</button>
+            <button class="quiz-btn" data-mode="curveball" data-value="25">25 Questions</button>
+          </div>
+        </div>
+
+        <!-- Confirmation Banner -->
+        <div id="selectionConfirmation" class="confirm-banner hidden">
+          <div class="confirm-info">
+            <span class="confirm-label">Selected Mode</span>
+            <div id="selectedInfo"></div>
+          </div>
+          <div class="confirm-actions">
+            <button id="changeSelectionBtn" class="btn btn-secondary btn-sm">Change</button>
+            <button id="startQuizBtn" class="btn btn-primary btn-sm">Start Quiz →</button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='selection.js') }}?v=5"></script>
 </body>
 </html>
-

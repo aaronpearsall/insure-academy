@@ -1,41 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M05 Exam Question Practice - History</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance Agent - History</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>M05 Exam Question Practice</h1>
-            <div class="header-actions">
-                <a href="/" class="btn-secondary">New Quiz</a>
-                <a href="/logout" class="btn-secondary">Logout</a>
-            </div>
-        </header>
+  <div class="app-layout">
 
-        <div class="history-content">
-            <div class="analytics-panel">
-                <h2>Overall Performance</h2>
-                <div id="overallStats" class="stats-grid"></div>
-                
-                <h2>Performance by Learning Objective</h2>
-                <div id="loPerformance" class="lo-performance"></div>
-                
-                <h2>Areas Needing Improvement</h2>
-                <div id="weakAreas" class="weak-areas"></div>
-            </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">IA</div>
+        <span class="logo-text">InsureAgent</span>
+      </div>
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-title">Menu</span>
+        <a href="/" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="/history" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          History
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/logout" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </aside>
 
-            <div class="history-panel">
-                <h2>Quiz History</h2>
-                <div id="historyList" class="history-list"></div>
-            </div>
+    <!-- Main -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">Practice History</h1>
         </div>
-    </div>
+        <div class="topbar-right">
+          <a href="/" class="btn btn-primary btn-sm">New Quiz</a>
+          <div class="user-avatar">A</div>
+        </div>
+      </header>
 
-    <script src="{{ url_for('static', filename='history.js') }}"></script>
+      <main class="page-content">
+        <div class="history-layout">
+
+          <!-- Analytics Panel -->
+          <div class="analytics-panel">
+            <h2>Overall Performance</h2>
+            <div id="overallStats" class="stats-grid"></div>
+
+            <h2>By Learning Objective</h2>
+            <div id="loPerformance" class="lo-performance"></div>
+
+            <h2>Areas to Improve</h2>
+            <div id="weakAreas" class="weak-areas"></div>
+          </div>
+
+          <!-- History List -->
+          <div class="history-panel">
+            <h2>Quiz History</h2>
+            <div id="historyList" class="history-list"></div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='history.js') }}"></script>
 </body>
 </html>
-

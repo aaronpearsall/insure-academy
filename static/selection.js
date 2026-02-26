@@ -1,9 +1,8 @@
-// Selection page logic - v2 (with curve ball support)
+// Selection page logic - v5 (LM1/LM2 only; no mixing)
 let selectedOptions = null;
+let currentModule = null;  // always LM1 or LM2 once loaded
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('Selection page loaded - checking for curve ball questions...');
-    // Check if user is authenticated
     try {
         const authResponse = await fetch('/api/check-auth');
         const authData = await authResponse.json();
@@ -12,327 +11,280 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
     } catch (error) {
-        console.error('Auth check failed:', error);
         window.location.href = '/login';
         return;
     }
-    
-    loadAvailableYears();
-    loadLearningObjectives();
-    loadMultipleChoiceCount();
-    loadCurveBallCount();
-    
-    // Handle count buttons
+
+    loadStats();
+    await loadModules();
+
+    // After modules load, currentModule is set to first (LM1); refresh data for it
+    refreshModuleData();
+
     document.querySelectorAll('.quiz-btn[data-mode="count"]').forEach(btn => {
         btn.addEventListener('click', () => {
-            const count = btn.dataset.value;
-            selectQuizMode({ count: parseInt(count) }, btn);
+            selectQuizMode({ count: parseInt(btn.dataset.value), module: currentModule }, btn);
         });
     });
-    
-    // Handle multiple selection buttons
+
     document.querySelectorAll('.quiz-btn[data-mode="multiple"]').forEach(btn => {
         btn.addEventListener('click', () => {
-            const value = btn.dataset.value;
-            if (value === 'all') {
-                selectQuizMode({ multiple_choice_only: true }, btn);
-            } else {
-                selectQuizMode({ multiple_choice_only: true, count: parseInt(value) }, btn);
-            }
+            const val = btn.dataset.value;
+            const opts = { multiple_choice_only: true, module: currentModule };
+            if (val !== 'all') opts.count = parseInt(val);
+            selectQuizMode(opts, btn);
         });
     });
-    
-    // Handle curve ball buttons
+
     document.querySelectorAll('.quiz-btn[data-mode="curveball"]').forEach(btn => {
         btn.addEventListener('click', () => {
-            const value = btn.dataset.value;
-            if (value === 'all') {
-                selectQuizMode({ curve_ball_only: true }, btn);
-            } else {
-                selectQuizMode({ curve_ball_only: true, count: parseInt(value) }, btn);
-            }
+            const val = btn.dataset.value;
+            const opts = { curve_ball_only: true, module: currentModule };
+            if (val !== 'all') opts.count = parseInt(val);
+            selectQuizMode(opts, btn);
         });
     });
-    
-    // Handle start quiz button
+
     document.getElementById('startQuizBtn').addEventListener('click', () => {
-        if (selectedOptions) {
-            startQuiz(selectedOptions);
-        }
+        if (selectedOptions) startQuiz(selectedOptions);
     });
-    
-    // Handle change selection button
-    document.getElementById('changeSelectionBtn').addEventListener('click', () => {
-        clearSelection();
-    });
+
+    document.getElementById('changeSelectionBtn').addEventListener('click', clearSelection);
 });
 
-async function loadAvailableYears() {
+async function loadStats() {
     try {
-        const response = await fetch('/api/years');
-        const years = await response.json();
-        
-        const yearButtons = document.getElementById('yearButtons');
-        yearButtons.innerHTML = '';
-        
-        if (years.length === 0) {
-            yearButtons.innerHTML = '<p>No exam years found. Please ensure exam papers are uploaded.</p>';
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        document.getElementById('statTotalQuestions').textContent = data.total_questions.toLocaleString();
+        document.getElementById('statModules').textContent = data.total_modules;
+        document.getElementById('statQuizzes').textContent = data.quizzes_completed;
+        document.getElementById('statAvgScore').textContent = data.quizzes_completed > 0 ? data.avg_score + '%' : '—';
+    } catch (e) {
+        console.error('Error loading stats:', e);
+    }
+}
+
+async function loadModules() {
+    try {
+        const res = await fetch('/api/modules');
+        const modules = await res.json();
+
+        const container = document.getElementById('moduleTabs');
+        container.innerHTML = '';
+
+        if (modules.length === 0) {
+            container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">No modules. Add exam_papers/LM1 and exam_papers/LM2.</span>';
             return;
         }
-        
+
+        modules.forEach((mod, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'module-tab' + (index === 0 ? ' active' : '');
+            btn.dataset.module = mod.code;
+            btn.textContent = mod.code;
+            btn.addEventListener('click', () => selectModule(mod.code, btn));
+            container.appendChild(btn);
+            if (index === 0) currentModule = mod.code;
+        });
+
+        // Hide Multiple Selection section for LM1 (no multiple selection in that module)
+        const multipleSection = document.getElementById('multipleSelectionSection');
+        if (multipleSection) {
+            if (currentModule === 'LM1') {
+                multipleSection.classList.add('hidden');
+            } else {
+                multipleSection.classList.remove('hidden');
+            }
+        }
+    } catch (e) {
+        console.error('Error loading modules:', e);
+    }
+}
+
+function selectModule(moduleCode, clickedBtn) {
+    currentModule = moduleCode;
+    document.querySelectorAll('.module-tab').forEach(t => t.classList.remove('active'));
+    clickedBtn.classList.add('active');
+    clearSelection();
+    refreshModuleData();
+}
+
+function refreshModuleData() {
+    if (!currentModule) return;
+    const moduleParam = `?module=${encodeURIComponent(currentModule)}`;
+    loadAvailableYears(moduleParam);
+    loadLearningObjectives(moduleParam);
+    loadMultipleChoiceCount(moduleParam);
+    loadCurveBallCount(moduleParam);
+    // LM1 has no multiple selection questions; only show for other modules (e.g. M05)
+    const multipleSection = document.getElementById('multipleSelectionSection');
+    if (multipleSection) {
+        if (currentModule === 'LM1') {
+            multipleSection.classList.add('hidden');
+        } else {
+            multipleSection.classList.remove('hidden');
+        }
+    }
+}
+
+async function loadAvailableYears(moduleParam = '') {
+    const yearButtons = document.getElementById('yearButtons');
+    yearButtons.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Loading…</span>';
+
+    try {
+        const res = await fetch(`/api/years${moduleParam}`);
+        const years = await res.json();
+        yearButtons.innerHTML = '';
+
+        if (years.length === 0) {
+            yearButtons.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">No years found for this module</span>';
+            return;
+        }
+
         years.forEach(year => {
             const btn = document.createElement('button');
             btn.className = 'quiz-btn';
             btn.dataset.year = year;
             btn.textContent = year;
             btn.addEventListener('click', () => {
-                selectQuizMode({ year: parseInt(year) }, btn);
+                selectQuizMode({ year: parseInt(year), module: currentModule }, btn);
             });
             yearButtons.appendChild(btn);
         });
-    } catch (error) {
-        console.error('Error loading years:', error);
-        document.getElementById('yearButtons').innerHTML = '<p>Error loading years</p>';
+    } catch (e) {
+        yearButtons.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Error loading years</span>';
+    }
+}
+
+async function loadLearningObjectives(moduleParam = '') {
+    const loButtons = document.getElementById('learningObjectiveButtons');
+    loButtons.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Loading…</span>';
+
+    try {
+        const res = await fetch(`/api/learning-objectives${moduleParam}`);
+        const objectives = await res.json();
+        loButtons.innerHTML = '';
+
+        if (objectives.length === 0) {
+            loButtons.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">No objectives found for this module</span>';
+            return;
+        }
+
+        objectives.forEach(obj => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.dataset.lo = obj.number;
+            btn.textContent = `LO ${obj.number}`;
+            btn.title = `${obj.count} questions`;
+            btn.addEventListener('click', () => {
+                selectQuizMode({ learning_objective: obj.number, module: currentModule }, btn);
+            });
+            loButtons.appendChild(btn);
+        });
+    } catch (e) {
+        loButtons.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Error loading objectives</span>';
+    }
+}
+
+async function loadMultipleChoiceCount(moduleParam = '') {
+    if (!currentModule) return;
+    try {
+        const res = await fetch(`/api/multiple-choice-count${moduleParam}`);
+        const data = await res.json();
+        const count = data.count || 0;
+
+        document.querySelectorAll('.quiz-btn[data-mode="multiple"]').forEach(btn => {
+            const val = btn.dataset.value;
+            if (val === 'all') {
+                btn.textContent = `All (${count})`;
+                btn.disabled = count === 0;
+            } else {
+                const max = Math.min(parseInt(val), count);
+                btn.textContent = `${max} Questions`;
+                btn.disabled = count === 0;
+            }
+        });
+    } catch (e) {
+        console.error('Error loading multiple choice count:', e);
+    }
+}
+
+async function loadCurveBallCount(moduleParam = '') {
+    if (!currentModule) return;
+    try {
+        const res = await fetch(`/api/curve-ball-count${moduleParam}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        const count = data.count || 0;
+
+        document.querySelectorAll('.quiz-btn[data-mode="curveball"]').forEach(btn => {
+            const val = btn.dataset.value;
+            if (val === 'all') {
+                btn.textContent = `All (${count})`;
+                btn.disabled = count === 0;
+            } else {
+                const max = Math.min(parseInt(val), count);
+                btn.textContent = `${max} Questions`;
+                btn.disabled = count === 0;
+            }
+        });
+    } catch (e) {
+        console.error('Error loading curve ball count:', e);
     }
 }
 
 function selectQuizMode(options, clickedButton) {
-    // Store selected options
     selectedOptions = options;
-    
-    // Clear previous selections
-    document.querySelectorAll('.quiz-btn').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    
-    // Highlight selected button
+    document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('selected'));
     clickedButton.classList.add('selected');
-    
-    // Show confirmation section
     showConfirmation(options);
 }
 
 function showConfirmation(options) {
     const confirmation = document.getElementById('selectionConfirmation');
     const selectedInfo = document.getElementById('selectedInfo');
-    
-    let infoText = '';
-    if (options.count) {
-        infoText = `
-            <div class="selected-detail">
-                <span class="selected-label">Mode:</span>
-                <span class="selected-value">Random Practice</span>
-            </div>
-            <div class="selected-detail">
-                <span class="selected-label">Number of Questions:</span>
-                <span class="selected-value">${options.count}</span>
-            </div>
-            <div class="selected-note">Questions will be randomly selected from all available exam papers.</div>
-        `;
-    } else if (options.year) {
-        infoText = `
-            <div class="selected-detail">
-                <span class="selected-label">Mode:</span>
-                <span class="selected-value">Past Paper</span>
-            </div>
-            <div class="selected-detail">
-                <span class="selected-label">Year:</span>
-                <span class="selected-value">${options.year}</span>
-            </div>
-            <div class="selected-note">You will practice questions from the ${options.year} exam paper in the exact order they appear.</div>
-        `;
-    } else if (options.learning_objective) {
-        infoText = `
-            <div class="selected-detail">
-                <span class="selected-label">Mode:</span>
-                <span class="selected-value">Learning Objective Practice</span>
-            </div>
-            <div class="selected-detail">
-                <span class="selected-label">Learning Objective:</span>
-                <span class="selected-value">${options.learning_objective}</span>
-            </div>
-            <div class="selected-note">You will practice up to 20 questions (or all available) from Learning Objective ${options.learning_objective}.</div>
-        `;
+
+    let modeText = '';
+    let detailText = '';
+
+    if (options.curve_ball_only) {
+        modeText = 'Curve Ball Questions';
+        detailText = options.count ? `${options.count} questions` : 'All available';
     } else if (options.multiple_choice_only) {
-        if (options.count) {
-            infoText = `
-                <div class="selected-detail">
-                    <span class="selected-label">Mode:</span>
-                    <span class="selected-value">Multiple Selection Questions</span>
-                </div>
-                <div class="selected-detail">
-                    <span class="selected-label">Number of Questions:</span>
-                    <span class="selected-value">${options.count}</span>
-                </div>
-                <div class="selected-note">You will practice ${options.count} multiple selection questions (questions where you can select more than one answer).</div>
-            `;
-        } else {
-            infoText = `
-                <div class="selected-detail">
-                    <span class="selected-label">Mode:</span>
-                    <span class="selected-value">Multiple Selection Questions</span>
-                </div>
-                <div class="selected-detail">
-                    <span class="selected-label">Number of Questions:</span>
-                    <span class="selected-value">All Available</span>
-                </div>
-                <div class="selected-note">You will practice all available multiple selection questions (questions where you can select more than one answer).</div>
-            `;
-        }
-    } else if (options.curve_ball_only) {
-        if (options.count) {
-            infoText = `
-                <div class="selected-detail">
-                    <span class="selected-label">Mode:</span>
-                    <span class="selected-value">Curve Ball Questions</span>
-                </div>
-                <div class="selected-detail">
-                    <span class="selected-label">Number of Questions:</span>
-                    <span class="selected-value">${options.count}</span>
-                </div>
-                <div class="selected-note">You will practice ${options.count} curve ball questions (advanced contribution calculation questions).</div>
-            `;
-        } else {
-            infoText = `
-                <div class="selected-detail">
-                    <span class="selected-label">Mode:</span>
-                    <span class="selected-value">Curve Ball Questions</span>
-                </div>
-                <div class="selected-detail">
-                    <span class="selected-label">Number of Questions:</span>
-                    <span class="selected-value">All Available</span>
-                </div>
-                <div class="selected-note">You will practice all available curve ball questions (advanced contribution calculation questions).</div>
-            `;
-        }
+        modeText = 'Multiple Selection Questions';
+        detailText = options.count ? `${options.count} questions` : 'All available';
+    } else if (options.year) {
+        modeText = 'Past Paper';
+        detailText = `${options.year} exam`;
+    } else if (options.learning_objective) {
+        modeText = 'Learning Objective';
+        detailText = `LO ${options.learning_objective}`;
+    } else if (options.count) {
+        modeText = 'Random Practice';
+        detailText = `${options.count} questions`;
     }
-    
-    selectedInfo.innerHTML = infoText;
+
+    if (options.module) {
+        detailText += ` · ${options.module}`;
+    }
+
+    selectedInfo.innerHTML = `
+        <span class="selected-label">${modeText}</span>
+        <span class="selected-value">${detailText}</span>
+    `;
+
     confirmation.classList.remove('hidden');
-    
-    // Scroll to confirmation
     confirmation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function clearSelection() {
     selectedOptions = null;
-    document.querySelectorAll('.quiz-btn').forEach(btn => {
-        btn.classList.remove('selected');
-    });
+    document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('selected'));
     document.getElementById('selectionConfirmation').classList.add('hidden');
 }
 
 function startQuiz(options) {
-    // Store quiz options in sessionStorage
     sessionStorage.setItem('quizOptions', JSON.stringify(options));
-    // Navigate to quiz page
     window.location.href = '/quiz';
 }
-
-async function loadLearningObjectives() {
-    try {
-        const response = await fetch('/api/learning-objectives');
-        const objectives = await response.json();
-        
-        const loButtons = document.getElementById('learningObjectiveButtons');
-        loButtons.innerHTML = '';
-        
-        if (objectives.length === 0) {
-            loButtons.innerHTML = '<p>No learning objectives found. Please ensure exam papers are uploaded.</p>';
-            return;
-        }
-        
-        objectives.forEach(obj => {
-            const btn = document.createElement('button');
-            btn.className = 'quiz-btn';
-            btn.dataset.lo = obj.number;
-            btn.textContent = `Learning Objective ${obj.number}`;
-            btn.title = `${obj.count} questions available`; // Show count in tooltip
-            btn.addEventListener('click', () => {
-                selectQuizMode({ learning_objective: obj.number }, btn);
-            });
-            loButtons.appendChild(btn);
-        });
-    } catch (error) {
-        console.error('Error loading learning objectives:', error);
-        document.getElementById('learningObjectiveButtons').innerHTML = '<p>Error loading learning objectives</p>';
-    }
-}
-
-async function loadMultipleChoiceCount() {
-    try {
-        const response = await fetch('/api/multiple-choice-count');
-        const data = await response.json();
-        const count = data.count;
-        
-        // Update button labels to show count
-        document.querySelectorAll('.quiz-btn[data-mode="multiple"]').forEach(btn => {
-            const value = btn.dataset.value;
-            if (value === 'all') {
-                btn.textContent = `All Multiple Selection Questions`;
-            } else {
-                const maxCount = Math.min(parseInt(value), count);
-                btn.textContent = `${maxCount} Multiple Selection Questions`;
-                if (maxCount < parseInt(value)) {
-                    btn.disabled = true;
-                    btn.title = `Only ${count} multiple selection questions available`;
-                }
-            }
-        });
-    } catch (error) {
-        console.error('Error loading multiple choice count:', error);
-    }
-}
-
-async function loadCurveBallCount() {
-    console.log('loadCurveBallCount() called');
-    try {
-        const response = await fetch('/api/curve-ball-count', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log('Curve ball count response:', response.status, response.statusText);
-        if (!response.ok) {
-            console.error('Failed to load curve ball count:', response.status, response.statusText);
-            const errorText = await response.text();
-            console.error('Error response:', errorText);
-            return;
-        }
-        const data = await response.json();
-        console.log('Curve ball count data:', data);
-        const count = data.count || 0;
-        
-        // Update button labels to show count
-        document.querySelectorAll('.quiz-btn[data-mode="curveball"]').forEach(btn => {
-            const value = btn.dataset.value;
-            if (value === 'all') {
-                btn.textContent = `Curve Ball Questions`;
-                if (count === 0) {
-                    btn.disabled = true;
-                    btn.title = 'No curve ball questions available';
-                }
-            } else {
-                const maxCount = Math.min(parseInt(value), count);
-                btn.textContent = `${maxCount} Curve Ball Questions`;
-                if (maxCount < parseInt(value) || count === 0) {
-                    btn.disabled = true;
-                    btn.title = count === 0 ? 'No curve ball questions available' : `Only ${count} curve ball questions available`;
-                } else {
-                    btn.disabled = false;
-                    btn.title = '';
-                }
-            }
-        });
-    } catch (error) {
-        console.error('Error loading curve ball count:', error);
-        // Disable buttons if we can't load the count
-        document.querySelectorAll('.quiz-btn[data-mode="curveball"]').forEach(btn => {
-            btn.disabled = true;
-            btn.title = 'Unable to load curve ball questions';
-        });
-    }
-}
-

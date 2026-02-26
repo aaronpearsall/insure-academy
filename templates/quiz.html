@@ -1,65 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M05 Exam Question Practice - Quiz</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance Agent - Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>M05 Exam Question Practice</h1>
-            <div class="header-actions">
-                <a href="/history" class="btn-secondary" style="text-decoration: none; margin-right: 10px;">History</a>
-                <a href="/logout" class="btn-secondary" style="text-decoration: none; margin-right: 10px;">Logout</a>
-                <button id="exitBtn" class="btn-secondary">Exit Quiz</button>
-                <div class="stats">
-                    <span id="scoreDisplay">Score: <span id="score">0</span>/<span id="total">0</span></span>
-                </div>
-            </div>
-        </header>
+  <div class="app-layout">
 
-        <div class="main-content">
-            <div class="question-panel">
-                <div id="loading" class="loading">Loading questions...</div>
-                
-                <div id="questionContainer" class="question-container hidden">
-                    <div class="question-header">
-                        <span class="question-number">Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">0</span></span>
-                        <div class="progress-bar">
-                            <div id="progressFill" class="progress-fill"></div>
-                        </div>
-                    </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">IA</div>
+        <span class="logo-text">InsureAgent</span>
+      </div>
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-title">Menu</span>
+        <a href="/" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="/history" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          History
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/logout" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </aside>
 
-                    <div class="question-text" id="questionText"></div>
-
-                    <div class="options-container" id="optionsContainer"></div>
-
-                    <div class="action-buttons">
-                        <button id="prevBtn" class="btn-secondary hidden">Previous</button>
-                        <button id="submitBtn" class="btn-primary" disabled>Submit Answer</button>
-                        <button id="nextBtn" class="btn-primary hidden">Next Question</button>
-                        <button id="finishBtn" class="btn-primary hidden">Finish Quiz</button>
-                    </div>
-                </div>
-
-                <div id="noQuestions" class="no-questions hidden">
-                    <h2>No questions found</h2>
-                    <p>Please go back and select a quiz mode.</p>
-                </div>
-            </div>
-
-            <div class="feedback-panel" id="feedbackPanel">
-                <h2>Feedback</h2>
-                <div id="feedbackContent" class="feedback-content">
-                    <p class="placeholder">Submit an answer to see feedback</p>
-                </div>
-            </div>
+    <!-- Main -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">Practice Quiz</h1>
         </div>
-    </div>
+        <div class="topbar-right">
+          <span class="score-badge">Score: <span id="score">0</span> / <span id="total">0</span></span>
+          <button id="exitBtn" class="btn btn-secondary btn-sm">Exit</button>
+          <div class="user-avatar">A</div>
+        </div>
+      </header>
 
-    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+      <main class="page-content">
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+          <div class="loading-spinner"></div>
+          Loading questions…
+        </div>
+
+        <!-- Quiz Layout -->
+        <div id="questionContainer" class="quiz-layout hidden">
+
+          <!-- Question Panel -->
+          <div class="question-card">
+            <div class="question-meta">
+              <span class="question-number-badge">
+                Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">0</span>
+              </span>
+            </div>
+            <div class="progress-track">
+              <div id="progressFill"></div>
+            </div>
+
+            <div class="question-text" id="questionText"></div>
+
+            <div id="optionsContainer"></div>
+
+            <div class="question-actions">
+              <button id="prevBtn" class="btn btn-secondary hidden">← Previous</button>
+              <button id="submitBtn" class="btn btn-primary" disabled>Submit Answer</button>
+              <button id="nextBtn" class="btn btn-primary hidden">Next →</button>
+              <button id="finishBtn" class="btn btn-primary hidden">Finish Quiz</button>
+            </div>
+          </div>
+
+          <!-- Feedback Panel -->
+          <div class="feedback-card" id="feedbackPanel">
+            <div class="feedback-card-title">Feedback</div>
+            <div id="feedbackContent" class="feedback-content">
+              <p class="placeholder">Submit an answer to see feedback</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- No Questions -->
+        <div id="noQuestions" class="no-questions hidden">
+          <h2 style="margin-bottom:10px;">No questions found</h2>
+          <p>Please go back and select a quiz mode.</p>
+          <a href="/" class="btn btn-primary" style="margin-top:16px;display:inline-flex;">Back to Dashboard</a>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='quiz.js') }}"></script>
 </body>
 </html>
-
