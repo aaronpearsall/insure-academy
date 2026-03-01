@@ -86,6 +86,12 @@ body {
   flex-shrink: 0;
 }
 
+.sidebar-logo-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .logo-icon {
   width: 34px;
   height: 34px;
@@ -1011,19 +1017,39 @@ body {
 }
 
 /* stats-grid and stat-card are created by history.js innerHTML */
-.stats-grid {
+.analytics-panel .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 22px;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 
-.stat-card {
+.analytics-panel .stat-card {
   background: var(--bg);
   border-radius: var(--radius-sm);
   padding: 14px;
   text-align: center;
   border: none;
+}
+
+.analytics-panel .stat-card .stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.analytics-panel .stat-card .stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
 /* lo-item and related created by history.js */

@@ -400,6 +400,23 @@ class QuestionParser:
         return questions
     
     @staticmethod
+    def fix_display_spacing(text):
+        """Fix incorrect spaces and common OCR splits in question/option text."""
+        if not text or not isinstance(text, str):
+            return text or ''
+        # Remove space(s) immediately before comma (e.g. '£250 ,000' -> '£250,000', 'Terry ,' -> 'Terry,')
+        text = re.sub(r'\s+,', ',', text)
+        # Remove space(s) immediately before apostrophe (e.g. "policyholder 's" -> "policyholder's")
+        text = re.sub(r"\s+'", "'", text)
+        # Remove space(s) immediately before full stop when it looks like a decimal (e.g. "1 . 5" -> "1.5")
+        text = re.sub(r'(\d)\s+\.\s+(?=\d)', r'\1.', text)
+        # Fix common OCR split-words (word broken with stray space)
+        text = re.sub(r'policyh\s+older', 'policyholder', text, flags=re.IGNORECASE)
+        # Normalise multiple spaces to single
+        text = re.sub(r'\s+', ' ', text).strip()
+        return text
+    
+    @staticmethod
     def load_questions_from_files():
         """Load questions from modules/<name>/past_papers and modules/<name>/study_text (curveballs)."""
         all_questions = []
@@ -426,6 +443,9 @@ class QuestionParser:
                 questions = QuestionParser.parse_questions(text)
 
                 for question in questions:
+                    question['question'] = QuestionParser.fix_display_spacing(question['question'])
+                    for opt in question.get('options', []):
+                        opt['text'] = QuestionParser.fix_display_spacing(opt.get('text', ''))
                     q_num = question.get('question_number', '')
                     q_text = question['question'].strip()
                     exp_answer = global_explanations.get_answer(q_text, module, source_file=file_path.name)
@@ -459,6 +479,9 @@ class QuestionParser:
                     text = file_path.read_text(encoding='utf-8')
                     questions = QuestionParser.parse_questions_from_explanations_format(text)
                     for question in questions:
+                        question['question'] = QuestionParser.fix_display_spacing(question['question'])
+                        for opt in question.get('options', []):
+                            opt['text'] = QuestionParser.fix_display_spacing(opt.get('text', ''))
                         q_text = question['question'].strip()
                         exp_answer = global_explanations.get_answer(q_text, module, source_file=file_path.name)
                         if exp_answer and not question.get('correct_answer'):
@@ -852,23 +875,60 @@ class StudyTextIndex:
                 key = f"{module}/{file_path.name}"
                 self.full_texts[key] = text
     
+    @staticmethod
+    def _strip_question_number_from_explanation(text):
+        """Remove leading 'Question N' / 'Question N.' so explanations don't show question numbers."""
+        if not text or not isinstance(text, str):
+            return (text or '').strip()
+        t = text.strip()
+        # Strip "Question 51 ", "Question 51.", "Question 120 By ..." etc.
+        t = re.sub(r'^Question\s+\d+\s*[.:]?\s*', '', t, flags=re.IGNORECASE)
+        return t.strip()
+
+    @staticmethod
+    def _explanation_is_low_value(explanation, question_text):
+        """True if the explanation is just the question repeated (adds no conceptual detail)."""
+        if not explanation or not question_text:
+            return True
+        def norm(s):
+            s = re.sub(r'[^\w\s]', ' ', (s or '').lower())
+            return re.sub(r'\s+', ' ', s).strip()
+        qn = norm(question_text)
+        en = norm(explanation)
+        if len(en) < 15:
+            return True
+        # One is almost a substring of the other (allowing small typos/word order)
+        qw = set(qn.split())
+        ew = set(en.split())
+        overlap = len(qw & ew) / max(len(qw), 1)
+        # If >75% of question words appear in explanation and explanation isn't much longer, it's a repeat
+        if overlap >= 0.75 and len(ew) <= len(qw) * 1.3:
+            return True
+        # Explanation is just the question with a full stop
+        if qn in en and len(en) <= len(qn) + 5:
+            return True
+        return False
+
     def generate_feedback_explanation(self, question_text, correct_answer_text, selected_answer_text, options_text=None, is_correct=False, module=None, source_file=None):
         # First, try to get pre-written explanation (prefer same past paper, then module-wide)
         pre_written = self.question_explanations.get_explanation(question_text, module, source_file=source_file)
         if pre_written:
-            # Clean up the pre-written explanation (spelling, grammar, consistency)
-            explanation = pre_written.strip()
+            # Strip any "Question N" prefix and clean up
+            explanation = self._strip_question_number_from_explanation(pre_written)
             explanation = self.fix_ocr_errors(explanation)
             explanation = self.cleanup_explanation_text(explanation)
             if explanation and not explanation.endswith(('.', '!', '?')):
                 explanation += '.'
-            
-            if is_correct:
-                return f"Correct! {explanation}"
+            # If the explanation is just the question repeated, use study text instead
+            if self._explanation_is_low_value(explanation, question_text):
+                pre_written = None
             else:
-                return f"The correct answer is {correct_answer_text}. {explanation}"
+                if is_correct:
+                    return f"Correct! {explanation}"
+                else:
+                    return f"The correct answer is {correct_answer_text}. {explanation}"
         
-        # Fall back to study text search if no pre-written explanation found
+        # Fall back to study text search if no pre-written explanation or it was low-value
         # Extract key concepts from question and answer
         # Focus on legal terms and concepts, not common words
         question_lower = question_text.lower()
@@ -966,6 +1026,9 @@ class StudyTextIndex:
                 sentence_lower = sentence.lower()
                 if any(re.search(p, sentence_lower) for p in instructional_patterns):
                     continue
+                # Skip sentences that are just the question restated (e.g. "Question 51 By disclosing...")
+                if re.match(r'^question\s+\d+\s', sentence_lower):
+                    continue
                 term_count = sum(1 for term in important_terms if term in sentence_lower)
                 if term_count > 0:
                     is_explanatory = any(w in sentence_lower for w in explanatory_words) or 'is' in sentence_lower or 'are' in sentence_lower
@@ -975,6 +1038,7 @@ class StudyTextIndex:
             if explanatory_sentences:
                 explanatory_sentences.sort(key=lambda x: x[0], reverse=True)
                 explanation = explanatory_sentences[0][1]
+                explanation = self._strip_question_number_from_explanation(explanation)
                 explanation = re.sub(r'^[A-Z]\s+', '', explanation)
                 explanation = re.sub(r'^\d+[\.\)]\s*', '', explanation)
                 explanation = self.fix_ocr_errors(explanation)

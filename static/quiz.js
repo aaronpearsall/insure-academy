@@ -42,6 +42,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = '/';
         }
     });
+
+    const homeLogoLink = document.getElementById('homeLogoLink');
+    if (homeLogoLink) {
+        homeLogoLink.addEventListener('click', (e) => {
+            if (questions.length > 0) {
+                e.preventDefault();
+                if (confirm('Do you want to quit the quiz? Your progress will be saved.')) {
+                    saveProgress();
+                    window.location.href = '/';
+                }
+            }
+        });
+    }
     
     // Save progress periodically
     setInterval(saveProgress, 30000); // Every 30 seconds
