@@ -428,14 +428,14 @@ class QuestionParser:
                 for question in questions:
                     q_num = question.get('question_number', '')
                     q_text = question['question'].strip()
-                    exp_answer = global_explanations.get_answer(q_text)
+                    exp_answer = global_explanations.get_answer(q_text, module, source_file=file_path.name)
                     if exp_answer:
                         question['correct_answer'] = exp_answer
                         question['is_multiple_choice'] = ',' in exp_answer
                     elif q_num in answer_key:
                         question['correct_answer'] = answer_key[q_num].upper()
                         question['is_multiple_choice'] = ',' in answer_key[q_num]
-                    question['is_curve_ball'] = global_explanations.get_curve_ball(q_text)
+                    question['is_curve_ball'] = global_explanations.get_curve_ball(q_text, module, source_file=file_path.name)
                     if q_num in learning_objectives:
                         question['learning_objective'] = learning_objectives[q_num]
                     question['source_file'] = file_path.name
@@ -460,7 +460,7 @@ class QuestionParser:
                     questions = QuestionParser.parse_questions_from_explanations_format(text)
                     for question in questions:
                         q_text = question['question'].strip()
-                        exp_answer = global_explanations.get_answer(q_text)
+                        exp_answer = global_explanations.get_answer(q_text, module, source_file=file_path.name)
                         if exp_answer and not question.get('correct_answer'):
                             question['correct_answer'] = exp_answer
                             question['is_multiple_choice'] = ',' in exp_answer
@@ -479,10 +479,11 @@ class QuestionParser:
         return all_questions
 
 class QuestionExplanations:
-    """Load and match pre-written explanations for questions"""
+    """Load and match pre-written explanations for questions, scoped by module."""
     
     def __init__(self):
-        self.explanations = {}  # Maps question text (normalized) to explanation
+        # Maps (module, normalized_question_text) -> {explanation, answer, is_curve_ball}
+        self.explanations = {}
         self.load_explanations()
     
     def normalize_text(self, text):
@@ -496,8 +497,8 @@ class QuestionExplanations:
         return normalized
     
     def load_explanations(self):
-        """Load explanations from each module's study_text: modules/<name>/study_text/."""
-        def collect_files(dir_path):
+        """Load explanations from each module's study_text and past_papers. Past paper explanations go in past_papers/ and correspond to each paper (e.g. LM1 Exam - 2026 Explanations.txt)."""
+        def collect_study_files(dir_path):
             files = []
             if not dir_path.exists():
                 return files
@@ -508,19 +509,33 @@ class QuestionExplanations:
                         files.append(file_path)
             return files
 
-        explanation_files = []
         for module in get_module_names():
-            explanation_files.extend(collect_files(MODULES_DIR / module / "study_text"))
-
-        for file_path in explanation_files:
-            try:
-                text = file_path.read_text(encoding='utf-8')
-                self.parse_explanations(text)
-            except Exception as e:
-                print(f"Error loading explanations from {file_path}: {e}")
+            # Study text: explanations not tied to a specific paper (source_file_key '')
+            study_dir = MODULES_DIR / module / "study_text"
+            for file_path in collect_study_files(study_dir):
+                try:
+                    text = file_path.read_text(encoding='utf-8')
+                    self.parse_explanations(text, module, source_file_key='')
+                except Exception as e:
+                    print(f"Error loading explanations from {file_path}: {e}")
+            # Past papers: one explanations file per paper (e.g. "LM1 Exam - 2026 Explanations.txt" -> paper "LM1 Exam - 2026.pdf")
+            past_dir = MODULES_DIR / module / "past_papers"
+            if past_dir.exists():
+                for file_path in past_dir.iterdir():
+                    if not file_path.is_file() or file_path.suffix.lower() != '.txt':
+                        continue
+                    if 'explanation' not in file_path.name.lower():
+                        continue
+                    try:
+                        text = file_path.read_text(encoding='utf-8')
+                        # Match corresponding paper by stem: "LM1 Exam - 2026 Explanations" -> "LM1 Exam - 2026"
+                        source_file_key = re.sub(r'\s*Explanations?\s*$', '', file_path.stem, flags=re.IGNORECASE)
+                        self.parse_explanations(text, module, source_file_key=source_file_key)
+                    except Exception as e:
+                        print(f"Error loading explanations from {file_path}: {e}")
     
-    def parse_explanations(self, text):
-        """Parse explanations from text file
+    def parse_explanations(self, text, module, source_file_key=''):
+        """Parse explanations from text file and store under the given module.
         
         Supports multiple formats:
         1. Question [number] [Learning Outcome X.X]
@@ -592,153 +607,160 @@ class QuestionExplanations:
             is_curve_ball = bool(curve_ball_match)
             
             if question_text and explanation:
-                # Store by normalized question text
+                # Store by (module, source_file_key, normalized question text). source_file_key = paper stem or '' for study_text.
                 normalized_q = self.normalize_text(question_text)
-                self.explanations[normalized_q] = {
+                self.explanations[(module, source_file_key, normalized_q)] = {
                     'explanation': explanation,
                     'answer': answer,
                     'is_curve_ball': is_curve_ball
                 }
     
-    def get_explanation(self, question_text):
-        """Get pre-written explanation for a question if available"""
+    def _source_stem(self, source_file):
+        """Return stem of source_file (e.g. 'LM1 Exam - 2026.pdf' -> 'LM1 Exam - 2026')."""
+        if not source_file:
+            return ''
+        return Path(source_file).stem
+    
+    def _iter_for_module(self, module, source_file_key=None):
+        """Yield (normalized_q, data) for a given module (and optionally source_file_key)."""
+        for key, data in self.explanations.items():
+            mod, src, normalized_q = key
+            if module is not None and mod != module:
+                continue
+            if source_file_key is not None and src != source_file_key:
+                continue
+            yield normalized_q, data
+    
+    def get_explanation(self, question_text, module=None, source_file=None):
+        """Get pre-written explanation. Prefer explanation from the question's past paper (source_file), then module-wide."""
         normalized_q = self.normalize_text(question_text)
+        source_stem = self._source_stem(source_file) if source_file else ''
         
-        # Try exact match first
-        if normalized_q in self.explanations:
-            return self.explanations[normalized_q]['explanation']
+        # Try exact match: (module, source_stem, norm_q) then (module, '', norm_q)
+        if module:
+            if source_stem and (module, source_stem, normalized_q) in self.explanations:
+                return self.explanations[(module, source_stem, normalized_q)]['explanation']
+            if (module, '', normalized_q) in self.explanations:
+                return self.explanations[(module, '', normalized_q)]['explanation']
+        if module is None:
+            for (m, src, q), data in self.explanations.items():
+                if q == normalized_q:
+                    return data['explanation']
         
-        # Try fuzzy matching with improved logic
-        # Extract key unique words (longer words, numbers, specific terms)
+        # Try fuzzy matching: prefer same paper, then module-wide
         question_words = normalized_q.split()
-        # Focus on distinctive words (4+ chars, not common words)
         common_words = {'the', 'a', 'an', 'is', 'are', 'was', 'were', 'has', 'have', 'had', 
                        'this', 'that', 'these', 'those', 'what', 'which', 'who', 'when', 'where', 'how',
                        'and', 'or', 'but', 'if', 'of', 'to', 'for', 'with', 'from', 'by', 'in', 'on', 'at'}
         key_words = [w for w in question_words if len(w) >= 4 and w not in common_words]
-        # Also include numbers and currency symbols
         key_words.extend([w for w in question_words if re.search(r'[£\d]', w)])
         
         best_match = None
         best_score = 0
-        
-        for stored_q, data in self.explanations.items():
-            stored_words = set(stored_q.split())
-            question_words_set = set(normalized_q.split())
-            
-            # Calculate overlap of key distinctive words
-            stored_key_words = [w for w in stored_q.split() if len(w) >= 4 and w not in common_words]
-            stored_key_words.extend([w for w in stored_q.split() if re.search(r'[£\d]', w)])
-            
-            key_overlap = len(set(key_words) & set(stored_key_words))
-            total_overlap = len(stored_words & question_words_set)
-            
-            # Require high similarity for key words (at least 50% of key words match)
-            # OR very high overall similarity (80%+)
-            similarity = total_overlap / max(len(stored_words), len(question_words_set), 1)
-            key_similarity = key_overlap / max(len(key_words), len(stored_key_words), 1) if key_words else 0
-            
-            # Stricter matching: require either high key word match OR very high overall match
-            if (key_similarity >= 0.5 and key_overlap >= 3) or similarity >= 0.8:
-                if similarity > best_score:
-                    best_score = similarity
-                    best_match = data['explanation']
+        for source_key in ([source_stem] if source_stem else []) + ['']:
+            for stored_q, data in self._iter_for_module(module, source_key):
+                stored_words = set(stored_q.split())
+                question_words_set = set(normalized_q.split())
+                stored_key_words = [w for w in stored_q.split() if len(w) >= 4 and w not in common_words]
+                stored_key_words.extend([w for w in stored_q.split() if re.search(r'[£\d]', w)])
+                key_overlap = len(set(key_words) & set(stored_key_words))
+                total_overlap = len(stored_words & question_words_set)
+                similarity = total_overlap / max(len(stored_words), len(question_words_set), 1)
+                key_similarity = key_overlap / max(len(key_words), len(stored_key_words), 1) if key_words else 0
+                if (key_similarity >= 0.5 and key_overlap >= 3) or similarity >= 0.8:
+                    if similarity > best_score:
+                        best_score = similarity
+                        best_match = data['explanation']
         
         return best_match
     
-    def get_answer(self, question_text):
-        """Get answer from explanations file for a question if available"""
+    def get_answer(self, question_text, module=None, source_file=None):
+        """Get answer from explanations file. Prefer same past paper, then module-wide."""
         normalized_q = self.normalize_text(question_text)
-        
-        # Try exact match first
-        if normalized_q in self.explanations:
-            return self.explanations[normalized_q].get('answer', '').strip().upper()
-        
-        # Try fuzzy matching
+        source_stem = self._source_stem(source_file) if source_file else ''
+        if module:
+            if source_stem and (module, source_stem, normalized_q) in self.explanations:
+                return self.explanations[(module, source_stem, normalized_q)].get('answer', '').strip().upper()
+            if (module, '', normalized_q) in self.explanations:
+                return self.explanations[(module, '', normalized_q)].get('answer', '').strip().upper()
+        if module is None:
+            for (m, src, q), data in self.explanations.items():
+                if q == normalized_q:
+                    return data.get('answer', '').strip().upper()
         key_words = normalized_q.split()[:20]
         key_phrase = ' '.join(key_words)
-        
         best_match = None
         best_score = 0
-        
-        for stored_q, data in self.explanations.items():
-            if key_phrase in stored_q or stored_q in normalized_q:
-                stored_words = set(stored_q.split())
-                question_words = set(normalized_q.split())
-                overlap = len(stored_words & question_words)
-                similarity = overlap / max(len(stored_words), len(question_words), 1)
-                
-                if similarity >= 0.6 or overlap >= 8:
-                    if similarity > best_score:
-                        best_score = similarity
-                        best_match = data.get('answer', '').strip().upper()
-        
+        for source_key in ([source_stem] if source_stem else []) + ['']:
+            for stored_q, data in self._iter_for_module(module, source_key):
+                if key_phrase in stored_q or stored_q in normalized_q:
+                    stored_words = set(stored_q.split())
+                    question_words_set = set(normalized_q.split())
+                    overlap = len(stored_words & question_words_set)
+                    similarity = overlap / max(len(stored_words), len(question_words_set), 1)
+                    if similarity >= 0.6 or overlap >= 8:
+                        if similarity > best_score:
+                            best_score = similarity
+                            best_match = data.get('answer', '').strip().upper()
         return best_match
     
-    def get_curve_ball(self, question_text):
-        """Get curve ball flag from explanations file for a question if available"""
+    def get_curve_ball(self, question_text, module=None, source_file=None):
+        """Get curve ball flag. Prefer same past paper, then module-wide."""
         normalized_q = self.normalize_text(question_text)
-        
-        # Try exact match first
-        if normalized_q in self.explanations:
-            return self.explanations[normalized_q].get('is_curve_ball', False)
-        
-        # Try fuzzy matching (same logic as get_answer)
+        source_stem = self._source_stem(source_file) if source_file else ''
+        if module:
+            if source_stem and (module, source_stem, normalized_q) in self.explanations:
+                return self.explanations[(module, source_stem, normalized_q)].get('is_curve_ball', False)
+            if (module, '', normalized_q) in self.explanations:
+                return self.explanations[(module, '', normalized_q)].get('is_curve_ball', False)
+        if module is None:
+            for (m, src, q), data in self.explanations.items():
+                if q == normalized_q:
+                    return data.get('is_curve_ball', False)
         key_words = normalized_q.split()[:20]
         key_phrase = ' '.join(key_words)
-        
         best_match = None
         best_score = 0
-        
-        for stored_q, data in self.explanations.items():
-            if key_phrase in stored_q or stored_q in normalized_q:
-                stored_words = set(stored_q.split())
-                question_words = set(normalized_q.split())
-                overlap = len(stored_words & question_words)
-                similarity = overlap / max(len(stored_words), len(question_words), 1)
-                
-                if similarity >= 0.6 or overlap >= 8:
-                    if similarity > best_score:
-                        best_score = similarity
-                        best_match = data.get('is_curve_ball', False)
-        
+        for source_key in ([source_stem] if source_stem else []) + ['']:
+            for stored_q, data in self._iter_for_module(module, source_key):
+                if key_phrase in stored_q or stored_q in normalized_q:
+                    stored_words = set(stored_q.split())
+                    question_words_set = set(normalized_q.split())
+                    overlap = len(stored_words & question_words_set)
+                    similarity = overlap / max(len(stored_words), len(question_words_set), 1)
+                    if similarity >= 0.6 or overlap >= 8:
+                        if similarity > best_score:
+                            best_score = similarity
+                            best_match = data.get('is_curve_ball', False)
         return best_match if best_match is not None else False
 
 class StudyTextIndex:
     """Index study text for concept lookup"""
     
-    # Common OCR error corrections
+    # Common OCR and spelling corrections (insurance / London Market study text)
     OCR_CORRECTIONS = {
-        'los': 'loss',
-        'ocurs': 'occurs',
-        'ocured': 'occurred',
-        'wil': 'will',
-        'prof': 'proof',
-        'diferent': 'different',
-        'alowed': 'allowed',
-        'seeking': 'seeking',
-        'sek': 'seek',
-        'comon': 'common',
-        'efect': 'effect',
-        'vesel': 'vessel',
-        'ben': 'been',
-        'gods': 'goods',
-        'aply': 'apply',
-        'acident': 'accident',
-        'shortfal': 'shortfall',
-        'clasification': 'classification',
-        'remedy': 'remedy',
-        'alowed': 'allowed',
-        'obstacle': 'obstacle',
-        'otherwise': 'otherwise',
-        'principle': 'principle',
-        'available': 'available',
-        'insurer': 'insurer',
-        'required': 'required',
-        'condition': 'condition',
-        'notice': 'notice',
-        'policy': 'policy',
-        'insured': 'insured',
+        'los': 'loss', 'ocurs': 'occurs', 'ocured': 'occurred', 'wil': 'will', 'prof': 'proof',
+        'diferent': 'different', 'alowed': 'allowed', 'seeking': 'seeking', 'sek': 'seek',
+        'comon': 'common', 'efect': 'effect', 'vesel': 'vessel', 'ben': 'been', 'gods': 'goods',
+        'aply': 'apply', 'acident': 'accident', 'shortfal': 'shortfall', 'clasification': 'classification',
+        'remedy': 'remedy', 'obstacle': 'obstacle', 'otherwise': 'otherwise', 'principle': 'principle',
+        'available': 'available', 'insurer': 'insurer', 'required': 'required', 'condition': 'condition',
+        'notice': 'notice', 'policy': 'policy', 'insured': 'insured',
+        'reinsurer': 'reinsurer', 'reinsurance': 'reinsurance', 'underwriter': 'underwriter',
+        'broker': 'broker', 'premium': 'premium', 'indemnity': 'indemnity', 'liability': 'liability',
+        'subrogation': 'subrogation', 'utmost': 'utmost', 'disclosure': 'disclosure',
+        'warranty': 'warranty', 'proposal': 'proposal', 'certificate': 'certificate',
+        'endorsement': 'endorsement', 'exclusion': 'exclusion', 'deductible': 'deductible',
+        'occurrence': 'occurrence', 'aggregate': 'aggregate', 'subscription': 'subscription',
+        'syndicate': 'syndicate', 'Lloyd\'s': 'Lloyd\'s', 'market': 'market',
+        'regulatory': 'regulatory', 'legislation': 'legislation', 'compliance': 'compliance',
+        'procedures': 'procedures', 'hospitality': 'hospitality', 'suspicious': 'suspicious',
+        'laundering': 'laundering', 'protection': 'protection', 'data': 'data',
+        'organisation': 'organisation',
+        'comunicating': 'communicating', 'bared': 'barred', 'agre': 'agree',
+        'suficient': 'sufficient', 'imediately': 'immediately', 'loking': 'looking',
+        'carying': 'carrying', 'god': 'good', 'aplys': 'applies', 'equaly': 'equally',
+        'aply': 'apply', 'terminology': 'terminology', 'precluded': 'precluded',
     }
     
     def __init__(self):
@@ -779,6 +801,37 @@ class StudyTextIndex:
         
         return ' '.join(corrected_words)
     
+    @staticmethod
+    def cleanup_explanation_text(text):
+        """Fix spelling, grammar and consistency in explanation text. Use for all explanations (LM1 and M05)."""
+        if not text or not isinstance(text, str):
+            return text or ''
+        # Normalise whitespace
+        text = re.sub(r'\s+', ' ', text).strip()
+        # Fix repeated words (the the, a a, is is, etc.)
+        for word in ['the', 'a', 'an', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'and', 'it', 'be', 'have', 'has', 'that', 'this']:
+            text = re.sub(rf'\b({re.escape(word)})\s+\1\b', r'\1', text, flags=re.IGNORECASE)
+        # Fix common grammar: 'a' before vowel sound (a insurer -> an insurer, a underwriter -> an underwriter)
+        text = re.sub(r'\ba\s+([aeiouAEIOU])', r'an \1', text)
+        # Remove double punctuation
+        text = re.sub(r'\.\s*\.', '.', text)
+        text = re.sub(r'\?\s*\?', '?', text)
+        text = re.sub(r'!\s*!', '!', text)
+        # Space after sentence-ending punctuation if missing
+        text = re.sub(r'\.([A-Z])', r'. \1', text)
+        text = re.sub(r'\?([A-Z])', r'? \1', text)
+        text = re.sub(r'!([A-Z])', r'! \1', text)
+        # Ensure first character is uppercase
+        if text and text[0].islower():
+            text = text[0].upper() + text[1:]
+        # Ensure ends with sentence punctuation
+        text = text.rstrip()
+        if text and text[-1] not in '.!?':
+            text = text.rstrip(',;:') + '.'
+        # Final whitespace normalisation
+        text = re.sub(r'\s+', ' ', text).strip()
+        return text
+    
     def load_study_text(self):
         """Load study text from each module's study_text: modules/<name>/study_text/."""
         for module in get_module_names():
@@ -799,16 +852,14 @@ class StudyTextIndex:
                 key = f"{module}/{file_path.name}"
                 self.full_texts[key] = text
     
-    def generate_feedback_explanation(self, question_text, correct_answer_text, selected_answer_text, options_text=None, is_correct=False):
-        # First, try to get pre-written explanation
-        pre_written = self.question_explanations.get_explanation(question_text)
+    def generate_feedback_explanation(self, question_text, correct_answer_text, selected_answer_text, options_text=None, is_correct=False, module=None, source_file=None):
+        # First, try to get pre-written explanation (prefer same past paper, then module-wide)
+        pre_written = self.question_explanations.get_explanation(question_text, module, source_file=source_file)
         if pre_written:
-            # Clean up the pre-written explanation
+            # Clean up the pre-written explanation (spelling, grammar, consistency)
             explanation = pre_written.strip()
-            # Fix OCR errors
             explanation = self.fix_ocr_errors(explanation)
-            # Ensure proper formatting
-            explanation = re.sub(r'\s+', ' ', explanation).strip()
+            explanation = self.cleanup_explanation_text(explanation)
             if explanation and not explanation.endswith(('.', '!', '?')):
                 explanation += '.'
             
@@ -838,8 +889,8 @@ class StudyTextIndex:
         # Remove duplicates
         important_terms = list(dict.fromkeys(important_terms))[:10]
         
-        # Find relevant study text sections with better matching
-        relevant_sections = self.find_relevant_text(question_text, options_text)
+        # Find relevant study text sections (scoped to module when provided)
+        relevant_sections = self.find_relevant_text(question_text, options_text, module=module)
         
         if not relevant_sections:
             # Fallback explanation if no study text found
@@ -848,157 +899,137 @@ class StudyTextIndex:
             else:
                 return f"The correct answer is {correct_answer_text}. You selected {selected_answer_text}."
         
-        # Look through all relevant sections to find the best explanatory content
+        core_explanation = self._extract_explanation_from_sections(
+            question_text, options_text or [], relevant_sections, correct_answer_text
+        )
+        if core_explanation is None:
+            if is_correct:
+                return f"Correct! {correct_answer_text} is the right answer."
+            else:
+                return f"The correct answer is {correct_answer_text}. You selected {selected_answer_text}."
+        
+        # Clean up formatting and spelling/grammar
+        core_explanation = re.sub(r'[•\-\*]\s*', '', core_explanation)
+        core_explanation = re.sub(r'^\d+[\.\)]\s*', '', core_explanation, flags=re.MULTILINE)
+        core_explanation = re.sub(r'^\s*[•\-\*]\s*', '', core_explanation, flags=re.MULTILINE)
+        core_explanation = re.sub(r'^[A-Z]\s+', '', core_explanation)
+        core_explanation = re.sub(r'\b(after you have|you may study|you should|you will learn)\b[^.]*\.?\s*', '', core_explanation, flags=re.IGNORECASE)
+        core_explanation = re.sub(r'\s+', ' ', core_explanation).strip()
+        core_explanation = re.sub(r'\.{2,}', '.', core_explanation)
+        core_explanation = re.sub(r'^[,\s;:]+', '', core_explanation)
+        core_explanation = re.sub(r'[,;:]+$', '', core_explanation)
+        core_explanation = self.fix_ocr_errors(core_explanation)
+        core_explanation = self.cleanup_explanation_text(core_explanation)
+        
+        if is_correct:
+            return f"Correct! {core_explanation}"
+        else:
+            return f"The correct answer is {correct_answer_text}. {core_explanation}"
+    
+    def _extract_explanation_from_sections(self, question_text, options_text, relevant_sections, correct_answer_text=None):
+        """Extract the best explanation string from relevant study text sections. Used by feedback and by LM1 file generation."""
+        question_lower = question_text.lower()
+        important_terms = []
+        question_terms = re.findall(r'\b\w{5,}\b', question_lower)
+        important_terms.extend([t for t in question_terms if t not in 
+                                ['which', 'there', 'their', 'would', 'could', 'should', 'about', 'other', 
+                                 'these', 'those', 'court', 'legal', 'law', 'policy', 'cover', 'invalid']])
+        if options_text:
+            answer_terms = re.findall(r'\b\w{4,}\b', ' '.join(options_text).lower())
+            important_terms.extend([t for t in answer_terms if len(t) > 4])
+        important_terms = list(dict.fromkeys(important_terms))[:10]
+        
+        instructional_patterns = [
+            r'after you have', r'you may study', r'you should', r'you will learn',
+            r'this section', r'next section', r'previous section'
+        ]
+        explanatory_words = ['means', 'refers', 'defined', 'definition', 'is when', 'is that', 
+                             'applies', 'applies when', 'occurs', 'requires', 'entitles', 'allows']
+        
         best_explanation = None
         best_score = 0
         
         for section in relevant_sections:
             section_text = section['text']
             section_lower = section_text.lower()
-            
-            # Skip instructional text (like "After you have learnt...", "you may study...")
-            instructional_patterns = [
-                r'after you have',
-                r'you may study',
-                r'you should',
-                r'you will learn',
-                r'this section',
-                r'next section',
-                r'previous section'
-            ]
-            if any(re.search(pattern, section_lower) for pattern in instructional_patterns):
+            if any(re.search(p, section_lower) for p in instructional_patterns):
                 continue
-            
-            # Score how well this section explains the concept
             score = 0
-            
-            # Check for important terms
             term_matches = sum(1 for term in important_terms if term in section_lower)
-            score += term_matches * 3  # Higher weight for concept matches
-            
-            # Check for explanatory language (defines, means, refers to, etc.)
-            explanatory_words = ['means', 'refers', 'defined', 'definition', 'is when', 'is that', 
-                               'applies', 'applies when', 'occurs', 'requires', 'entitles', 'allows']
+            score += term_matches * 3
             explanatory_matches = sum(1 for word in explanatory_words if word in section_lower)
             score += explanatory_matches * 2
             
-            # Prefer sentences that actually explain (contain "is", "means", "refers", etc.)
             sentences = re.split(r'[.!?]\s+', section_text)
             explanatory_sentences = []
-            
             for sentence in sentences:
                 sentence_lower = sentence.lower()
-                # Skip if it's instructional
-                if any(re.search(pattern, sentence_lower) for pattern in instructional_patterns):
+                if any(re.search(p, sentence_lower) for p in instructional_patterns):
                     continue
-                
-                # Check if sentence contains important terms
                 term_count = sum(1 for term in important_terms if term in sentence_lower)
                 if term_count > 0:
-                    # Check if it's explanatory
-                    is_explanatory = any(word in sentence_lower for word in explanatory_words) or \
-                                   'is' in sentence_lower or 'are' in sentence_lower
-                    
+                    is_explanatory = any(w in sentence_lower for w in explanatory_words) or 'is' in sentence_lower or 'are' in sentence_lower
                     if is_explanatory and len(sentence.split()) > 8:
                         explanatory_sentences.append((term_count, sentence.strip()))
             
             if explanatory_sentences:
-                # Get best explanatory sentence
                 explanatory_sentences.sort(key=lambda x: x[0], reverse=True)
-                best_sentence = explanatory_sentences[0][1]
-                
-                # Clean and format
-                explanation = best_sentence
-                # Remove random letter/number prefixes (like "B Notice" or "1. ")
-                explanation = re.sub(r'^[A-Z]\s+', '', explanation)  # Remove single letter prefix
-                explanation = re.sub(r'^\d+[\.\)]\s*', '', explanation)  # Remove number prefix
-                # Fix OCR errors
+                explanation = explanatory_sentences[0][1]
+                explanation = re.sub(r'^[A-Z]\s+', '', explanation)
+                explanation = re.sub(r'^\d+[\.\)]\s*', '', explanation)
                 explanation = self.fix_ocr_errors(explanation)
-                # Remove double periods and clean up
                 explanation = re.sub(r'\.{2,}', '.', explanation)
-                # Limit to 50 words
                 words = explanation.split()
                 if len(words) > 50:
                     explanation = ' '.join(words[:50])
-                    # Try to end at sentence boundary
                     last_period = explanation.rfind('.')
                     if last_period > len(explanation) * 0.7:
                         explanation = explanation[:last_period+1]
-                
-                # Skip if explanation is too short or doesn't make sense
-                if len(explanation.split()) >= 8 and not re.match(r'^[A-Z]\s', explanation):
-                    if score > best_score:
-                        best_score = score
-                        best_explanation = explanation
+                if len(explanation.split()) >= 8 and score >= 2 and score > best_score:
+                    best_score = score
+                    best_explanation = explanation
         
-        # If we found a good explanation, use it
-        if best_explanation:
-            core_explanation = best_explanation
-        else:
-            # Fallback: try to extract from best section, avoiding instructional text
-            best_section = relevant_sections[0]['text']
-            sentences = re.split(r'[.!?]\s+', best_section)
-            
-            # Find first non-instructional sentence with important terms
-            for sentence in sentences:
-                sentence_lower = sentence.lower()
-                if any(re.search(pattern, sentence_lower) for pattern in instructional_patterns):
-                    continue
-                
-                term_count = sum(1 for term in important_terms if term in sentence_lower)
-                if term_count > 0 and len(sentence.split()) > 8:
-                    words = sentence.split()
-                    core_explanation = ' '.join(words[:40])
-                    # Fix OCR errors
-                    core_explanation = self.fix_ocr_errors(core_explanation)
-                    if not core_explanation.endswith(('.', '!', '?')):
-                        core_explanation += '.'
-                    break
-            else:
-                # Last resort: simple explanation
-                core_explanation = f"This relates to {correct_answer_text.lower()}."
+        if best_explanation and best_score >= 2:
+            return best_explanation
         
-        # Clean up formatting issues
-        # Remove bullet points and list markers (•, -, *, etc.)
-        core_explanation = re.sub(r'[•\-\*]\s*', '', core_explanation)
-        # Remove numbered list markers at start of line
-        core_explanation = re.sub(r'^\d+[\.\)]\s*', '', core_explanation, flags=re.MULTILINE)
-        # Remove any remaining list-style formatting
-        core_explanation = re.sub(r'^\s*[•\-\*]\s*', '', core_explanation, flags=re.MULTILINE)
-        # Remove single letter prefixes (like "B Notice")
-        core_explanation = re.sub(r'^[A-Z]\s+', '', core_explanation)
-        # Remove instructional phrases that might have slipped through
-        core_explanation = re.sub(r'\b(after you have|you may study|you should|you will learn)\b[^.]*\.?\s*', '', core_explanation, flags=re.IGNORECASE)
-        # Remove extra whitespace and normalize
-        core_explanation = re.sub(r'\s+', ' ', core_explanation).strip()
-        # Remove double periods
-        core_explanation = re.sub(r'\.{2,}', '.', core_explanation)
-        # Remove any leading/trailing punctuation issues
-        core_explanation = re.sub(r'^[,\s;:]+', '', core_explanation)
-        core_explanation = re.sub(r'[,;:]+$', '', core_explanation)
+        best_section = relevant_sections[0]['text']
+        sentences = re.split(r'[.!?]\s+', best_section)
+        for sentence in sentences:
+            sentence_lower = sentence.lower()
+            if any(re.search(p, sentence_lower) for p in instructional_patterns):
+                continue
+            term_count = sum(1 for term in important_terms if term in sentence_lower)
+            if term_count > 0 and len(sentence.split()) > 8:
+                out = ' '.join(sentence.split()[:40])
+                out = self.fix_ocr_errors(out)
+                if not out.endswith(('.', '!', '?')):
+                    out += '.'
+                return out
         
-        # Fix OCR errors (spelling mistakes)
-        core_explanation = self.fix_ocr_errors(core_explanation)
-        
-        # Ensure it starts with a capital letter
-        if core_explanation and len(core_explanation) > 0:
-            if core_explanation[0].islower():
-                core_explanation = core_explanation[0].upper() + core_explanation[1:]
-        # Ensure proper sentence ending
-        core_explanation = core_explanation.rstrip()
-        if core_explanation and not core_explanation.endswith(('.', '!', '?')):
-            core_explanation += '.'
-        # Final cleanup of any double spaces
-        core_explanation = re.sub(r'\s+', ' ', core_explanation).strip()
-        
-        # Generate targeted feedback with proper formatting
-        if is_correct:
-            return f"Correct! {core_explanation}"
-        else:
-            return f"The correct answer is {correct_answer_text}. {core_explanation}"
+        if correct_answer_text:
+            return f"This relates to {correct_answer_text.lower()}."
+        return "See study text for more detail."
     
-    def find_relevant_text(self, question_text, options_text=None):
-        """Find relevant study text sections for a question - returns concise, relevant excerpts (max 50 words)"""
+    def get_explanation_from_study_text(self, question_text, options_text=None, module=None, correct_answer_text=None):
+        """Get a single explanation string from study text (for feedback or for generating LM1 explanations file)."""
+        relevant_sections = self.find_relevant_text(question_text, options_text, module=module)
+        if not relevant_sections:
+            return None
+        raw = self._extract_explanation_from_sections(
+            question_text, options_text or [], relevant_sections, correct_answer_text
+        )
+        if not raw:
+            return None
+        raw = re.sub(r'[•\-\*]\s*', '', raw)
+        raw = re.sub(r'^\d+[\.\)]\s*', '', raw, flags=re.MULTILINE)
+        raw = re.sub(r'^[A-Z]\s+', '', raw)
+        raw = re.sub(r'\s+', ' ', raw).strip()
+        raw = self.fix_ocr_errors(raw)
+        raw = self.cleanup_explanation_text(raw)
+        return raw
+    
+    def find_relevant_text(self, question_text, options_text=None, module=None):
+        """Find relevant study text sections for a question. If module is set, only search that module's study text."""
         # Extract meaningful keywords from question
         # Focus on legal terms, concepts, and important nouns
         question_lower = question_text.lower()
@@ -1028,8 +1059,8 @@ class StudyTextIndex:
             return []
         
         relevant_sections = []
-        
-        for file_name, full_text in self.full_texts.items():
+        texts_to_search = self.full_texts.items() if module is None else [(k, v) for k, v in self.full_texts.items() if k.startswith(module + "/")]
+        for file_name, full_text in texts_to_search:
             # Split into paragraphs (double newlines or sentence breaks)
             paragraphs = re.split(r'\n\s*\n|\.\s+(?=[A-Z])', full_text)
             
@@ -1172,12 +1203,17 @@ class StudyTextIndex:
 # Initialize
 study_index = StudyTextIndex()
 
+# In-memory cache so we don't reparse all PDFs on every request (fixes slow load and slow submit)
+_questions_cache = None
+
 def load_questions():
-    """Load questions from file or parse from papers"""
-    # Always regenerate from source files to ensure we have the latest data
-    # This ensures Railway and local environments stay in sync
+    """Load questions from file or parse from papers. Uses in-memory cache after first load."""
+    global _questions_cache
+    if _questions_cache is not None:
+        return _questions_cache
     questions = QuestionParser.load_questions_from_files()
     save_questions(questions)
+    _questions_cache = questions
     return questions
 
 def save_questions(questions):
@@ -1524,14 +1560,16 @@ def submit_answer():
     selected_option = selected_options[0] if len(selected_options) == 1 else None
     selected_option_text = selected_option['text'] if selected_option else ', '.join([opt['text'] for opt in selected_options])
     
-    # Generate concise feedback explanation from study text
+    # Generate concise feedback explanation from study text (scoped to question's module)
     options_text = [opt['text'] for opt in question['options']]
     feedback_explanation = study_index.generate_feedback_explanation(
         question['question'],
         correct_option_text,
         selected_option_text,
         options_text,
-        is_correct
+        is_correct,
+        module=question.get('module'),
+        source_file=question.get('source_file')
     )
     
     feedback = {
@@ -1550,9 +1588,11 @@ def submit_answer():
 @app.route('/api/reload-questions', methods=['POST'])
 @login_required
 def reload_questions():
-    """Reload questions from exam papers"""
+    """Reload questions from exam papers and refresh cache"""
+    global _questions_cache
     questions = QuestionParser.load_questions_from_files()
     save_questions(questions)
+    _questions_cache = questions
     study_index.load_study_text()  # Reload study text too
     return jsonify({'message': f'Loaded {len(questions)} questions', 'count': len(questions)})
 

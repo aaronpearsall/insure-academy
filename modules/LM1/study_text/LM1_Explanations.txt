@@ -1,0 +1,2298 @@
+LM1 LONDON MARKET INSURANCE - QUESTION EXPLANATIONS
+================================================================================
+Generated from LM1 Study Text. One entry per unique question (deduplicated across years).
+Format compatible with the app's explanation loader.
+================================================================================
+
+--------------------------------------------------------------------------------
+Question 1
+A commercial customer applying for office insurance has been burgled a number of times recently. In accordance with the principle of good faith, when must this be disclosed to the insurer?
+
+A. During the proposal stage.
+B. Only if a specific question is asked.
+C. Immediately after the quotation is received.
+D. Immediately after the premium is paid.
+
+Answer: A
+Explanation: Reputation protection (for example, by dealing with the costs and logistics of communicating with customers whose data might have been taken).
+
+--------------------------------------------------------------------------------
+Question 2
+Which insurance principle allows an insurer, once it has indemnified the insured, to take over the insured ’s right to recover payment from a third party responsible for a loss?
+
+A. Contribution.
+B. Proximate cause.
+C. Subrogation.
+D. Good faith.
+
+Answer: C
+Explanation: Precluded subrogation rights There are some situations in which insurers are barred from exercising subrogation rights, or where they agree not to exercise them.2: Basic insurance legal principles and terminology 49 Insured has no rights The insurer's right to subrogate relies on the insured having rights against a negligent party.
+
+--------------------------------------------------------------------------------
+Question 3
+A hotel owner insures his buildings for £5,000,000 with insurer X. He decides to sell the hotel to a competitor, who insures the building for £7,500,000 with insurer Y. Prior to the completion of the sale, whilst still insured by both insurers, a fire loss of £2,000,000 occurs. Assuming the buildings are adequately insured, how much will each insurer pay towards the damage?
+
+A. Insurer X will pay nothing and insurer Y will pay £2,000,000.
+B. Insurer X will pay £800,000 and insurer Y will pay £1,200,000.
+C. Insurer X will pay £1,000,000 and insurer Y will pay £1,000,000.
+D. Insurer X will pay £2,000,000 and insurer Y will pay nothing.
+
+Answer: B
+Explanation: Question 3 A hotel owner insures his buildings for £5,0,0 with insurer X.
+
+--------------------------------------------------------------------------------
+Question 4
+What does the principle of indemnity mean?
+
+A. The insurer places the insured in the same financial position after a loss as he was before it.
+B. The insurer has a right to recover costs from a third party.
+C. The insured has a duty to report a claim promptly.
+D. The insured must have an interest in the subject matter of insurance.
+
+Answer: A
+Explanation: Definition of indemnity Indemnity can be defined as ‘financial compensation sufficient to place the insured in the same financial position after a loss as they enjoyed immediately before the loss occurred.
+
+--------------------------------------------------------------------------------
+Question 5
+Heavy rain causes a drain to overflow into the basement storeroom of a nearby grocery shop. The perishable goods in the storero om, which were NOT raised off the floor, have been written off. What is the proximate cause of the loss?
+
+A. The heavy rain.
+B. The drain.
+C. The storage of the stock.
+D. The perishable nature of the stock.
+
+Answer: A
+Explanation: Fundamental risks can be defined as those that arise from social, economic, political or natural causes and are widespread in their effect.
+
+--------------------------------------------------------------------------------
+Question 6
+The principle of good faith is applied to commercial insurance contracts because the
+
+A. proposer has more knowledge of the risk than the underwriter.
+B. underwriter has more knowledge of the risk than the proposer.
+C. proposer and the underwriter have equal knowledge of the risk.
+D. proposer and the underwriter need to increase their knowledge of the risk.
+
+Answer: A
+Explanation: Question 6 The principle of good faith is aplied to comercial insurance contracts because the.
+
+--------------------------------------------------------------------------------
+Question 7
+For what primary purpose do commercial policyholders take out property insurance?
+
+A. To comply with legislation.
+B. To enable risk transfer.
+C. To increase working capital.
+D. To obtain risk management.
+
+Answer: B
+Explanation: Question 7 For what primary purpose do comercial policyholders take out property insurance?
+
+--------------------------------------------------------------------------------
+Question 8
+The part of the claims -handling process where the insurer assesses and calculates the funds that need to be set aside to pay each individual claim is known as
+
+A. loss adjusting.
+B. loss assessing.
+C. loss reserving.
+D. risk modelling.
+
+Answer: C
+Explanation: Question 8 The part of the claims handling proces where the insurer asses and calculates the funds that ned to be set aside to pay each individual claim is known as.
+
+--------------------------------------------------------------------------------
+Question 9
+Gerry’s restaurant suffers a loss of revenue as a result of a power failure when a mechanical digger cuts through an underground cable. This incident can be categorised as a
+
+A. fundamental risk.
+B. particular risk.
+C. pure risk.
+D. speculative risk.
+
+Answer: B
+Explanation: Solicitors Solicitors must hold profesional indemnity insurance – this must indemnify the solicitor against claims for financial loss sufered by clients as a result of the solicitor's profesional negligence.
+
+--------------------------------------------------------------------------------
+Question 10
+A fire occurs at a chilled food warehouse, assisted by the presence of polystyrene composite panels. A recent property survey noted the existence of the panels in the warehouse and would have been classified as a
+
+A. moral hazard.
+B. peril.
+C. physical hazard.
+D. risk.
+
+Answer: C
+Explanation: Question 10 A fire occurs at a chiled fod warehouse, asisted by the presence of polystyrene composite panels.
+
+--------------------------------------------------------------------------------
+Question 11
+Bill is accused of defrauding his employer and, if found guilty, a fine may be imposed on him by the court. What insurance, if any, could cover Bill for any financial loss?
+
+A. None.
+B. Contingency.
+C. Employers ’ liability.
+D. Fidelity guarantee.
+
+Answer: A
+Explanation: Question 1 Bil is acused of defrauding his employer and, if found guilty, a fine may be imposed on him by the court.
+
+--------------------------------------------------------------------------------
+Question 12
+A company that manufactures components for the aviation industry is situated in a fully -sprinklered factory with an automatic fire detection system. When an underwriter considers a proposal for fire insurance, the sprinkler system and automatic fire detection system are examples of
+
+A. good moral hazards.
+B. good physical hazards.
+C. poor moral hazards.
+D. poor physical hazards.
+
+Answer: B
+Explanation: Question 12 A company that manufactures components for the aviation industry is situated in a fuly sprinklered factory with an automatic fire detection system.
+
+--------------------------------------------------------------------------------
+Question 13
+The subjective assessment of the probability of a risk occurring and the likely consequences is known as risk
+
+A. avoidance.
+B. management.
+C. perception.
+D. transfer.
+
+Answer: C
+Explanation: Question 13 The subjective asesment of the probability of a risk ocuring and the likely consequences is known as risk.
+
+--------------------------------------------------------------------------------
+Question 14
+An underwriter has identified a good physical hazard in relation to an insurance proposal. What impact will this tend to have on the likelihood and severity of loss?
+
+A. An increase in both the likelihood and severity.
+B. A decrease in both the likelihood and severity.
+C. An increase in the likelihood, but a decrease in the severity.
+D. A decrease in the likelihood, but an increase in the severity.
+
+Answer: B
+Explanation: It may be simply defined as 'the legal right to insure arising out of a financial relationship recognised at law, betwen the insured and the subjectmater of insurance.' Features of insurable interest Subjectmater Subjectmater of insuranceThis is what is actualy being insured, be it a physical thing such.
+
+--------------------------------------------------------------------------------
+Question 15
+The primary function of insurance is to act as a risk transfer mechanism, which means that it
+
+A. provides insurance for a fundamental risk.
+B. provides insurance for a speculative risk.
+C. transfers a risk from the insured to the insurer.
+D. transfers the certainty of a risk.
+
+Answer: C
+Explanation: Question 15 The primary function of insurance is to act as a risk transfer mechanism, which means that it.
+
+--------------------------------------------------------------------------------
+Question 16
+An insu rer fails to adequately manage its claims -handling processes, resulting in inadequate reserves being set aside. What is the most likely ultimate outcome for the insurer?
+
+A. Fraudulent claims.
+B. Increased profits.
+C. Insolvency.
+D. Reduced profits.
+
+Answer: C
+Explanation: The claims handling proces It is important to understand the role of insurance as a service industry.
+
+--------------------------------------------------------------------------------
+Question 17
+What class of insurance can provide cover for non -repayment of outstanding debts due to expropriation of assets by a foreign Government ’s actions?
+
+A. Contingency insurance.
+B. Financial loss insurance.
+C. Political risks insurance.
+D. Specie insurance.
+
+Answer: C
+Explanation: Treaty reinsuranceReinsurance that can be purchased to cover a wider portfolio of risks, either a clas of busines or even an insurer’s whole bok of busines.3: Main clases of busines writen in the London Market 73 74 LM London Market insurance esentials 4 The insurance cycle Suply and demand What.
+
+--------------------------------------------------------------------------------
+Question 18
+A toy manufacturer discovers that one of its toys has a safety issue. The toy is removed from sale immediately and any retailer or consumer that has purchased the product is refunded. What class of insurance would provide cover against the financial consequences of this event?
+
+A. Business interruption insurance.
+B. Contingency insurance.
+C. Product recall insurance.
+D. Products liability insurance.
+
+Answer: C
+Explanation: Question 18 A toy manufacturer discovers that one of its toys has a safety isue.
+
+--------------------------------------------------------------------------------
+Question 19
+What class of business written in the London Market will provide indemnity to a shipowner for damage to the hull of a vessel?
+
+A. Energy.
+B. Liability.
+C. Marine.
+D. Property.
+
+Answer: C
+Explanation: Treaty reinsuranceReinsurance that can be purchased to cover a wider portfolio of risks, either a clas of busines or even an insurer’s whole bok of busines.3: Main clases of busines writen in the London Market 73 74 LM London Market insurance esentials 4 The insurance cycle Suply and demand What.
+
+--------------------------------------------------------------------------------
+Question 20
+Particular average is a feature of which type of insurance?
+
+A. Liability.
+B. Marine.
+C. Motor.
+D. Property.
+
+Answer: B
+Explanation: Nonmarine liabilities (also known as casualty) There are various types of liability insurance available in the London Market, including:62 LM London Market insurance esentials Employers' liability A compulsory form of insurance in the UK and its US equivalent, known as 'workers' compensation', is also compulsory.
+
+--------------------------------------------------------------------------------
+Question 21
+What immediately follows higher capacity in a typical insurance cycle?
+
+A. Higher profits.
+B. Lower profits.
+C. Higher prices.
+D. Lower prices.
+
+Answer: D
+Explanation: This is because the insured has no way of knowing what the surveyor may or may not have noted during a survey.2: Basic insurance legal principles and terminology 29 Information that the insured does not knowDiferent rules apply to people acting in their private capacity as compared with comercial insurances.
+
+--------------------------------------------------------------------------------
+Question 22
+An insured requests that the sum insured on his office block is increased to an amount that is greater than his insurer ’s normal acceptance limit. The insurer w ill normally be able to continue to underwrite the office block for its full sum insured by
+
+A. applying average.
+B. arranging coinsurance.
+C. increasing the deductible.
+D. purchasing reinsurance.
+
+Answer: D
+Explanation: Question 2 An insured requests that the sum insured on his ofice block is increased to an amount that is greater than his insurer ’s normal aceptance limit.
+
+--------------------------------------------------------------------------------
+Question 23
+The two main benefits of purchasing reinsurance are to increase capacity and to
+
+A. ensure a risk transfer mechanism for brokers.
+B. prevent the need to take out insurance.
+C. provide greater stability in trading results for brokers.
+D. provide greater stability in trading results for insurers.
+
+Answer: D
+Explanation: Benefits of purchasing reinsurance Increasing capacity By purchasing reinsurance, the underwriter can increase the individual share of any one risk that they can acept as a direct insurer which will have the knockon effect of helping increase their status and market share overal.
+
+--------------------------------------------------------------------------------
+Question 24
+Reinsurance of individual risks, where the reinsurer retains the authority to accept or reject each risk offered, is known as what type of reinsurance?
+
+A. Facultative.
+B. Stop loss.
+C. Surplus.
+D. Treaty quota share.
+
+Answer: A
+Explanation: Question 24 Reinsurance of individual risks, where the reinsurer retains the authority to acept or reject each risk ofered, is known as what type of reinsurance?
+
+--------------------------------------------------------------------------------
+Question 25
+The London Market is often utilised for the p lacing of insurance because it offers a good claims service provided by experienced and knowledgeable claims handlers, has experienced and entrepreneurial underwriters that can consider new emerging risks and provide bespoke insurance coverage and
+
+A. has a higher security rating for financial stability when compared with other international insurance markets.
+B. has lower premiums than all of its overseas competitors.
+C. has the lowest rates of tax when compared with other international insurance markets.
+D. provides sufficient capacity to place large and complex risks.
+
+Answer: D
+Explanation: Question 25 The London Market is often utilised for the p lacing of insurance because it ofers a good claims service provided by experienced and knowledgeable claims handlers, has experienced and entrepreneurial underwriters that can consider new emerging risks and provide bespoke insurance coverage and.
+
+--------------------------------------------------------------------------------
+Question 26
+Business is transacted largely on a subscription basis within the London Market, which means that
+
+A. all business must be placed through brokers.
+B. business is placed with more than one underwriter.
+C. all contracts of insurance must be in the form of a Market Reform Contract.
+D. both insurance and reinsurance business is placed.
+
+Answer: B
+Explanation: Question 26 Busines is transacted largely on a subscription basis within the London Market, which means that.
+
+--------------------------------------------------------------------------------
+Question 27
+Protection and indemnity clubs provide insurance for
+
+A. airlines.
+B. insurance brokers.
+C. shipowners.
+D. solicitors.
+
+Answer: C
+Explanation: Whether it concerns compulsory insurance, noncompulsory insurance or longterm insurance).6: Legal and regulatory environment 15 Protection is 10% for: –compulsory insurance (third party motor and employers’ liability) ; –profesional indemnity insurance .
+
+--------------------------------------------------------------------------------
+Question 28
+What main role does the International Underwriting Association perform for its members?
+
+A. To inform members of overseas legislation that affects their business.
+B. To organise double taxation relief for its members on their overseas operations.
+C. To promote and enhance the business environment for its members.
+D. To set up overseas offices for its members.
+
+Answer: C
+Explanation: Members’ agents The first role that a members' agent performs is to advise their client on the advantages and disadvantages of investing in the Lloyd's Market, as part of a.
+
+--------------------------------------------------------------------------------
+Question 29
+The broker for a utilities company is most likely to place a power station risk within the London Market because the
+
+A. ability of London Market insurers to pay claims is guaranteed by the central fund.
+B. London Market is more strictly regulated than all other insurance markets.
+C. subscription market provides sufficient capacity to underwrite the risk.
+D. UK has lower taxes f or insurance transactions than anywhere else.
+
+Answer: C
+Explanation: Question 29 The broker for an utilities company is most likely to place a power station risk within the London Market because the.
+
+--------------------------------------------------------------------------------
+Question 30
+Under a contract of insurance, an insurer
+
+A. agrees to make insurance available to the proposer, subject to finalisation of terms after the insurer has been supplied with information about the risk.
+B. agrees to pay an amount to the insured upon the occurrence of an insured event, in return for consideration by the insured.
+C. commits to paying an agreed amount to the insured if an inevitable event occurs, provided that the insured is prepared to pay a p remium at the time.
+D. guarantees to make a pre -determined payment to an insured upon the occurrence of an expected event.
+
+Answer: B
+Explanation: Agres to make insurance available to the proposer, subject to finalisation of terms after the insurer has been suplied with information about the risk.
+
+--------------------------------------------------------------------------------
+Question 31
+How much of a non- compulsory insurance claim will the Financial Services Compensation Scheme pay if an insurer becomes insolvent prior to the claim being settled?
+
+A. A maximum of £50,000.
+B. A maximum of £85,000.
+C. 90% of the claim.
+D. 100% of the claim.
+
+Answer: C
+Explanation: Of course, the insurer's liability does not finish when the policy expires as some types of policy will have claims that take a long time to be concluded, such as liability insurances with personal injury claims.
+
+--------------------------------------------------------------------------------
+Question 32
+What is the role of the Financial Ombudsman Service?
+
+A. To help resolve individual disputes between consumers and financial institutions.
+B. To mediate disputes between insurance consumers and insurance companies only.
+C. To pay compensation to an insured when an insolvent insurer is unable to settle a claim.
+D. To regulate all financial institutions.
+
+Answer: A
+Explanation: Question 32 What is the role of the Financial Ombudsman Service?
+
+--------------------------------------------------------------------------------
+Question 33
+Who is responsible fo r setting the level of contribution to the Lloyd’s Central Fund?
+
+A. Corporation of Lloyd ’s.
+B. Council of Lloyd ’s.
+C. Lloyd ’s managing agents.
+D. Lloyd ’s underwriters.
+
+Answer: B
+Explanation: Question 3 Who is responsible fo r seting the level of contribution to the Lloyd’s Central Fund?
+
+--------------------------------------------------------------------------------
+Question 34
+The two main objectives of the International Association of Insurance Supervisors is to contribute to global financial stability and to
+
+A. promote and enhance the business environment of its member insurance and reinsurance companies.
+B. promote effective and globally -consistent supervision of the insurance industry.
+C. regulate global insurance companies.
+D. regulate global insurance intermediaries.
+
+Answer: B
+Explanation: Question 34 The two main objectives of the International Asociation of Insurance Supervisors is to contribute to global financial stability and to.
+
+--------------------------------------------------------------------------------
+Question 35
+The principal role of the Financial Conduct Authority and the Prudential Regulation Authority is to
+
+A. provide compensation to consumers when insurers are unable to pay claims due to insolvency.
+B. regulate UK insurance companies and intermediaries only.
+C. regulate and supervise the UK financial services industry.
+D. resolve individual disputes between consumers and financial companies.
+
+Answer: C
+Explanation: Question 35 The principal role of the Financial Conduct Authority and the Prudential Regulation Authority is to.
+
+--------------------------------------------------------------------------------
+Question 36
+The main purpose of the Financial Conduct Authority ’s firm systematic framework is to
+
+A. calculate a firm’s tax liabilities due to HM Revenue & Customs.
+B. ensure that the interests of the customer are at the heart of the way the business is run.
+C. provide a framework for assessing a firm’s financia l security rating for the ratings agencies.
+D. set out the eligibility criteria to a firm for its nominated approved persons.
+
+Answer: C
+Explanation: Question 36 The main purpose of the Financial Conduct Authority ’s firm systematic framework is to.
+
+--------------------------------------------------------------------------------
+Question 37
+What essential component of a valid contract of property insurance constitutes ownership of the subject matter?
+
+A. Coinsurance.
+B. Consideration.
+C. Insurable interest.
+D. Proximate cause.
+
+Answer: C
+Explanation: If the breach is neither deliberate nor reckles but the premium was reduced because of the change, and – if the insurer would not have agred to the change, then they can treat the contract as if the change had never hapened, but any.
+
+--------------------------------------------------------------------------------
+Question 38
+An appointed representative usually acts on behalf of the
+
+A. coverholder.
+B. Financial Conduct Authority.
+C. insurer.
+D. intermediary.
+
+Answer: D
+Explanation: Apointed representatives and introducer apointed representatives are not required to have this form of insurance, since everything they do is undertaken on behalf of a principal that is responsible for their actions.
+
+--------------------------------------------------------------------------------
+Question 39
+The main objective of which organisation is to assist the US State insurance regulators establish standards and best practices, conduct peer reviews and coordinate regulatory oversights?
+
+A. Internal Revenue Service.
+B. The International Underwriting Association of London.
+C. The Nati onal Association of Insurance Commissioners.
+D. The US Federal Government.
+
+Answer: C
+Explanation: Question 39 The main objective of which organisation is to asist the US State insurance regulators establish standards and best practices, conduct per reviews and cordinate regulatory oversights?
+
+--------------------------------------------------------------------------------
+Question 40
+What is usually considered to be the most effective way for a London Market insurer to prevent an underwriter from writing a risk in contravention of EU legislation?
+
+A. Potenti al disciplinary action.
+B. A peer review of all underwriting decisions after risks have incepted.
+C. The provision of an underwriting licence so all underwriters have adequate authority.
+D. Training and education of all underwriting staff.
+
+Answer: D
+Explanation: Question 40 What is usualy considered to be the most efective way for a London Market insurer to prevent an underwriter from writing a risk in contravention of EU legislation?
+
+--------------------------------------------------------------------------------
+Question 41
+What is the main purpose of sanctions imposed by Governments or the United Nations?
+
+A. To assert pressure on individuals, companies or political regimes.
+B. To increase the amount of reinsurance business written in the London Market.
+C. To prevent underwri ters accepting high -risk business.
+D. To increase tax revenue.
+
+Answer: A
+Explanation: Question 41 What is the main purpose of sanctions imposed by Governments or the United Nations?
+
+--------------------------------------------------------------------------------
+Question 42
+Under the Data Protection Act 2018 , what is the maximum fine that the Information Commissioner can levy on data controllers and processors for the most serious data breaches?
+
+A. £8.5m (€10m ) or 4% of global turnover.
+B. £12.75m (€15m) or 5% of global turnover.
+C. £17m (€20m) or 4% of global turnover.
+D. £21.25m (€25m) or 5% of global turnover.
+
+Answer: C
+Explanation: Question 42 Under the Data Protection Act 2018 , what is the maximum fine that the Information Comisioner can levy on data controlers and procesors for the most serious data breaches?
+
+--------------------------------------------------------------------------------
+Question 43
+Establishing proof of a client’s identity is an essential part of an insurer’s responsibilities when writing business to comply with the
+
+A. Bribery Act 2010.
+B. Data Protection Act 2018.
+C. Financial Services and Markets Act 2012.
+D. Money Laundering Regulations 2017.
+
+Answer: D
+Explanation: Question 43 Establishing proof of a client’s identity is an esential part of an insurer’s responsibilities when writing busines to comply with the.
+
+--------------------------------------------------------------------------------
+Question 44
+A London Market broker places an insurance policy on a subscription basis with a number of Lloyd’s underwriters. On receipt of the premium from the insured, to whom does the broker pay the premium?
+
+A. Each Lloyd ’s underwriter for their respective proportion of the premium.
+B. Lloyd ’s Market Association.
+C. The lead ing Lloyd ’s underwriter.
+D. Xchanging Ins -sure Services.
+
+Answer: D
+Explanation: Question 4 A London Market broker places an insurance policy on a subscription basis with a number of Lloyd’s underwriters.
+
+--------------------------------------------------------------------------------
+Question 45
+A commercial combined insurance policyholder of a Lloyd ’s syndicate suffers a fire at its factory. Who would the insurer usually require notification from in order to process the claim?
+
+A. The broker.
+B. The insured.
+C. The loss adjuster.
+D. The loss assessor.
+
+Answer: A
+Explanation: Selers of reinsurance The main types of reinsurer are: specialist companies that do not write any direct insurance at al; Lloyd’s syndicates; and insurers who also write reinsurance as wel as direct busines.
+
+--------------------------------------------------------------------------------
+Question 46
+An insurance broker ’s primary role is to provide advice to clients on
+
+A. the most appropriate cover for their needs.
+B. the most appropriate risk management strategy.
+C. which loss adjuster to appoint.
+D. which loss assessor to appoint.
+
+Answer: A
+Explanation: If we consider independent intermediaries (such as London Market brokers) first, they will al cary out the folowing functions: review the client’s neds; advise whether the risk is insurable; decide the best market for the risk; negotiate terms and conditions; provide advice to the client.
+
+--------------------------------------------------------------------------------
+Question 47
+How does a broker usually place complex risks within the London Market?
+
+A. Email.
+B. Face to face.
+C. Through a third party.
+D. Through Xchanging Ins -sure Services.
+
+Answer: B
+Explanation: Question 47 How does a broker usualy place complex risks within the London Market?
+
+--------------------------------------------------------------------------------
+Question 48
+What is the main role of the lead underwriter?
+
+A. To approve following markets.
+B. To obtain reinsurance.
+C. To select an acceptable London broker.
+D. To set the terms and conditions of an insurance contract.
+
+Answer: D
+Explanation: Question 48 What is the main role of the lead underwriter?
+
+--------------------------------------------------------------------------------
+Question 49
+Who decides whether to accept or decline the risk transfer of an individual risk on behalf of a Lloyd ’s syndicate?
+
+A. An actuary.
+B. A managing director.
+C. A members ’ agent.
+D. An underwriter.
+
+Answer: D
+Explanation: Question 19 Who decides whether to acept or decline the risk transfer of an individual risk on behalf of a Lloyd’s syndicate?
+
+--------------------------------------------------------------------------------
+Question 50
+An underwriter is responsible for
+
+A. calculating the insurance premium.
+B. investigating claims notified by policyholders.
+C. imposing sanctions if regulations are breached.
+D. placing insurance business.
+
+Answer: A
+Explanation: The broker receives any claims monies they forward them to their client to finalise the claim.5: Structure of the London Market 89 90 LM London Market insurance esentials 6 Legal and regulatory environment Overview of the UK regulatory framework The UK regulatory framework for financial services consists of thre regulatory.
+
+--------------------------------------------------------------------------------
+Question 51
+By disclosing every material circumstance which the insured knows or ought to know, the insured satisfies their legal duty of
+
+A. consideration.
+B. good faith.
+C. promptly notifying any incidents that may result in a claim.
+D. taking reasonable precautions to prevent a loss.
+
+Answer: B
+Explanation: Question 51 By disclosing every material circumstance which the insured knows or ought to know, the insured satisfies their legal duty of.
+
+--------------------------------------------------------------------------------
+Question 52
+The proximate cause of a loss will always be the
+
+A. dominant cause.
+B. first cause.
+C. last cause.
+D. only cause.
+
+Answer: A
+Explanation: The proximate cause of an ocurence is always the dominant cause and there is a direct link betwen it and the resulting loss.
+
+--------------------------------------------------------------------------------
+Question 53
+Which insurance principle gives an insurer the right to call upon other insurers to share in the settling of a claim?
+
+A. Average.
+B. Contribution.
+C. Good faith.
+D. Subrogation.
+
+Answer: B
+Explanation: Question 53 Which insurance principle gives an insurer the right to cal upon other insurers to share in the setling of a claim?
+
+--------------------------------------------------------------------------------
+Question 54
+A building valued at £250 ,000 is jointly owned by Karen and Terry , who each individually arrange insurance on it. Karen insures the building for £100 ,000 , whilst Terry insures it for £150 ,000. If a valid claim of £55 ,000 occurs how much is each insurer liable to pay?
+
+A. Karen ’s insurer is liable for £22 ,000 and Terry ’s for £33 ,000.
+B. Karen ’s insurer is liable for £27 ,500 and Terry ’s for £27 ,500.
+C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22 ,000.
+D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55 ,000.
+
+Answer: A
+Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+
+--------------------------------------------------------------------------------
+Question 55
+An insurer arranges for a policyh older ’s car to be repaired following damage by a negligent third party motorist. Under which insurance principle can the insurer recover the paid claim?
+
+A. Average.
+B. Contribution.
+C. Indemnity.
+D. Subrogation.
+
+Answer: D
+Explanation: Question 5 An insurer aranges for a policyh older ’s car to be repaired folowing damage by a negligent third party motorist.
+
+--------------------------------------------------------------------------------
+Question 56
+Which insurance principle ensures that in the event of a loss the insured is placed in the same financial position as he was immediately prior to the loss?
+
+A. Average.
+B. Contribution.
+C. Indemnity.
+D. Insurable interest.
+
+Answer: C
+Explanation: Question 56 Which insurance principle ensures that in the event of a loss the insured is placed in the same financial position as he was immediately prior to the loss?
+
+--------------------------------------------------------------------------------
+Question 57
+The protection of jobs by preventing the failure of businesses that are insured against the financial consequences of loss is known as
+
+A. the basic purpose of insurance.
+B. a primary function of insurance only.
+C. a primary and secondary function of insurance.
+D. a secondary function of insurance only.
+
+Answer: D
+Explanation: Question 57 The protection of jobs by preventing the failure of busineses that are insured against the financial consequences of loss is known as.
+
+--------------------------------------------------------------------------------
+Question 58
+Which type of risk arises from a cause outside the control of any one individual and affects a large number of people?
+
+A. A fundamental risk.
+B. A particular risk.
+C. A pure risk.
+D. A speculative risk.
+
+Answer: A
+Explanation: Question 58 Which type of risk arises from a cause outside the control of any one individual and afects a large number of people?
+
+--------------------------------------------------------------------------------
+Question 59
+For an individual, which class of risk is always uninsurable?
+
+A. Fundamental.
+B. Particular.
+C. Pure.
+D. Speculative.
+
+Answer: D
+Explanation: Question 59 For an individual, which clas of risk is always uninsurable?
+
+--------------------------------------------------------------------------------
+Question 60
+The subjective judgment that individuals or organisations make about the characteristics and severity of a risk is known as
+
+A. Risk Analysis.
+B. Risk Management.
+C. Risk Perception.
+D. Risk Transfer.
+
+Answer: C
+Explanation: Question 60 The subjective judgment that individuals or organisations make about the characteristics and severity of a risk is known as.
+
+--------------------------------------------------------------------------------
+Question 61
+In relation to insurance , a peril is
+
+A. an event which may give rise to a loss.
+B. the chance of an event which may give rise to a loss.
+C. the exposure to risk.
+D. when a financial loss occurs.
+
+Answer: A
+Explanation: The chance of an event which may give rise to a loss.
+
+--------------------------------------------------------------------------------
+Question 62
+What enables an insurance company to accept a small premium in relation to its exposure?
+
+A. The purchase of reinsurance.
+B. Limiting the cover provided.
+C. The application of a large deductible.
+D. Pooling of the risks.
+
+Answer: D
+Explanation: It can best be sumarised in the form of an equation: Insurer paying premium to reinsurer to transfer risk=reinsurer acepting transfer of risk from insurer along with the premium Reinsurers can be organisations that also operate as insurers (i.e.
+
+--------------------------------------------------------------------------------
+Question 63
+What is the most likely impact , if any , on a co mmercial insurer if it fails to implement an effective claims -handling process?
+
+A. Brokers are more likely to place business with that insurer.
+B. The insurer will increase its market share.
+C. The reputation of the insurer will be affected.
+D. There will be no impact on the insurer.
+
+Answer: C
+Explanation: What is the most likely ultimate outcome for the insurer?
+
+--------------------------------------------------------------------------------
+Question 64
+A proposer for an insurance policy who has previously made fraudulent insurance claims would be classed by an underwriter as a
+
+A. poor moral hazard.
+B. good moral hazard.
+C. poor physical hazard.
+D. good physical hazard.
+
+Answer: A
+Explanation: For example, whether the proposer has any criminal convictions, any insurance declined previously or any fraudulent claims discovered.
+
+--------------------------------------------------------------------------------
+Question 65
+Where the premiums of the many pay the losses of the few, this is known as
+
+A. claims ratio analysis.
+B. loss modelling.
+C. pooling of risks.
+D. risk reserving.
+
+Answer: C
+Explanation: Question 65 Where the premiums of the many pay the loses of the few, this is known as.
+
+--------------------------------------------------------------------------------
+Question 66
+What is the basic purpose of insurance?
+
+A. To pay for catastrophes.
+B. To provide risk management.
+C. To reduce loss.
+D. To transfer risk.
+
+Answer: D
+Explanation: It provides a disciplined aproach to quantifying riskIt reduces the potential for losIt gives shareholders confidence that the busines is being run properlyRisk management is important for a number of reasons: The decision to transfer risks (for example, by insurance) is an important final stage in the risk management proces.
+
+--------------------------------------------------------------------------------
+Question 67
+What class of insurance protects the policyholder from the nationalisation of their overseas assets by a foreign government?
+
+A. Contingency.
+B. Loss of Earnings.
+C. Political Risks.
+D. Specie.
+
+Answer: C
+Explanation: Question 67 What clas of insurance protects the policyholder from the nationalisation of their overseas asets by a foreign government?
+
+--------------------------------------------------------------------------------
+Question 68
+Cargo carried by an airline will usually be covered under what class of business?
+
+A. Aviation.
+B. Casualty.
+C. Marine.
+D. Property.
+
+Answer: C
+Explanation: – once the customer has decided which quote to acept, then the broker has, what is known as, a firm order for the busines.5: Structure of the London Market 87 Having received the firm order, the Lloyd's broker aproaches other underwriters and 'fils' the MRC/slip by obtaing signatures for.
+
+--------------------------------------------------------------------------------
+Question 69
+What class of insurance would respond to claims made against a lawyer in respect of advice given to clients?
+
+A. Financial loss insurance.
+B. Legal expenses insurance.
+C. Professional indemnity insurance.
+D. Public liability insurance.
+
+Answer: C
+Explanation: The person who has sufered damage or injury is entitled to compensation.48 LM London Market insurance esentials Statute The Riot Compensation Act 2016 makes provision for types of claims that can be made against the police and the procedures for making them in relation to property damaged, destroyed or stolen.
+
+--------------------------------------------------------------------------------
+Question 70
+What class of insurance can provide cover for loss of attraction or denial of access to the insured ’s premises?
+
+A. Business interruption insurance.
+B. Contingency insurance.
+C. Property damage insurance.
+D. Public liability insurance.
+
+Answer: A
+Explanation: Question 70 What clas of insurance can provide cover for loss of atraction or denial of aces to the insured ’s premises?
+
+--------------------------------------------------------------------------------
+Question 71
+When underwriting capacity is withdrawn from the insurance market, what is the next likely outcome in the context of the insurance cycle?
+
+A. The cost of insurance reduces.
+B. The cost of insurance increases.
+C. The profits of insurers reduce.
+D. The profits of insurers increase.
+
+Answer: B
+Explanation: Question 71 When underwriting capacity is withdrawn from the insurance market, what is the next likely outcome in the context of the insurance cycle?
+
+--------------------------------------------------------------------------------
+Question 72
+An insurer who has accepted a risk too large to retain can choose to insure part of the risk with
+
+A. an assignee.
+B. a cedant.
+C. a reinsured.
+D. a reinsurer.
+
+Answer: D
+Explanation: Question 72 An insurer who has acepted a risk to large to retain can chose to insure part of the risk with.
+
+--------------------------------------------------------------------------------
+Question 73
+What does the term facultative reinsurance mean?
+
+A. A single risk is reinsured.
+B. A portfolio of risks is reinsured.
+C. Only catastrophe events are reinsured.
+D. Only non-catastrophe events are reinsured.
+
+Answer: A
+Explanation: Treaty reinsuranceReinsurance that can be purchased to cover a wider portfolio of risks, either a clas of busines or even an insurer’s whole bok of busines.3: Main clases of busines writen in the London Market 73 74 LM London Market insurance esentials 4 The insurance cycle Suply and demand What.
+
+--------------------------------------------------------------------------------
+Question 74
+When an insurer ‘cedes ’ its business, it
+
+A. charges a reinstatement premium.
+B. seeks a contribution from another insurer.
+C. subrogates against an insured third party.
+D. transfers risk to a reinsurer.
+
+Answer: D
+Explanation: There are ocasions when an insurer will ned to use les than fuly reliable historical data when fixing premiums, such as: a completely new risk (such as new technology); and risks in parts of the world not previously open to that insurer.
+
+--------------------------------------------------------------------------------
+Question 75
+What is a protection and indemnity (P&I) club?
+
+A. A group of insurers who collectively underwrite an insurance risk and split the liability in accordance with their participation in the pool.
+B. A mutual association formed by a group of individuals who col lectively require the same insurance and who make contributions to the pool based on their individual risk.
+C. An organisation whose shares are owned by private individuals whose liability for the debts of the organisation are limited to the value of the s hares.
+D. An organisation which is entirely owned by a non -insurance parent company.
+
+Answer: B
+Explanation: Group of insurers who colectively underwrite an insurance risk and split the liability in acordance with their participation in the pol.
+
+--------------------------------------------------------------------------------
+Question 76
+Why might a client choose the London Market in preference to anywhere else in the world for its insurance cover?
+
+A. A London Market insurer will always accept 100% of the risk.
+B. A London Market insurer will not repudiate a claim.
+C. The London Market is able to accept complex risks which are difficult to place elsewhere.
+D. The London Market will always provide the cheapest quote.
+
+Answer: C
+Explanation: However, marine war and strikes insurance is fairly frely available within the London Market, but the main market wordings are not quite as broad as the exclusions they are replacing.
+
+--------------------------------------------------------------------------------
+Question 77
+How does the London subscription market operate?
+
+A. Each insurer who subscribes to the risk will always quote their own terms and conditions.
+B. An insurer will automatically underwrite 100% of the insurance risk and then request the broker obtains reinsurance for the exposur e in excess of its maximum acceptance limit.
+C. A lead insurer quotes the terms for an insurance risk which is supported by following insurers each for their own proportion.
+D. One insurer will always quote and accept the risk on behalf of a pool of insure rs who equally share the liability.
+
+Answer: C
+Explanation: The London Market is a subscription market which means that more than one insurer generaly shares each risk.
+
+--------------------------------------------------------------------------------
+Question 78
+Which market organisation consists of syndicates formed by names and corporate members ?
+
+A. Lloyd ’s.
+B. The London Underwriting Centre.
+C. Protection and indemnity (P&I) clubs.
+D. Xchanging Ins -sure Services.
+
+Answer: A
+Explanation: Question 78 Which market organisation consists of syndicates formed by names and corporate members ?
+
+--------------------------------------------------------------------------------
+Question 79
+Which trade market association for insurance and reinsurance companies exists to promote and enhance the business environment for its members operating in or through London?
+
+A. Association of British Insurers.
+B. Financial Conduct Authority.
+C. International Underwriting Association of London.
+D. Lloyd ’s Market Association.
+
+Answer: C
+Explanation: Question 79 Which trade market asociation for insurance and reinsurance companies exists to promote and enhance the busines environment for its members operating in or through London?
+
+--------------------------------------------------------------------------------
+Question 80
+In relation to the governance of Lloyd ’s, who is ultimately responsible for the regulation of Lloyd’s Members Agents?
+
+A. The Council of Lloyd ’s.
+B. The Financial Conduct Authority.
+C. The Financial Conduct Authority and Prudential Regulation Authority.
+D. The Lloyd ’s Franchise Board.
+
+Answer: B
+Explanation: Question 80 In relation to the governance of Lloyd ’s, who is ultimately responsible for the regulation of Lloyd’s Members Agents?
+
+--------------------------------------------------------------------------------
+Question 81
+The main function of the Financial Ombudsman Service is to arbitrate in disputes regarding claims settlements between
+
+A. large commercial policyholders and brokers.
+B. large commercial policyholders and insurers.
+C. private and small commercial policyholders and brokers.
+D. private and small commercial policyholders and insurers.
+
+Answer: D
+Explanation: Question 81 The main function of the Financial Ombudsman Service is to arbitrate in disputes regarding claims setlements betwen.
+
+--------------------------------------------------------------------------------
+Question 82
+The Financial Conduct Authority ’s Principles for Busine sses states that a firm must maintain financial resources that are
+
+A. adequate.
+B. easy to liquidate.
+C. equal to its liabilities.
+D. set at a minimum by the regulator.
+
+Answer: A
+Explanation: Question 82 The Financial Conduct Authority ’s Principles for Busine ses states that a firm must maintain financial resources that are.
+
+--------------------------------------------------------------------------------
+Question 83
+The nature and extent of the regulator ’s supervisory relationship with an intermediary depends on the
+
+A. amount of annual brokerage income of the intermediary.
+B. geographical scope of the intermediary ’s operations.
+C. level of risk the regulator considers the intermediary presents to its statutory objectives.
+D. number of awards made against the intermediary by the Financial Ombudsman Service.
+
+Answer: C
+Explanation: Question 83 The nature and extent of the regulator ’s supervisory relationship with an intermediary depends on the.
+
+--------------------------------------------------------------------------------
+Question 84
+To which organisation should policyholders apply for compensation if valid claims are NOT paid because an insurer ceases trading with liabilities far outweighing its assets?
+
+A. The Association of British Insurers.
+B. The Financial Conduct Authority.
+C. The Financial Services Compensation Scheme.
+D. The Financial Ombudsman Service s.
+
+Answer: C
+Explanation: Question 84 To which organisation should policyholders apply for compensation if valid claims are NOT paid because an insurer ceases trading with liabilities far outweighing its asets?
+
+--------------------------------------------------------------------------------
+Question 85
+The essentials of a valid contract of insurance are
+
+A. invitation to treat , acceptance and consideration.
+B. invitation to treat , offer and acceptance.
+C. invitation to treat , offer and consideration.
+D. offer , acceptance and consideration.
+
+Answer: D
+Explanation: However, where the parties have agred to use the post as the method of comunication, aceptance is complete at the point when the leter of aceptance is posted.2: Basic insurance legal principles and terminology 23 Consideration Contracts must be suported by consideration to be valid.
+
+--------------------------------------------------------------------------------
+Question 86
+If the Financial Conduct Authority (FCA) discovers that an insurer is falsely claiming to be FCA authorised what action are they most likely to take?
+
+A. Ask the insurer to seek authorisation within 90 days.
+B. Instigate civil proceedings against the insurer.
+C. Instigate criminal proceedings against the insurer.
+D. Report the insurer to the Prudential Regulation Authority.
+
+Answer: C
+Explanation: Question 86 If the Financial Conduct Authority (FCA) discovers that an insurer is falsely claiming to be FCA authorised what action are they most likely to take?
+
+--------------------------------------------------------------------------------
+Question 87
+If an insurer from the European Union (EU) authorised by its local regulator wishes to write business from any country within the EU whilst based solely in their home state , this is permitted under EU regulations
+
+A. on an admitted basis.
+B. on an establishment basis.
+C. on a freedom of services basis.
+D. on a non- admitted basis.
+
+Answer: C
+Explanation: Question 87 If an insurer from the European Union (EU) authorised by its local regulator wishes to write busines from any country within the EU whilst based solely in their home state , this is permited under EU regulations.
+
+--------------------------------------------------------------------------------
+Question 88
+All authorised insurance companies must report complaints to the Financial Conduct Authority (FCA) in what frequency?
+
+A. Monthly.
+B. Quarterly.
+C. Bi-annually.
+D. Annually.
+
+Answer: C
+Explanation: Question 8 Al authorised insurance companies must report complaints to the Financial Conduct Authority (FCA) in what frequency?
+
+--------------------------------------------------------------------------------
+Question 89
+A contract of insurance is between the
+
+A. broker and the insurer only.
+B. insured and the insurer only.
+C. insured and the broker only.
+D. insured , the broker and the insurer.
+
+Answer: B
+Explanation: Aplying this definition to insurance, it may be said that an insurance contract is: an agrement, enforceable by law, betwen an insured and an insurer.
+
+--------------------------------------------------------------------------------
+Question 90
+In order to prevent an insurer from trading with a country , a government may impose
+
+A. additional authorisation.
+B. double taxation.
+C. sanctions.
+D. tariffs.
+
+Answer: C
+Explanation: Question 140 In order to prevent an insurer from trading with a country, a government may impose.
+
+--------------------------------------------------------------------------------
+Question 91
+In order to comply with the provisions of the Helms -Burton Act 1996 , a UK subsidiary of a US insurer would need to implement systems and controls to prevent it from
+
+A. breaching EU sanctions.
+B. bribery and corruption.
+C. money laundering.
+D. trading with Cuba.
+
+Answer: D
+Explanation: It folows that those actions that the proposer neds to take in order to comply with the law do not ned to be declared specificaly, even if material.
+
+--------------------------------------------------------------------------------
+Question 92
+To which orga nisation would a firm’s Money Laundering Reporting Officer submit a Suspicious Activity Report?
+
+A. The Financial Conduct Authority.
+B. HM Revenue & Customs.
+C. The Serious Fraud Office.
+D. The National Crime Agency.
+
+Answer: D
+Explanation: Question 92 To which orga nisation would a firm’s Money Laundering Reporting Oficer submit a Suspicious Activity Report?
+
+--------------------------------------------------------------------------------
+Question 93
+Under the Data Protection Act 2018, if an organisation wishes to record special categories of data about an individual it must
+
+A. obtain express consent from the individual.
+B. show the individual the information before it is recorded.
+C. tell the individual that it has recorded the information.
+D. show the individual the information after it is recorded.
+
+Answer: A
+Explanation: Question 93 Under the Data Protection Act 2018, if an organisation wishes to record special categories of data about an individual it must.
+
+--------------------------------------------------------------------------------
+Question 94
+When arranging cover in the London Market with Lloyd’s , who normally requests a quotation from a Lloyd ’s underwriter?
+
+A. Broker.
+B. Managing agent.
+C. Name.
+D. Syndicate.
+
+Answer: A
+Explanation: Question 94 When aranging cover in the London Market with Lloyd’s , who normaly requests a quotation from a Lloyd ’s underwriter?
+
+--------------------------------------------------------------------------------
+Question 95
+Who is usually responsible for the collection of insurance premiums in the London Market?
+
+A. Broker.
+B. Following insurer.
+C. Lead insurer.
+D. Managing agent.
+
+Answer: A
+Explanation: Question 95 Who is usualy responsible for the colection of insurance premiums in the London Market?
+
+--------------------------------------------------------------------------------
+Question 96
+Who is responsible for providing a Unique Market Reference for a newly place d risk at Lloyd ’s as part of their role?
+
+A. Lloyd ’s Market Association.
+B. Lloyd ’s Syndicate.
+C. The placing broker.
+D. Xchanging Ins -sure Services.
+
+Answer: C
+Explanation: Question 96 Who is responsible for providing an Unique Market Reference for a newly place d risk at Lloyd ’s as part of their role?
+
+--------------------------------------------------------------------------------
+Question 97
+A policyholder advises his broker of a large storm loss at their premises. Typically what action should the broker take next?
+
+A. Appoint an authorised repairer.
+B. Appoint a loss adjuster.
+C. Appoint a loss assessor.
+D. Notify the insurer.
+
+Answer: D
+Explanation: Question 97 A policyholder advises his broker of a large storm loss at their premises.
+
+--------------------------------------------------------------------------------
+Question 98
+Which insurance professional decides whether a proposed risk is accepted by an insurer?
+
+A. Actuary.
+B. Risk manager.
+C. Risk modeller.
+D. Underwriter.
+
+Answer: D
+Explanation: Question 98 Which insurance profesional decides whether a proposed risk is acepted by an insurer?
+
+--------------------------------------------------------------------------------
+Question 99
+A placing broker is experiencing difficulty in completing a placement of a risk due to a lack of appetite for the risk. Eventually they find a following underwriter who is willing to complete the placement , but they want a higher premium than the other underwriters that have already subscribed to the risk. If the broker and the proposer accept the following underwriter ’s terms in order to complete the placement what action, if any , can the lead underwriter and other subscribing underwriters take?
+
+A. Increase their premiums so that they match the higher premium quoted.
+B. Maintain their original quote to comply with competition law.
+C. Reduce the commission they pay to the broker to recover the difference in premium.
+D. Withdraw their quote so that the broker cannot complete the placement.
+
+Answer: B
+Explanation: Negotiation Just as the placing broker negotiates the placement of the risk, the claims broker has a negotiating role to play in those cases where the claim is not perhaps clearcut.
+
+--------------------------------------------------------------------------------
+Question 100
+Who is primarily responsible for setting the terms of an insurance contract where several insurers participate?
+
+A. All participating insurers.
+B. The insurance broker.
+C. The insured.
+D. The lead underwriter.
+
+Answer: D
+Explanation: Question 10 Who is primarily responsible for seting the terms of an insurance contract where several insurers participate?
+
+--------------------------------------------------------------------------------
+Question 101
+A commercial customer applying for office insurance has been burgled a number of times recently. In accordance with the duty of fair presentation, when must this be disclosed to the insurer?
+
+A. During the proposal stage.
+B. Only if a specific question is asked.
+C. Immediately after the quotation is received.
+D. Immediately after the premium is paid.
+
+Answer: A
+Explanation: Reputation protection (for example, by dealing with the costs and logistics of communicating with customers whose data might have been taken).
+
+--------------------------------------------------------------------------------
+Question 102
+Which insurance principle allows an insurer, once it has indemnified the insured, to take over the insured’s right to recover payment from a third party responsible for a loss?
+
+A. Contribution.
+B. Proximate cause.
+C. Subrogation.
+D. Good faith.
+
+Answer: C
+Explanation: Precluded subrogation rights There are some situations in which insurers are barred from exercising subrogation rights, or where they agree not to exercise them.2: Basic insurance legal principles and terminology 49 Insured has no rights The insurer's right to subrogate relies on the insured having rights against a negligent party.
+
+--------------------------------------------------------------------------------
+Question 103
+Heavy rain causes a drain to overflow into the basement storeroom of a nearby grocery shop. The perishable goods in the storeroom, which were NOT raised off the floor, have been written off. What is the proximate cause of the loss?
+
+A. The heavy rain.
+B. The drain.
+C. The storage of the stock.
+D. The perishable nature of the stock.
+
+Answer: A
+Explanation: Fundamental risks can be defined as those that arise from social, economic, political or natural causes and are widespread in their effect.
+
+--------------------------------------------------------------------------------
+Question 104
+The part of the claims‐handling process where the insurer assesses and calculates the funds that need to be set aside to pay each individual claim is known as
+
+A. loss adjusting.
+B. loss assessing.
+C. loss reserving.
+D. risk modelling.
+
+Answer: C
+Explanation: Question 8 The part of the claims handling proces where the insurer asses and calculates the funds that ned to be set aside to pay each individual claim is known as.
+
+--------------------------------------------------------------------------------
+Question 105
+By operating a system of pooling risk, the law of large numbers assists insurers to make reliable
+
+A. claim payment predictions.
+B. investment return predictions.
+C. new business predictions.
+D. premium income predictions.
+
+Answer: A
+Explanation: Question 105 By operating a system of poling risk, the law of large numbers asists insurers to make reliable.
+
+--------------------------------------------------------------------------------
+Question 106
+In the context of insurance, an event that gives rise to a loss is known as
+
+A. insurable interest.
+B. a hazard.
+C. a peril.
+D. a risk.
+
+Answer: C
+Explanation: It provides a disciplined aproach to quantifying riskIt reduces the potential for losIt gives shareholders confidence that the busines is being run properlyRisk management is important for a number of reasons: The decision to transfer risks (for example, by insurance) is an important final stage in the risk management proces.
+
+--------------------------------------------------------------------------------
+Question 107
+An insurer fails to adequately manage its claims‐handling processes, resulting in inadequate reserves being set aside. What is the most likely ultimate outcome for the insurer?
+
+A. Fraudulent claims.
+B. Increased profits.
+C. Insolvency.
+D. Reduced profits.
+
+Answer: C
+Explanation: The insurer 'experience' is generaly centred on claims handling, as before a loss hapens most insureds pay litle or no atention to their policy.1: Fundamental principles of insurance 19 Claims personel An eficient claims department, stafed by competent and profesional claims personel, is vital to ensure the proper use of.
+
+--------------------------------------------------------------------------------
+Question 108
+What class of insurance can provide cover for non‐repayment of outstanding debts due to expropriation of assets by a foreign Government’s actions?
+
+A. Contingency insurance.
+B. Financial loss insurance.
+C. Political risks insurance.
+D. Specie insurance.
+
+Answer: C
+Explanation: Treaty reinsuranceReinsurance that can be purchased to cover a wider portfolio of risks, either a clas of busines or even an insurer’s whole bok of busines.3: Main clases of busines writen in the London Market 73 74 LM London Market insurance esentials 4 The insurance cycle Suply and demand What.
+
+--------------------------------------------------------------------------------
+Question 109
+An insured requests that the sum insured on his office block is increased to an amount that is greater than his insurer’s normal acceptance limit. The insurer will normally be able to continue to underwrite the office block for its full sum insured by
+
+A. applying average.
+B. arranging coinsurance.
+C. increasing the deductible.
+D. purchasing reinsurance.
+
+Answer: D
+Explanation: Question 2 An insured requests that the sum insured on his ofice block is increased to an amount that is greater than his insurer ’s normal aceptance limit.
+
+--------------------------------------------------------------------------------
+Question 110
+The London Market is often utilised for the placing of insurance because it offers a good claims service provided by experienced and knowledgeable claims handlers, has experienced and entrepreneurial underwriters that can consider new emerging risks and provide bespoke insurance coverage and
+
+A. has a higher security rating for financial stability when compared with other international insurance markets.
+B. has lower premiums than all of its overseas competitors.
+C. has the lowest rates of tax when compared with other international insurance markets.
+D. provides sufficient capacity to place large and complex risks.
+
+Answer: D
+Explanation: Question 10 The London Market is often utilised for the placing of insurance because it ofers a good claims service provided by experienced and knowledgeable claims handlers, has experienced and entrepreneurial underwriters that can consider new emerging risks and provide bespoke insurance coverage and.
+
+--------------------------------------------------------------------------------
+Question 111
+What main role does the International Underwriting Association of London perform for its members?
+
+A. To inform members of overseas legislation that affects their business.
+B. To organise double taxation relief for its members on their overseas operations.
+C. To promote and enhance the business environment for its members.
+D. To set up overseas offices for its members.
+
+Answer: C
+Explanation: Question 1 What main role does the International Underwriting Asociation of London perform for its members?
+
+--------------------------------------------------------------------------------
+Question 112
+How much of a non‐compulsory insurance claim will the Financial Services Compensation Scheme pay if an insurer becomes insolvent prior to the claim being settled?
+
+A. A maximum of £50,000.
+B. A maximum of £85,000.
+C. 90% of the claim.
+D. 100% of the claim.
+
+Answer: C
+Explanation: Of course, the insurer's liability does not finish when the policy expires as some types of policy will have claims that take a long time to be concluded, such as liability insurances with personal injury claims.
+
+--------------------------------------------------------------------------------
+Question 113
+Who is responsible for setting the level of contribution to the Lloyd’s Central Fund?
+
+A. Corporation of Lloyd’s.
+B. Council of Lloyd’s.
+C. Lloyd’s managing agents.
+D. Lloyd’s underwriters.
+
+Answer: B
+Explanation: Question 3 Who is responsible fo r seting the level of contribution to the Lloyd’s Central Fund?
+
+--------------------------------------------------------------------------------
+Question 114
+The main purpose of the Financial Conduct Authority’s firm systematic framework is to
+
+A. calculate a firm’s tax liabilities due to HM Revenue & Customs.
+B. ensure that the interests of the customer are at the heart of the way the business is run.
+C. provide a framework for assessing a firm’s financial security rating for the ratings agencies.
+D. set out the eligibility criteria to a firm for its nominated approved persons.
+
+Answer: C
+Explanation: Question 36 The main purpose of the Financial Conduct Authority ’s firm systematic framework is to.
+
+--------------------------------------------------------------------------------
+Question 115
+Appointed representative act as agents for who?
+
+A. The Financial Conduct Authority.
+B. The Lloyd’s Market Association and British Insurance Brokers' Association.
+C. The Prudential Regulation Authority.
+D. Intermediaries and insurers.
+
+Answer: D
+Explanation: This reserve fund is known as the Central Fund and forms part of the Lloyd's chain of security.16 LM London Market insurance esentials 7 Regulatory proceses, systems and controls Impact of UK, EU and US regulation Now the Financial Conduct Authority (FCA) and Prudential Regulation Authority (PRA) regulate the whole.
+
+--------------------------------------------------------------------------------
+Question 116
+Under the Data Protection Act 2018, what is the maximum fine that the Information Commissioner can levy on data controllers and processors for the most serious data breaches?
+
+A. £8.5 million or 4% of global turnover.
+B. £12.75 million or 5% of global turnover.
+C. £17 million or 4% of global turnover.
+D. £21.25 million or 5% of global turnover.
+
+Answer: C
+Explanation: Question 42 Under the Data Protection Act 2018 , what is the maximum fine that the Information Comisioner can levy on data controlers and procesors for the most serious data breaches?
+
+--------------------------------------------------------------------------------
+Question 117
+A commercial combined insurance policyholder of a Lloyd’s syndicate suffers a fire at its factory. Who would the insurer usually require notification from in order to process the claim?
+
+A. The broker.
+B. The insured.
+C. The loss adjuster.
+D. The loss assessor.
+
+Answer: A
+Explanation: Selers of reinsurance The main types of reinsurer are: specialist companies that do not write any direct insurance at al; Lloyd’s syndicates; and insurers who also write reinsurance as wel as direct busines.
+
+--------------------------------------------------------------------------------
+Question 118
+An insurance broker’s primary role is to provide advice to clients on
+
+A. the most appropriate cover for their needs.
+B. the most appropriate risk management strategy.
+C. which loss adjuster to appoint.
+D. which loss assessor to appoint.
+
+Answer: A
+Explanation: If we consider independent intermediaries (such as London Market brokers) first, they will al cary out the folowing functions: review the client’s neds; advise whether the risk is insurable; decide the best market for the risk; negotiate terms and conditions; provide advice to the client.
+
+--------------------------------------------------------------------------------
+Question 119
+Who decides whether to accept or decline the risk transfer of an individual risk on behalf of a Lloyd’s syndicate?
+
+A. An actuary.
+B. A managing director.
+C. A members’ agent.
+D. An underwriter.
+
+Answer: D
+Explanation: Question 19 Who decides whether to acept or decline the risk transfer of an individual risk on behalf of a Lloyd’s syndicate?
+
+--------------------------------------------------------------------------------
+Question 120
+By sharing information about their risk, the insured satisfies which obligation?
+
+A. Consideration.
+B. Good faith.
+C. Promptly notifying any incidents that may result in a claim.
+D. Taking reasonable precautions to prevent a loss.
+
+Answer: B
+Explanation: Question 120 By sharing information about their risk, the insured satisfies which obligation?
+
+--------------------------------------------------------------------------------
+Question 121
+A building valued at £250 ,000 is jointly owned by Karen and Terry , who each individually arrange insurance on it. Karen insures the building for £100 ,000, whilst Terry insures it for £150 ,000. If a valid claim of £55 ,000 occurs how much is each insurer liable to pay?
+
+A. Karen ’s insurer is liable for £22 ,000 and Terry ’s for £33, 000.
+B. Karen ’s insurer is liable for £27 ,500 and Terry ’s for £27, 500.
+C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22, 000.
+D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55, 000.
+
+Answer: A
+Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+
+--------------------------------------------------------------------------------
+Question 122
+An insurer arranges for a policyholder ’s car to be repaired following damage by a negligent third party motorist. Under which i nsurance principle can the insurer recover the paid claim?
+
+A. Average.
+B. Contribution.
+C. Indemnity.
+D. Subrogation.
+
+Answer: D
+Explanation: Question 186 An insurer aranges for a policyholder’s car to be repaired folowing damage by a negligent third party motorist.
+
+--------------------------------------------------------------------------------
+Question 123
+Which insurance principle ensures that in the event of a loss the insured is placed in the same financial position as he was immediate ly prior to the loss?
+
+A. Average.
+B. Contribution.
+C. Indemnity.
+D. Insurable interest.
+
+Answer: C
+Explanation: Question 56 Which insurance principle ensures that in the event of a loss the insured is placed in the same financial position as he was immediately prior to the loss?
+
+--------------------------------------------------------------------------------
+Question 124
+The protection of jobs is classed as which type of function of insurance?
+
+A. The basic purpose of insurance.
+B. A primary function of insurance only.
+C. A primary and secondary function of insurance.
+D. A secondary function of insurance only.
+
+Answer: D
+Explanation: The basic type of property insurance for industrial buildings can also cover machinery, fixtures and fitings within any building – as wel as the raw materials before they go into the manufacturing proces together with the finished product before shipment.
+
+--------------------------------------------------------------------------------
+Question 125
+For an individual , which class of risk is always uninsurable?
+
+A. Fundamental.
+B. Particular.
+C. Pure.
+D. Speculative.
+
+Answer: D
+Explanation: Question 59 For an individual, which clas of risk is always uninsurable?
+
+--------------------------------------------------------------------------------
+Question 126
+The calculation of what involves the use of the law of large numbers?
+
+A. Average.
+B. Equitable premiums.
+C. Indemnity.
+D. Solvency margins.
+
+Answer: B
+Explanation: The insurer endeavours to make sure that the premium paid by the insured is proportionate to the risk which they introduce to the pol .14 LM London Market insurance esentials Law of large numbers In operating the pol, insurers benefit from the law of large numbers.
+
+--------------------------------------------------------------------------------
+Question 127
+What is the most likely impact , if any , on a commercial insurer if it fails to implement an effective claims -handling process?
+
+A. Brokers are more likely to place business with that insurer.
+B. The insurer will increase its market share.
+C. The reputation of the insurer will be affected.
+D. There will be no impact on the insurer.
+
+Answer: C
+Explanation: What is the most likely ultimate outcome for the insurer?
+
+--------------------------------------------------------------------------------
+Question 128
+Where the premiums of the many pay the losses of the few , this is known as
+
+A. claims ratio analysis.
+B. loss modelling.
+C. pooling of risks.
+D. risk reserving.
+
+Answer: C
+Explanation: Question 65 Where the premiums of the many pay the loses of the few, this is known as.
+
+--------------------------------------------------------------------------------
+Question 129
+What class of insurance would respond to claims made against a lawyer in respect of advice given to fee paying clients?
+
+A. Financial loss insurance.
+B. Legal expenses insurance.
+C. Professional indemnity insurance.
+D. Public liability insurance.
+
+Answer: C
+Explanation: The person who has sufered damage or injury is entitled to compensation.48 LM London Market insurance esentials Statute The Riot Compensation Act 2016 makes provision for types of claims that can be made against the police and the procedures for making them in relation to property damaged, destroyed or stolen.
+
+--------------------------------------------------------------------------------
+Question 130
+What class of insurance can provide cover for loss of attraction or denial of access to the insured’ s premises?
+
+A. Business interruption insurance.
+B. Contingency insurance.
+C. Property damage insurance.
+D. Public liability insurance.
+
+Answer: A
+Explanation: Question 70 What clas of insurance can provide cover for loss of atraction or denial of aces to the insured ’s premises?
+
+--------------------------------------------------------------------------------
+Question 131
+When underwriting capacity is withdrawn from the insurance market , what is the next likely outcome in the context of the insurance cycle?
+
+A. The cost of insurance reduces.
+B. The cost of insurance increases.
+C. The profits of insurers reduce.
+D. The profits of insurers increase.
+
+Answer: B
+Explanation: Question 71 When underwriting capacity is withdrawn from the insurance market, what is the next likely outcome in the context of the insurance cycle?
+
+--------------------------------------------------------------------------------
+Question 132
+An insurer who has accepted a risk too large to retain can choose to insure part of the risk to
+
+A. an assignee.
+B. a cedant.
+C. a reinsured.
+D. a reinsurer.
+
+Answer: D
+Explanation: Question 72 An insurer who has acepted a risk to large to retain can chose to insure part of the risk with.
+
+--------------------------------------------------------------------------------
+Question 133
+What effect does purchasing reinsurance have on an insurer’s trading results?
+
+A. It increases peaks and troughs.
+B. It smooths peaks and troughs.
+C. It always increases profits.
+D. It always guarantees a profit.
+
+Answer: B
+Explanation: Benefits of purchasing reinsurance Increasing capacity By purchasing reinsurance, the underwriter can increase the individual share of any one risk that they can acept as a direct insurer which will have the knockon effect of helping increase their status and market share overal.
+
+--------------------------------------------------------------------------------
+Question 134
+Which trade market association for insurance and reinsurance companie s exists to promote and enhance the business environment for its members operating in or through London?
+
+A. Association of British Insurers.
+B. Financial Conduct Authority.
+C. International Underwriting Association of London.
+D. Lloyd ’s Market Association.
+
+Answer: C
+Explanation: Question 79 Which trade market asociation for insurance and reinsurance companies exists to promote and enhance the busines environment for its members operating in or through London?
+
+--------------------------------------------------------------------------------
+Question 135
+In relation to the governance of Lloyd ’s, who is ultimately responsible for the regulation of Lloyd’ s Members Agents?
+
+A. The Council of Lloyd ’s.
+B. The Financial Conduct Authority.
+C. The Financial Conduct Authority and Prudential Regulation Authority.
+D. The Lloyd ’s Franchise Board.
+
+Answer: B
+Explanation: Question 80 In relation to the governance of Lloyd ’s, who is ultimately responsible for the regulation of Lloyd’s Members Agents?
+
+--------------------------------------------------------------------------------
+Question 136
+The Financial Conduct Authority ’s Principles for Businesses states that a firm must maintain financial resources tha t are
+
+A. adequate.
+B. easy to liquidate.
+C. equal to its liabilities.
+D. set at a minimum by the regulator.
+
+Answer: A
+Explanation: Question 136 The Financial Conduct Authority ’s Principles for Busineses states that a firm must maintain financial resources tha t are.
+
+--------------------------------------------------------------------------------
+Question 137
+Who authorises and regulates insurance intermediaries?
+
+A. The British Insurance Brokers’ Association.
+B. The Financial Conduct Authority.
+C. The London and International Insurance Brokers’ Association.
+D. The Prudential Regulation Authority.
+
+Answer: B
+Explanation: Brokerelated organisations British Insurance Brokers’ Asociation (BIBA) BIBA is the major trade asociation for insurance intermediaries, with a membership of more than 1,80; it is a nonstatutory trade body.
+
+--------------------------------------------------------------------------------
+Question 138
+How frequently must an authorised insurance company provide the Financial Conduct Authority (FCA) with a complete report of complaints received from eligible complainants?
+
+A. Monthly.
+B. Quarterl y.
+C. Bi-annually.
+D. Annually.
+
+Answer: C
+Explanation: Question 138 How frequently must an authorised insurance company provide the Financial Conduct Authority (FCA) with a complete report of complaints received from eligible complainants?
+
+--------------------------------------------------------------------------------
+Question 139
+A placing broker is experiencing difficulty in completing a placement of a risk due to a lack of appetite for the risk. Eventually they find a following underwriter who is willing to complete the placement, but they want a higher premium than the other underwriters that have already subscribed to the risk. If the broker and the proposer accept the following underwriter's terms in order to complete the placement what action, if any, can the lead underwriter and other subscribing underwriters take?
+
+A. Increas e their premiums so that they match the higher premium quoted.
+B. Maintain their original quote to comply with competition law.
+C. Reduce the commission they pay to the broker to recover the difference in premium.
+D. Withdraw their quote so that the broker cannot complete the placement.
+
+Answer: B
+Explanation: Negotiation Just as the placing broker negotiates the placement of the risk, the claims broker has a negotiating role to play in those cases where the claim is not perhaps clearcut.
+
+--------------------------------------------------------------------------------
+Question 140
+In order to prevent an insurer from trading with a country, a government may impose
+
+A. additional authorisation.
+B. double taxation.
+C. sanctions.
+D. tariffs.
+
+Answer: C
+Explanation: Question 140 In order to prevent an insurer from trading with a country, a government may impose.
+
+--------------------------------------------------------------------------------
+Question 141
+Which statue requires firms to have a procedure in place relating to gifts and hospitality which sets out what is acceptable and what is NOT acceptable?
+
+A. Bribery Act 2010.
+B. Proceeds of Crime Act 2002.
+C. Public Interest Disclosure Act 1998.
+D. Serious Crime Act 2007.
+
+Answer: A
+Explanation: Question 141 Which statue requires firms to have a procedure in place relating to gifts and hospitality which sets out what is aceptable and what is NOT aceptable?
+
+--------------------------------------------------------------------------------
+Question 142
+To which organisation would a firm's Money Laundering Reporting Officer submit a Suspicious Activity Report?
+
+A. The Financial Conduct Authority.
+B. HM Revenue & Customs.
+C. The Serious Fraud Office.
+D. The National Crime Agency.
+
+Answer: D
+Explanation: Question 142 To which organisation would a firm's Money Laundering Reporting Oficer submit a Suspicious Activity Report?
+
+--------------------------------------------------------------------------------
+Question 143
+Under the Data Protection Act 2018 , if an organisation wishes to record special categories of data about an individual it must
+
+A. obtain express consent from the individual.
+B. show the individual the information before it is recorded.
+C. tell the individual that it has recorded the information.
+D. show the individual the information after it is recorded.
+
+Answer: A
+Explanation: Question 93 Under the Data Protection Act 2018, if an organisation wishes to record special categories of data about an individual it must.
+
+--------------------------------------------------------------------------------
+Question 144
+Which document usually evidences the agency agreement between a broker and an insured?
+
+A. Broker Insurance Document.
+B. Market Reform Contract.
+C. Proposal Form.
+D. Terms of Business Agreement.
+
+Answer: D
+Explanation: The folowing definition for contract certainty has been agred: Contract certainty is achieved by the complete and final agrement of al terms betwen the insured and the insurer by the time that they enter into the contract, with contract documentation provided promptly thereafter.
+
+--------------------------------------------------------------------------------
+Question 145
+In the London Market, w ho is usually responsible for the collection of insurance premiums in the London Market?
+
+A. Broker.
+B. Following insurer.
+C. Lead insurer.
+D. Managing agent.
+
+Answer: A
+Explanation: Question 95 Who is usualy responsible for the colection of insurance premiums in the London Market?
+
+--------------------------------------------------------------------------------
+Question 146
+Who is responsible for providing a Unique Market Reference for a newly placed risk at Lloyd's as part of their role?
+
+A. Lloyd's Market Association.
+B. Lloyd's Syndicate.
+C. The placing broker.
+D. Xchanging Ins -sure Services.
+
+Answer: C
+Explanation: Question 146 Who is responsible for providing an Unique Market Reference for a newly placed risk at Lloyd's as part of their role?
+
+--------------------------------------------------------------------------------
+Question 147
+A hotel owner insures his buildings for £5,000,000 with insurer X. He decides to sell the hotel to a competitor, who insures the building for £7,500,000 with insurer Y. Prior to the completion of the sale, whilst still insured by both insurers, a fire loss of £2,000,000 occurs. Assuming the buildings are adequately insured, how much will each insurer pay towards the damage using the sum insured method?
+
+A. Insurer X will pay nothing and insurer Y will pay £2,000,000.
+B. Insurer X will pay £800,000 and insurer Y will pay £1,200,000.
+C. Insurer X will pay £1,000,000 and insurer Y will pay £1,000,000.
+D. Insurer X will pay £2,000,000 and insurer Y will pay nothing.
+
+Answer: B
+Explanation: Question 3 A hotel owner insures his buildings for £5,0,0 with insurer X.
+
+--------------------------------------------------------------------------------
+Question 148
+By operating a pooling of risk system, the law of large numbers assists insurers to make
+
+A. reliable claim payment predictions.
+B. reliable investment return predictions.
+C. reliable new business predictions.
+D. reliable premium income predictions.
+
+Answer: A
+Explanation: Question 105 By operating a system of poling risk, the law of large numbers asists insurers to make reliable.
+
+--------------------------------------------------------------------------------
+Question 149
+In the context of insurance, what is defined as an event that gives rise to a loss?
+
+A. Risk.
+B. Hazard.
+C. Peril.
+D. Insurable interest.
+
+Answer: C
+Explanation: Aproach to quantifying riskIt reduces the potential for losIt gives shareholders confidence that the busines is being run properlyRisk management is important for a number of reasons: The decision to transfer risks (for example, by insurance) is an important final stage in the risk management proces.
+
+--------------------------------------------------------------------------------
+Question 150
+What is the main purpose of the International Underwriting Association of London?
+
+A. To inform members of overseas legislation that affects their business.
+B. To organise double taxation relief for its members on their overseas operations.
+C. To secure an optimal trading environment for its members.
+D. To set up overseas offices for its members.
+
+Answer: C
+Explanation: Question 150 What is the main purpose of the International Underwriting Asociation of London?
+
+--------------------------------------------------------------------------------
+Question 151
+What ultimate action can the Financial Conduct Authority (FCA) take against a company that fails to meet FCA requirements?
+
+A. Seize the assets of the company until the company meets the requirements.
+B. Suspend trading in the shares of the company until the company meets the requirements.
+C. The company directors can be fined.
+D. The company can be wound‐up.
+
+Answer: D
+Explanation: 6 Legal and regulatory environment Overview of the UK regulatory framework The UK regulatory framework for financial services consists of thre regulatory bodies: Financial Conduct Authority (FCA) Separate independent regulator responsible for conduct of busines and market isues for al firms and prudential regulation of smal firms, like insurance.
+
+--------------------------------------------------------------------------------
+Question 152
+The main purpose of which organisation is to provide expertise, data and analysis to individual US state insurance regulators to effectively regulate the insurance industry and protect consumers?
+
+A. Internal Revenue Service.
+B. The International Underwriting Association of London.
+C. The National Association of Insurance Commissioners.
+D. The US Federal Government.
+
+Answer: C
+Explanation: Question 152 The main purpose of which organisation is to provide expertise, data and analysis to individual US state insurance regulators to efectively regulate the insurance industry and protect consumers?
+
+--------------------------------------------------------------------------------
+Question 153
+Who usually contacts underwriters to advise of a firm order?
+
+A. The broker.
+B. The insured.
+C. The risk manager.
+D. Xchanging Ins‐sure Services.
+
+Answer: A
+Explanation: Question 153 Who usualy contacts underwriters to advise of a firm order?
+
+--------------------------------------------------------------------------------
+Question 154
+A building valued at £250 ,000 is jointly owned by Karen and Terry , who each individually arrange insurance on it. Karen insures the building for £100 ,000, whilst Terry insures it for £150 ,000. If a valid claim of £55 ,000 occurs how much is each insurer liable to pay under the sum insured method ?
+
+A. Karen ’s insurer is liable for £22 ,000 and Terry ’s for £33 ,000.
+B. Karen ’s insurer is liable for £27 ,500 and Terry ’s for £27 ,500.
+C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22 ,000.
+D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55 ,000.
+
+Answer: A
+Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+
+--------------------------------------------------------------------------------
+Question 155
+What class of insurance can provide cover for denial of access to the insured ’s premises?
+
+A. Business interruption insurance.
+B. Contingency insurance.
+C. Property damage insurance.
+D. Public liability insurance.
+
+Answer: A
+Explanation: Question 70 What clas of insurance can provide cover for loss of atraction or denial of aces to the insured ’s premises?
+
+--------------------------------------------------------------------------------
+Question 156
+An insurer who has accepted a risk too large to retain can choose to transfer part of the risk to
+
+A. an assignee.
+B. a cedant.
+C. a reinsured.
+D. a reinsurer.
+
+Answer: D
+Explanation: Question 156 An insurer who has acepted a risk to large to retain can chose to transfer part of the risk to.
+
+--------------------------------------------------------------------------------
+Question 157
+Which market organisation consists of syndicates formed by names and corporate members?
+
+A. Lloyd’ s.
+B. The London Underwriting Centre.
+C. Protection and indemnity (P& I) clubs.
+D. Xchanging Ins-sure Services.
+
+Answer: A
+Explanation: Question 78 Which market organisation consists of syndicates formed by names and corporate members ?
+
+--------------------------------------------------------------------------------
+Question 158
+Which market association for insurance and reinsurance companies operating in or through the London market exists to protect and strengthen the business environment for its members?
+
+A. Association of British Insurers.
+B. Financial Conduct Authority.
+C. International Underwriting Association of London.
+D. Lloyd’ s Market Association.
+
+Answer: C
+Explanation: Question 79 Which trade market asociation for insurance and reinsurance companies exists to promote and enhance the busines environment for its members operating in or through London?
+
+--------------------------------------------------------------------------------
+Question 159
+In relation to the governance of Lloyd ’s, who is ultimately responsible for the regulation of Lloyd ’s Members Agents?
+
+A. The Council of Lloyd ’s.
+B. The Financial Conduct Authority.
+C. The Financial Conduct Authority and Prudential Regulation Authority.
+D. The Lloyd ’s Market Association.
+
+Answer: B
+Explanation: Question 80 In relation to the governance of Lloyd ’s, who is ultimately responsible for the regulation of Lloyd’s Members Agents?
+
+--------------------------------------------------------------------------------
+Question 160
+The main function of the Financial Ombudsman Service is to assist in disputes regarding claims settlements between
+
+A. large commercial policyholders and brokers.
+B. large commercial policyholders and insurers.
+C. private and small commercial policyholders and b rokers.
+D. private and small commercial policyholders and insurers.
+
+Answer: D
+Explanation: Question 160 The main function of the Financial Ombudsman Service is to asist in disputes regarding claims setlements betwen.
+
+--------------------------------------------------------------------------------
+Question 161
+The Financial Conduct Authority ’s Principles for Businesses states that a firm must maintain financial resources that are
+
+A. adequate.
+B. easy to liquidate.
+C. equal to its liabilities.
+D. set at a minimum by the regulator.
+
+Answer: A
+Explanation: Question 136 The Financial Conduct Authority ’s Principles for Busineses states that a firm must maintain financial resources tha t are.
+
+--------------------------------------------------------------------------------
+Question 162
+At Lloyd’s, bye -laws are passed by the
+
+A. Corporation of Lloyd’s.
+B. Council of Lloyd’s.
+C. Lloyd's Market Association.
+D. Lloyd’s syndicates.
+
+Answer: B
+Explanation: Certain activities that only Council holds final decision making authority on include: making or changing byelaws; seting the longterm strategic development of the market; deciding contribution levels to Lloyd’s Central Fund (covered in more detail in study text LM2); deciding the amounts of members’ (Names’) anual.
+
+--------------------------------------------------------------------------------
+Question 163
+The body directly responsible for supervising the solvency margins of insurance companies is the
+
+A. Association of British Insurers.
+B. Financial Conduct Authority.
+C. International Underwriting Association of London.
+D. Prudential Regulation Authority.
+
+Answer: D
+Explanation: Question 163 The body directly responsible for supervising the solvency margins of insurance companies is the.
+
+--------------------------------------------------------------------------------
+Question 164
+Which statute requires firms to have a procedure in place relating to gifts and hospitality which sets out what is acceptable and what is NOT acceptable?
+
+A. Bribery Act 2010.
+B. Proceeds of Crime Act 2002.
+C. Public Interest Disclosure Act 1998.
+D. Serious Crime Act 2007.
+
+Answer: A
+Explanation: Question 164 Which statute requires firms to have a procedure in place relating to gifts and hospitality which sets out what is aceptable and what is NOT aceptable?
+
+--------------------------------------------------------------------------------
+Question 165
+Under the Data Protection Act 2018, if an organisation wishes to process special categories of data about an individual it must
+
+A. obtain explicit consent from the individual.
+B. show the individual the information before it is recorded.
+C. tell the individual that it has recorded the information.
+D. show the individual the information after it is recorded.
+
+Answer: A
+Explanation: Question 165 Under the Data Protection Act 2018, if an organisation wishes to proces special categories of data about an individual it must.
+
+--------------------------------------------------------------------------------
+Question 166
+In the London Market, who is usually responsible for the collection of insurance premiums from policyholders?
+
+A. The broker.
+B. The lead underwriter.
+C. Rating agencies.
+D. Xchanging Ins- sure Services.
+
+Answer: A
+Explanation: Question 16 In the London Market, who is usualy responsible for the colection of insurance premiums from policyholders?
+
+--------------------------------------------------------------------------------
+Question 167
+A policyholder advises his broker of a large storm loss at their premises. Typically what action should the broker take next ?
+
+A. Appoint an authorised repairer.
+B. Appoint a loss adjuster.
+C. Appoint a loss assessor.
+D. Notify the insurer.
+
+Answer: D
+Explanation: Question 97 A policyholder advises his broker of a large storm loss at their premises.
+
+--------------------------------------------------------------------------------
+Question 168
+A hotel owner insures his buildings for £5 ,000, 000 with insurer X. He decides to sell the hotel to a competitor, who insures the building for £7 ,500,000 with insurer Y. Prior to the completion of the sale , whilst still insured by both insurers , a fire loss of £2 ,000 ,000 occurs. Assuming the buildings are adequately insured , how much will each insurer pay towards the damage using the sum insured method?
+
+A. Insurer X will pay nothing and insurer Y will pay £2 ,000 ,000.
+B. Insurer X will pay £800 ,000 and insurer Y will pay £1 ,200 ,000.
+C. Insurer X will pay £1 ,000 ,000 and insurer Y will pay £1 ,000, 000.
+D. Insurer X will pay £2 ,000 ,000 and insurer Y will pay nothing.
+
+Answer: B
+Explanation: Question 3 A hotel owner insures his buildings for £5,0,0 with insurer X.
+
+--------------------------------------------------------------------------------
+Question 169
+Gerry ’s restaurant suffers a loss of revenue as a result of a power failure when a mechanical digger cuts through an underground cable. This incident can be categorised as a
+
+A. fundamental risk.
+B. particular risk.
+C. pure risk.
+D. speculative risk.
+
+Answer: B
+Explanation: Solicitors Solicitors must hold profesional indemnity insurance – this must indemnify the solicitor against claims for financial loss sufered by clients as a result of the solicitor's profesional negligence.
+
+--------------------------------------------------------------------------------
+Question 170
+A fire occurs at a chilled food warehouse , assisted by the presence of polystyrene composite panels. A recent property survey noted the existence of the panels in the warehouse and would have been classified as a
+
+A. moral hazard.
+B. peril.
+C. physical hazard.
+D. risk.
+
+Answer: C
+Explanation: Question 10 A fire occurs at a chiled fod warehouse, asisted by the presence of polystyrene composite panels.
+
+--------------------------------------------------------------------------------
+Question 171
+Bill is accused of defrauding his employer and , if found guilty , a fine may be imposed on him by the court. What insurance , if any , could cover Bill for any financial loss?
+
+A. None.
+B. Contingency.
+C. Employers ’ liability.
+D. Fidelity guarantee.
+
+Answer: A
+Explanation: Question 1 Bil is acused of defrauding his employer and, if found guilty, a fine may be imposed on him by the court.
+
+--------------------------------------------------------------------------------
+Question 172
+By operating a pooling of risk system , the law of large numbers assists insurers to make
+
+A. reliable claim payment predictions.
+B. reliable investment return predictions.
+C. reliable new business predictions.
+D. reliable premium income predictions.
+
+Answer: A
+Explanation: Question 105 By operating a system of poling risk, the law of large numbers asists insurers to make reliable.
+
+--------------------------------------------------------------------------------
+Question 173
+In the context of insurance , what is defined as an event that gives rise to a loss?
+
+A. Risk.
+B. Hazard.
+C. Peril.
+D. Insurable interest.
+
+Answer: C
+Explanation: Aproach to quantifying riskIt reduces the potential for losIt gives shareholders confidence that the busines is being run properlyRisk management is important for a number of reasons: The decision to transfer risks (for example, by insurance) is an important final stage in the risk management proces.
+
+--------------------------------------------------------------------------------
+Question 174
+An insurer fails to adequately manage its claims -handling processes , resulting in inadequate reserves being set aside. What is the most likely ultimate outcome for the insurer?
+
+A. Fraudulent claims.
+B. Increased profits.
+C. Insolvency.
+D. Reduced profits.
+
+Answer: C
+Explanation: The insurer 'experience' is generaly centred on claims handling, as before a loss hapens most insureds pay litle or no atention to their policy.1: Fundamental principles of insurance 19 Claims personel An eficient claims department, stafed by competent and profesional claims personel, is vital to ensure the proper use of.
+
+--------------------------------------------------------------------------------
+Question 175
+An insured requests that the sum insured on his office block is increased to an amount that is greater than his insurer ’s normal acceptance limit. The insurer will normally be able to continue to underwrite the office block for its full sum insured by
+
+A. applying average.
+B. arranging coinsurance.
+C. increasing the deductible.
+D. purchasing reinsurance.
+
+Answer: D
+Explanation: Question 2 An insured requests that the sum insured on his ofice block is increased to an amount that is greater than his insurer ’s normal aceptance limit.
+
+--------------------------------------------------------------------------------
+Question 176
+One of the main reasons an insurer buys reinsurance is to smooth the peaks and troughs from their
+
+A. number of insurance claims.
+B. insurance premium income.
+C. amount of taxation.
+D. trading results.
+
+Answer: D
+Explanation: Question 176 One of the main reasons an insurer buys reinsurance is to smoth the peaks and troughs from their.
+
+--------------------------------------------------------------------------------
+Question 177
+Reinsurance of individual risks , where the reinsurer retains the authority to accept or reject each risk offered , is known as what type of reinsurance?
+
+A. Facultative.
+B. Stop loss.
+C. Surplus.
+D. Treaty quota share.
+
+Answer: A
+Explanation: Question 24 Reinsurance of individual risks, where the reinsurer retains the authority to acept or reject each risk ofered, is known as what type of reinsurance?
+
+--------------------------------------------------------------------------------
+Question 178
+An oil company requires insurance for an oil rig situated in the North Sea. It would be advantageous to have this risk placed within the London Market because
+
+A. full insurance coverage is always obtainable from a number of insurers via the subscription.
+B. high levels of insurance capacity can be obtained by co -insuring with a number of insurers via the subscription market.
+C. the insurers are able to provide the highest limits of liability to meet insurance capacity requirements.
+D. the insurers will always ensure that full insurance coverage is in force prior to the inception date.
+
+Answer: B
+Explanation: Question 178 An oil company requires insurance for an oil rig situated in the North Sea.
+
+--------------------------------------------------------------------------------
+Question 179
+Business is transacted largely on a subscription basis within the London Market , which means that
+
+A. all business must be placed through brokers.
+B. business is placed with more than one underwriter.
+C. all contracts of insurance must be in the form of a Market Reform Contract.
+D. both insurance and reinsurance business is placed.
+
+Answer: B
+Explanation: Question 26 Busines is transacted largely on a subscription basis within the London Market, which means that.
+
+--------------------------------------------------------------------------------
+Question 180
+Under a contract of insurance , an insurer
+
+A. agrees to make insurance available to the proposer, subject to finalisation of terms after the insurer has been supplied with information about the risk.
+B. agrees to pay an amount to the insured upon the occurrence of an insured event , in return for consideration by the insured.
+C. commits to paying an agreed amount to the insured if an inevitable event occurs , provided that the insured is prepared to pay a premium at the time.
+D. guarantees to make a pre -determined payment to an insured upon the occurrence of an expected event.
+
+Answer: B
+Explanation: Agres to make insurance available to the proposer, subject to finalisation of terms after the insurer has been suplied with information about the risk.
+
+--------------------------------------------------------------------------------
+Question 181
+What key advantage do Lloyd’s syndicates have over insurance companies in relation to international regulatory reporting?
+
+A. Lloyd’s syndicates have a special exemption that means they never have to report.
+B. Lloyd’s does all the reporting centrally on behalf of all syndicates.
+C. Lloyd’s syndicates always have to report less frequently than an insurance company.
+D. Lloyd’s syndicates always have to supply less information than an insurance company.
+
+Answer: D
+Explanation: Insurers that are both Lloyd’s syndicates and insurance companies As we saw earlier, any insurer that has both a Lloyd’s syndicate and an insurance company within its group has to consider for each risk that it reviews whether it is authorised to write that risk – both by the local.
+
+--------------------------------------------------------------------------------
+Question 182
+What ultimate action can the Prudential Regulation Authority (PRA) take against a company that fails to meet its requirements?
+
+A. Seize the assets of the company until the company meets the requirements.
+B. Suspend trading in the shares of the company until the company meets the requirements.
+C. The company directors can be fined.
+D. The company can be wound- up.
+
+Answer: D
+Explanation: 6 Legal and regulatory environment Overview of the UK regulatory framework The UK regulatory framework for financial services consists of thre regulatory bodies: Financial Conduct Authority (FCA) Separate independent regulator responsible for conduct of busines and market isues for al firms and prudential regulation of smal firms, like insurance.
+
+--------------------------------------------------------------------------------
+Question 183
+The main purpose of which organisation is to provide expertise , data and analysis to individual US state insurance regulators to effectively regulate the insurance industry and protect consumers?
+
+A. Internal Revenue Service.
+B. The International Underwriting Association of London.
+C. The National Association of Insurance Commissioners.
+D. The US Federal Government.
+
+Answer: C
+Explanation: Question 152 The main purpose of which organisation is to provide expertise, data and analysis to individual US state insurance regulators to efectively regulate the insurance industry and protect consumers?
+
+--------------------------------------------------------------------------------
+Question 184
+A London Market broker places an insurance policy on a subscription basis with a number of Lloyd ’s underwriters. On receipt of the premium from the insured, to whom does the broker pay the premium?
+
+A. Each Lloyd ’s underwriter for their respective proportion of the premium.
+B. Lloyd ’s Market Association.
+C. The leading Lloyd ’s underwriter.
+D. Xchanging Ins -sure Services.
+
+Answer: D
+Explanation: Question 4 A London Market broker places an insurance policy on a subscription basis with a number of Lloyd’s underwriters.
+
+--------------------------------------------------------------------------------
+Question 185
+A building valued at £250 ,000 is jointly owned by Karen and Terry , who each individually arrange insurance on it. Karen insures the building for £100 ,000 , whilst Terry insures it for £150 ,000. If a valid claim of £55 ,000 occurs how much is each insurer liable to pay under the sum insured method ?
+
+A. Karen ’s insurer is liable for £22 ,000 and Terry ’s for £33 ,000.
+B. Karen ’s insurer is liable for £27 ,500 and Terry ’s for £27 ,500.
+C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22 ,000.
+D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55 ,000.
+
+Answer: A
+Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+
+--------------------------------------------------------------------------------
+Question 186
+An insurer arranges for a policyholder’s car to be repaired following damage by a negligent third party motorist. Under which insurance principle can the insurer recover the paid claim?
+
+A. Average.
+B. Contribution.
+C. Indemnity.
+D. Subrogation.
+
+Answer: D
+Explanation: Question 186 An insurer aranges for a policyholder’s car to be repaired folowing damage by a negligent third party motorist.
+
+--------------------------------------------------------------------------------
+Question 187
+Which market organisation consists of syndicates formed by individual names and corporate members ?
+
+A. Lloyd ’s.
+B. The London Underwriting Centre.
+C. Protection and indemnity (P& I) clubs.
+D. Velonetic.
+
+Answer: A
+Explanation: Question 187 Which market organisation consists of syndicates formed by individual names and corporate members ?
+
+--------------------------------------------------------------------------------
+Question 188
+Which market association for insurance and reinsurance companies operating in or through the London market exists to pro tect and strengthen the business environment for its members?
+
+A. Association of British Insurers.
+B. Financial Conduct Authority.
+C. International Underwriting Association of London.
+D. Lloyd ’s Market Association.
+
+Answer: C
+Explanation: Question 79 Which trade market asociation for insurance and reinsurance companies exists to promote and enhance the busines environment for its members operating in or through London?
+
+--------------------------------------------------------------------------------
+Question 189
+Which statu te requires firms to have a procedure in place relating to gifts and hospitality which sets out what is acceptable and what is NOT acceptable?
+
+A. Bribery Act 2010.
+B. Proceeds of Crime Act 2002.
+C. Public Interest Disclosure Act 1998.
+D. Serious Crime Act 2007.
+
+Answer: A
+Explanation: Question 141 Which statue requires firms to have a procedure in place relating to gifts and hospitality which sets out what is aceptable and what is NOT aceptable?
+
+--------------------------------------------------------------------------------
+Question 190
+Under the Data Protection Act 2018 , if an organisation wishes to process special categories of data about an individual it must
+
+A. obtain explicit consent from the individual.
+B. show the individual the information before it is recorded.
+C. tell the individual that it has recorded the information.
+D. show the individual the information after it is recorded.
+
+Answer: A
+Explanation: Question 165 Under the Data Protection Act 2018, if an organisation wishes to proces special categories of data about an individual it must.
+
+--------------------------------------------------------------------------------
+Question 191
+In the London Market, w ho is usually responsible for the collection of insurance premiums from policyholders ?
+
+A. The b roker.
+B. The lead underwriter.
+C. Rating agencies.
+D. Velonetic.
+
+Answer: A
+Explanation: Question 16 In the London Market, who is usualy responsible for the colection of insurance premiums from policyholders?
+

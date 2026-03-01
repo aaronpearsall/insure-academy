@@ -1,4 +1,4 @@
-# Insurance Agent
+# InsureAcademy
 
 A study app for practising multiple choice questions for insurance exams. Designed to support multiple modules (e.g. CII and similar qualifications). Add your own exam papers and study materials to practise any module.
 
