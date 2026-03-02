@@ -53,6 +53,24 @@
 
       <main class="page-content">
 
+        <!-- Dashboard Summary: Designation, Enrolled, Days Until -->
+        <div class="dashboard-summary section-card">
+          <div class="dashboard-summary-grid">
+            <div class="dashboard-summary-item">
+              <div class="dashboard-summary-label">Current designation</div>
+              <div class="dashboard-summary-value" id="dashboardDesignation">—</div>
+            </div>
+            <div class="dashboard-summary-item">
+              <div class="dashboard-summary-label">Currently enrolled</div>
+              <div class="dashboard-summary-value" id="dashboardEnrolled">—</div>
+            </div>
+            <div class="dashboard-summary-item">
+              <div class="dashboard-summary-label">Days until next assessment</div>
+              <div class="dashboard-summary-value" id="dashboardDaysUntil">—</div>
+            </div>
+          </div>
+        </div>
+
         <!-- Stats Row -->
         <div class="stats-row">
           <div class="stat-card">
@@ -179,6 +197,7 @@
     </div>
   </div>
 
-  <script src="{{ url_for('static', filename='selection.js') }}?v=5"></script>
+  <script src="{{ url_for('static', filename='cii_units.js') }}"></script>
+  <script src="{{ url_for('static', filename='selection.js') }}?v=6"></script>
 </body>
 </html>

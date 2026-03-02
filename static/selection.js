@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     loadStats();
+    loadDashboardSummary();
     loadCurrentUnits();
     await loadModules();
 
@@ -64,6 +65,80 @@ async function loadStats() {
     } catch (e) {
         console.error('Error loading stats:', e);
     }
+}
+
+async function loadDashboardSummary() {
+  const designationEl = document.getElementById('dashboardDesignation');
+  const enrolledEl = document.getElementById('dashboardEnrolled');
+  const daysEl = document.getElementById('dashboardDaysUntil');
+  if (!designationEl && !enrolledEl && !daysEl) return;
+
+  try {
+    const res = await fetch('/api/planner');
+    const data = await res.json();
+    const plan = data.plan || [];
+    const enrolled = (data.enrolled_units || []).filter(u => u && (u.code || u.title));
+
+    // Designation: highest achieved (ACII > DipCII > Cert CII)
+    let designation = '—';
+    if (typeof QUALIFICATION_RULES !== 'undefined') {
+      const passed = plan.filter(r => r.status === 'passed' && r.code);
+      const certPassed = passed.filter(r => r.level === 'certificate');
+      const dipPassed = passed.filter(r => r.level === 'diploma');
+      const advPassed = passed.filter(r => r.level === 'advanced');
+
+      const certCredits = certPassed.reduce((s, r) => s + (r.credits || 0), 0);
+      const dipCredits = dipPassed.reduce((s, r) => s + (r.credits || 0), 0);
+      const advCredits = advPassed.reduce((s, r) => s + (r.credits || 0), 0);
+      const dipTotal = certCredits + dipCredits;
+      const advTotal = certCredits + dipCredits + advCredits;
+      const dipLevel4Plus = dipCredits + advCredits;
+
+      const certMet = certCredits >= QUALIFICATION_RULES.certificate.minCredits && QUALIFICATION_RULES.certificate.checkCore(certPassed);
+      const dipMet = dipTotal >= QUALIFICATION_RULES.diploma.minTotal && dipLevel4Plus >= QUALIFICATION_RULES.diploma.minDiplomaPlus && QUALIFICATION_RULES.diploma.checkCore(dipPassed);
+      const allPassed = [...certPassed, ...dipPassed, ...advPassed];
+      const advMet = advTotal >= QUALIFICATION_RULES.advanced.minTotal && advCredits >= QUALIFICATION_RULES.advanced.minAdvanced && dipLevel4Plus >= QUALIFICATION_RULES.advanced.minDiplomaPlus && QUALIFICATION_RULES.advanced.checkCore(allPassed);
+
+      if (advMet) designation = 'ACII';
+      else if (dipMet) designation = 'DipCII';
+      else if (certMet) designation = 'Cert CII';
+    }
+
+    if (designationEl) designationEl.textContent = designation;
+
+    // Currently enrolled: unit codes (e.g. LM1, LM2)
+    if (enrolledEl) {
+      enrolledEl.textContent = enrolled.length ? enrolled.map(u => u.code || u.title).join(', ') : '—';
+    }
+
+    // Days until next assessment: soonest future target_date among plan items
+    if (daysEl) {
+      const dates = plan.filter(r => r.target_date).map(r => r.target_date);
+      if (!dates.length) {
+        daysEl.textContent = '—';
+      } else {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let minDays = null;
+        dates.forEach(dStr => {
+          const d = new Date(dStr);
+          d.setHours(0, 0, 0, 0);
+          const diff = Math.ceil((d - today) / (1000 * 60 * 60 * 24));
+          if (diff >= 0 && (minDays === null || diff < minDays)) minDays = diff;
+          else if (diff < 0 && minDays === null) minDays = diff;
+        });
+        if (minDays === null) daysEl.textContent = '—';
+        else if (minDays < 0) daysEl.textContent = 'Past due';
+        else if (minDays === 0) daysEl.textContent = 'Today';
+        else if (minDays === 1) daysEl.textContent = '1 day';
+        else daysEl.textContent = `${minDays} days`;
+      }
+    }
+  } catch (e) {
+    if (designationEl) designationEl.textContent = '—';
+    if (enrolledEl) enrolledEl.textContent = '—';
+    if (daysEl) daysEl.textContent = '—';
+  }
 }
 
 async function loadCurrentUnits() {

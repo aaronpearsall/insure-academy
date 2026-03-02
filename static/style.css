@@ -434,6 +434,35 @@ body {
 /* =========================================
    Section Cards (Practice Modes)
    ========================================= */
+.dashboard-summary {
+  margin-bottom: 22px;
+}
+
+.dashboard-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.dashboard-summary-item {
+  padding: 4px 0;
+}
+
+.dashboard-summary-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.dashboard-summary-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
 .section-card {
   background: var(--white);
   border-radius: var(--radius);
