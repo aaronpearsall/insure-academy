@@ -54,6 +54,11 @@
 
       <main class="page-content">
 
+        <div class="planner-view-toggle">
+          <button type="button" class="planner-view-btn active" data-view="modules">Modules</button>
+          <button type="button" class="planner-view-btn" data-view="calendar">Calendar</button>
+        </div>
+
         <div class="planner-summary section-card">
           <div class="planner-summary-header">
             <div>
@@ -63,26 +68,45 @@
           </div>
           <div class="planner-summary-grid">
             <div class="planner-summary-card">
-              <div class="planner-summary-title">Certificate</div>
+              <div class="planner-summary-title">Certificate in Insurance (40 credits)</div>
               <div class="planner-summary-value" id="summaryCertCredits">0</div>
-              <div class="planner-summary-caption">Level 3 credits planned</div>
+              <div class="planner-summary-caption">Credits: 0/40 · Core: IF1 or LM1+LM2</div>
+              <div class="planner-criteria-status" id="summaryCertMet"></div>
             </div>
             <div class="planner-summary-card">
-              <div class="planner-summary-title">Diploma</div>
+              <div class="planner-summary-title">Diploma (120 total, 90 at L4+)</div>
               <div class="planner-summary-value" id="summaryDipCredits">0</div>
-              <div class="planner-summary-caption">Total credits (≥120) / Level 4+ (≥90)</div>
+              <div class="planner-summary-caption">Credits: 0/120 · Core: M05 + (M92 or 530)</div>
+              <div class="planner-criteria-status" id="summaryDipMet"></div>
             </div>
             <div class="planner-summary-card">
-              <div class="planner-summary-title">Advanced Diploma</div>
+              <div class="planner-summary-title">Advanced Diploma (290 total, 150 Adv)</div>
               <div class="planner-summary-value" id="summaryAdvCredits">0</div>
-              <div class="planner-summary-caption">Higher-level credits (rules to be confirmed)</div>
+              <div class="planner-summary-caption">Credits: 0/290 · Core: M05 + M92/530 + 820/930/960</div>
+              <div class="planner-criteria-status" id="summaryAdvMet"></div>
             </div>
           </div>
         </div>
 
-        <div class="planner-layout">
+        <div id="plannerModulesView" class="planner-modules-view">
 
-          <section class="planner-section">
+          <div class="planner-add-module section-card">
+            <label for="addModuleSelect" class="section-label">Add module</label>
+            <select id="addModuleSelect" class="planner-add-module-select">
+              <option value="">-- Choose a unit to add --</option>
+              <optgroup label="Certificate (Level 3)">
+                <!-- Populated by JS -->
+              </optgroup>
+              <optgroup label="Diploma (Level 4)">
+                <!-- Populated by JS -->
+              </optgroup>
+              <optgroup label="Advanced Diploma (Level 6+)">
+                <!-- Populated by JS -->
+              </optgroup>
+            </select>
+          </div>
+
+          <section class="planner-section planner-section-vertical">
             <div class="section-card">
               <div class="section-label">Certificate Level Units</div>
               <p class="planner-help-text">Typically around 40 Level 3 credits required. Add units you are planning or currently studying.</p>
@@ -91,9 +115,8 @@
                   <thead>
                     <tr>
                       <th>Unit</th>
-                      <th>Title</th>
                       <th>Credits</th>
-                      <th>Compulsory</th>
+                      <th>Study hrs</th>
                       <th>Target Exam Date</th>
                       <th>Status</th>
                       <th></th>
@@ -102,11 +125,10 @@
                   <tbody id="plannerCertBody"></tbody>
                 </table>
               </div>
-              <button class="btn btn-secondary btn-sm" data-add-row="certificate">+ Add Certificate Unit</button>
             </div>
           </section>
 
-          <section class="planner-section">
+          <section class="planner-section planner-section-vertical">
             <div class="section-card">
               <div class="section-label">Diploma Level Units</div>
               <p class="planner-help-text">Diploma typically needs 120 CII credits in total, with at least 90 at Diploma level or above, including compulsory units.</p>
@@ -115,9 +137,8 @@
                   <thead>
                     <tr>
                       <th>Unit</th>
-                      <th>Title</th>
                       <th>Credits</th>
-                      <th>Compulsory</th>
+                      <th>Study hrs</th>
                       <th>Target Exam Date</th>
                       <th>Status</th>
                       <th></th>
@@ -126,11 +147,10 @@
                   <tbody id="plannerDipBody"></tbody>
                 </table>
               </div>
-              <button class="btn btn-secondary btn-sm" data-add-row="diploma">+ Add Diploma Unit</button>
             </div>
           </section>
 
-          <section class="planner-section">
+          <section class="planner-section planner-section-vertical">
             <div class="section-card">
               <div class="section-label">Advanced Diploma Units</div>
               <p class="planner-help-text">Use this section for higher-level units that build towards the Advanced Diploma.</p>
@@ -139,9 +159,8 @@
                   <thead>
                     <tr>
                       <th>Unit</th>
-                      <th>Title</th>
                       <th>Credits</th>
-                      <th>Compulsory</th>
+                      <th>Study hrs</th>
                       <th>Target Exam Date</th>
                       <th>Status</th>
                       <th></th>
@@ -150,14 +169,27 @@
                   <tbody id="plannerAdvBody"></tbody>
                 </table>
               </div>
-              <button class="btn btn-secondary btn-sm" data-add-row="advanced">+ Add Advanced Unit</button>
             </div>
           </section>
 
         </div>
 
+        <div id="plannerCalendarView" class="planner-calendar-view hidden">
+          <div class="planner-calendar-header">
+            <button type="button" class="btn btn-secondary btn-sm" id="calendarPrev">← Prev</button>
+            <h2 class="planner-calendar-title" id="calendarTitle">January 2026</h2>
+            <button type="button" class="btn btn-secondary btn-sm" id="calendarNext">Next →</button>
+          </div>
+          <div class="planner-calendar-grid" id="calendarGrid"></div>
+          <div class="planner-calendar-legend">
+            <span class="planner-calendar-legend-item"><span class="legend-dot certificate"></span> Certificate</span>
+            <span class="planner-calendar-legend-item"><span class="legend-dot diploma"></span> Diploma</span>
+            <span class="planner-calendar-legend-item"><span class="legend-dot advanced"></span> Advanced</span>
+          </div>
+        </div>
+
         <div class="planner-actions">
-          <button id="savePlannerBtn" class="btn btn-primary">Save Plan</button>
+          <button type="button" id="savePlannerBtn" class="btn btn-primary">Save Plan</button>
           <span id="plannerSaveStatus" class="planner-save-status"></span>
         </div>
 
@@ -165,6 +197,7 @@
     </div>
   </div>
 
+  <script src="{{ url_for('static', filename='cii_units.js') }}"></script>
   <script src="{{ url_for('static', filename='planner.js') }}"></script>
 </body>
 </html>

@@ -1262,8 +1262,56 @@ body {
    Exam Planner
    ========================================= */
 
+.planner-view-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+}
+
+.planner-view-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.planner-view-btn:hover {
+  background: var(--bg);
+  color: var(--text-primary);
+}
+
+.planner-view-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
 .planner-summary {
   margin-bottom: 22px;
+}
+
+.planner-add-module {
+  margin-bottom: 22px;
+}
+
+.planner-add-module-select {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--text-primary);
 }
 
 .planner-summary-header {
@@ -1312,15 +1360,18 @@ body {
   color: var(--text-muted);
 }
 
-.planner-layout {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.planner-modules-view {
+  display: flex;
+  flex-direction: column;
   gap: 18px;
-  align-items: flex-start;
 }
 
-.planner-section .section-card {
-  height: 100%;
+.planner-section.planner-section-vertical {
+  width: 100%;
+}
+
+.planner-section.planner-section-vertical .section-card {
+  width: 100%;
 }
 
 .planner-help-text {
@@ -1373,6 +1424,31 @@ body {
   text-align: center;
 }
 
+.planner-cell-credits,
+.planner-cell-hours {
+  font-size: 12.5px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.planner-unit-select {
+  min-width: 240px;
+}
+
+.planner-criteria-status {
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.planner-met-yes {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.planner-met-no {
+  color: var(--text-muted);
+}
+
 .planner-remove-row {
   border: none;
   background: transparent;
@@ -1398,11 +1474,112 @@ body {
   color: var(--text-secondary);
 }
 
-@media (max-width: 1100px) {
-  .planner-layout {
-    grid-template-columns: 1fr;
-  }
+/* Calendar view */
+.planner-calendar-view {
+  margin-top: 0;
 }
+
+.planner-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.planner-calendar-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.planner-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.planner-calendar-day {
+  min-height: 90px;
+  padding: 6px;
+  background: var(--white);
+  font-size: 12px;
+}
+
+.planner-calendar-day.planner-calendar-weekday {
+  min-height: auto;
+  padding: 8px 6px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.planner-calendar-day-header {
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.planner-calendar-day.other-month .planner-calendar-day-header {
+  color: var(--text-muted);
+}
+
+.planner-calendar-day.other-month {
+  background: var(--bg);
+}
+
+.planner-calendar-event {
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.planner-calendar-event.certificate {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.planner-calendar-event.diploma {
+  background: var(--purple-light);
+  color: var(--purple);
+}
+
+.planner-calendar-event.advanced {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.planner-calendar-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.planner-calendar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-dot.certificate { background: var(--primary); }
+.legend-dot.diploma { background: var(--purple); }
+.legend-dot.advanced { background: var(--success); }
 
 /* =========================================
    Login Page
