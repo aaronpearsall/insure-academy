@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     loadStats();
+    loadCurrentUnits();
     await loadModules();
 
     // After modules load, currentModule is set to first (LM1); refresh data for it
@@ -63,6 +64,37 @@ async function loadStats() {
     } catch (e) {
         console.error('Error loading stats:', e);
     }
+}
+
+async function loadCurrentUnits() {
+  const container = document.getElementById('currentUnitsList');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/planner');
+    const data = await res.json();
+    const units = (data.enrolled_units || []).filter(u => u && (u.code || u.title));
+    if (!units.length) {
+      container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">No units marked as studying or booked yet. Use the Exam Planner to add your units.</span>';
+      return;
+    }
+    container.innerHTML = units.map(u => {
+      const code = u.code || '';
+      const title = u.title || '';
+      const level = u.level || '';
+      const credits = u.credits != null ? `${u.credits} credits` : '';
+      const when = u.target_date ? `Target: ${u.target_date}` : '';
+      const meta = [level, credits, when].filter(Boolean).join(' · ');
+      return `<div class="current-unit-row">
+        <div class="current-unit-main">
+          <div class="current-unit-code">${code}</div>
+          <div class="current-unit-title">${title}</div>
+        </div>
+        <div class="current-unit-meta">${meta}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Unable to load units.</span>';
+  }
 }
 
 async function loadModules() {

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsureAcademy - Exam Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="/" class="sidebar-logo sidebar-logo-link">
+        <div class="logo-icon">IA</div>
+        <span class="logo-text">InsureAcademy</span>
+      </a>
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-title">Menu</span>
+        <a href="/" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="/planner" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Exam Planner
+        </a>
+        <a href="/history" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          History
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/logout" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">Exam Planner</h1>
+        </div>
+        <div class="topbar-right">
+          <a href="/" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+          <div class="user-avatar">A</div>
+        </div>
+      </header>
+
+      <main class="page-content">
+
+        <div class="planner-summary section-card">
+          <div class="planner-summary-header">
+            <div>
+              <div class="section-label">Qualification Progress</div>
+              <p class="planner-summary-text">Track credits towards Certificate, Diploma and Advanced Diploma. This is a planning aid only; always check the latest CII rules.</p>
+            </div>
+          </div>
+          <div class="planner-summary-grid">
+            <div class="planner-summary-card">
+              <div class="planner-summary-title">Certificate</div>
+              <div class="planner-summary-value" id="summaryCertCredits">0</div>
+              <div class="planner-summary-caption">Level 3 credits planned</div>
+            </div>
+            <div class="planner-summary-card">
+              <div class="planner-summary-title">Diploma</div>
+              <div class="planner-summary-value" id="summaryDipCredits">0</div>
+              <div class="planner-summary-caption">Total credits (≥120) / Level 4+ (≥90)</div>
+            </div>
+            <div class="planner-summary-card">
+              <div class="planner-summary-title">Advanced Diploma</div>
+              <div class="planner-summary-value" id="summaryAdvCredits">0</div>
+              <div class="planner-summary-caption">Higher-level credits (rules to be confirmed)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planner-layout">
+
+          <section class="planner-section">
+            <div class="section-card">
+              <div class="section-label">Certificate Level Units</div>
+              <p class="planner-help-text">Typically around 40 Level 3 credits required. Add units you are planning or currently studying.</p>
+              <div class="planner-table-wrapper">
+                <table class="planner-table">
+                  <thead>
+                    <tr>
+                      <th>Unit</th>
+                      <th>Title</th>
+                      <th>Credits</th>
+                      <th>Compulsory</th>
+                      <th>Target Exam Date</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="plannerCertBody"></tbody>
+                </table>
+              </div>
+              <button class="btn btn-secondary btn-sm" data-add-row="certificate">+ Add Certificate Unit</button>
+            </div>
+          </section>
+
+          <section class="planner-section">
+            <div class="section-card">
+              <div class="section-label">Diploma Level Units</div>
+              <p class="planner-help-text">Diploma typically needs 120 CII credits in total, with at least 90 at Diploma level or above, including compulsory units.</p>
+              <div class="planner-table-wrapper">
+                <table class="planner-table">
+                  <thead>
+                    <tr>
+                      <th>Unit</th>
+                      <th>Title</th>
+                      <th>Credits</th>
+                      <th>Compulsory</th>
+                      <th>Target Exam Date</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="plannerDipBody"></tbody>
+                </table>
+              </div>
+              <button class="btn btn-secondary btn-sm" data-add-row="diploma">+ Add Diploma Unit</button>
+            </div>
+          </section>
+
+          <section class="planner-section">
+            <div class="section-card">
+              <div class="section-label">Advanced Diploma Units</div>
+              <p class="planner-help-text">Use this section for higher-level units that build towards the Advanced Diploma.</p>
+              <div class="planner-table-wrapper">
+                <table class="planner-table">
+                  <thead>
+                    <tr>
+                      <th>Unit</th>
+                      <th>Title</th>
+                      <th>Credits</th>
+                      <th>Compulsory</th>
+                      <th>Target Exam Date</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="plannerAdvBody"></tbody>
+                </table>
+              </div>
+              <button class="btn btn-secondary btn-sm" data-add-row="advanced">+ Add Advanced Unit</button>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="planner-actions">
+          <button id="savePlannerBtn" class="btn btn-primary">Save Plan</button>
+          <span id="plannerSaveStatus" class="planner-save-status"></span>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='planner.js') }}"></script>
+</body>
+</html>
+

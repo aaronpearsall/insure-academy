@@ -49,7 +49,7 @@ C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22, 000.
 D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55, 000.
 
 Answer: A
-Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+Explanation: Under the sum insured method, each insurer pays in proportion to their share of the total sum insured. Total sum insured is £100,000 + £150,000 = £250,000. Karen's insurer pays (100,000 ÷ 250,000) × £55,000 = £22,000; Terry's pays (150,000 ÷ 250,000) × £55,000 = £33,000.
 
 --------------------------------------------------------------------------------
 Question 5

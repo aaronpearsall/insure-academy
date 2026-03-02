@@ -29,13 +29,15 @@ DEFAULT_PASSWORD_HASH = os.environ.get('APP_PASSWORD_HASH', generate_password_ha
 # Directories: one folder per module, each with past_papers/ and study_text/
 MODULES_DIR = Path("modules")
 QUESTIONS_FILE = Path("questions.json")
+PLANNER_FILE = Path("planner.json")
 
 # Only these modules are shown and loaded (no "All Modules"; practice is per module).
-ALLOWED_MODULES = ["LM1", "M05"]
+# LM1 and LM2 are London Market units; M05 is the existing diploma unit.
+ALLOWED_MODULES = ["LM1", "LM2", "M05"]
 
 
 def get_module_names():
-    """Return allowed modules that exist under modules/ (LM1, M05)."""
+    """Return allowed modules that exist under modules/ (LM1, LM2, M05)."""
     if not MODULES_DIR.exists():
         return []
     return [m for m in ALLOWED_MODULES if (MODULES_DIR / m).is_dir()]
@@ -406,8 +408,10 @@ class QuestionParser:
             return text or ''
         # Remove space(s) immediately before comma (e.g. '£250 ,000' -> '£250,000', 'Terry ,' -> 'Terry,')
         text = re.sub(r'\s+,', ',', text)
-        # Remove space(s) immediately before apostrophe (e.g. "policyholder 's" -> "policyholder's")
-        text = re.sub(r"\s+'", "'", text)
+        # Remove space(s) immediately after comma when followed by digit (e.g. '£33, 000' -> '£33,000')
+        text = re.sub(r',\s+(?=\d)', ',', text)
+        # Remove space(s) immediately before apostrophe (straight, curly U+2019, or backtick) for possessives
+        text = re.sub(r"\s+[''\u2019`](?=[sS]|\s|$)", "'", text)
         # Remove space(s) immediately before full stop when it looks like a decimal (e.g. "1 . 5" -> "1.5")
         text = re.sub(r'(\d)\s+\.\s+(?=\d)', r'\1.', text)
         # Fix common OCR split-words (word broken with stray space)
@@ -829,6 +833,15 @@ class StudyTextIndex:
         """Fix spelling, grammar and consistency in explanation text. Use for all explanations (LM1 and M05)."""
         if not text or not isinstance(text, str):
             return text or ''
+        # Remove page/section references (e.g. "2: Basic insurance legal principles and terminology 49")
+        text = re.sub(r'\d+:\s*[A-Za-z][^.]*?\s+\d+(?=\s|$)', ' ', text)
+        # Remove heading-style fragments that run into the next sentence (e.g. "Precluded subrogation rights There" -> "There")
+        text = re.sub(
+            r'\b(Precluded subrogation rights|Insured has no rights|Information that the insured does not know)\s+',
+            ' ',
+            text,
+            flags=re.IGNORECASE
+        )
         # Normalise whitespace
         text = re.sub(r'\s+', ' ', text).strip()
         # Fix repeated words (the the, a a, is is, etc.)
@@ -1285,6 +1298,31 @@ def save_questions(questions):
     with open(QUESTIONS_FILE, 'w', encoding='utf-8') as f:
         json.dump(questions, f, indent=2, ensure_ascii=False)
 
+
+def load_planner():
+    """Load study planner data (enrolled units + long-term plan)."""
+    if PLANNER_FILE.exists():
+        try:
+            with open(PLANNER_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                # Ensure expected keys exist
+                data.setdefault('enrolled_units', [])
+                data.setdefault('plan', [])
+                return data
+        except Exception:
+            pass
+    return {'enrolled_units': [], 'plan': []}
+
+
+def save_planner(data):
+    """Persist study planner data."""
+    cleaned = {
+        'enrolled_units': data.get('enrolled_units', []),
+        'plan': data.get('plan', []),
+    }
+    with open(PLANNER_FILE, 'w', encoding='utf-8') as f:
+        json.dump(cleaned, f, indent=2, ensure_ascii=False)
+
 def login_required(f):
     """Decorator to require login for routes"""
     @wraps(f)
@@ -1338,10 +1376,29 @@ def results():
 def history():
     return render_template('history.html')
 
+
+@app.route('/planner')
+@login_required
+def planner():
+    """Exam planner page (certificate / diploma / advanced diploma)."""
+    return render_template('planner.html')
+
 @app.route('/api/check-auth')
 def check_auth():
     """Check if user is authenticated"""
     return jsonify({'authenticated': session.get('logged_in', False)})
+
+
+@app.route('/api/planner', methods=['GET', 'POST'])
+@login_required
+def planner_api():
+    """Get or update the long-term exam planner (enrolled units and plan rows)."""
+    if request.method == 'GET':
+        return jsonify(load_planner())
+    
+    data = request.get_json(silent=True) or {}
+    save_planner(data)
+    return jsonify({'ok': True})
 
 @app.route('/api/questions')
 @login_required

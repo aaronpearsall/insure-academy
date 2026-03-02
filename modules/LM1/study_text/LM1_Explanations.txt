@@ -14,7 +14,7 @@ C. Immediately after the quotation is received.
 D. Immediately after the premium is paid.
 
 Answer: A
-Explanation: Reputation protection (for example, by dealing with the costs and logistics of communicating with customers whose data might have been taken).
+Explanation: Under the duty of fair presentation (and the principle of good faith), material facts that the insurer would want to know must be disclosed during the proposal stage, before the contract is concluded. A history of burglaries is material to the risk and must be disclosed at that time.
 
 --------------------------------------------------------------------------------
 Question 2
@@ -26,7 +26,7 @@ C. Subrogation.
 D. Good faith.
 
 Answer: C
-Explanation: Precluded subrogation rights There are some situations in which insurers are barred from exercising subrogation rights, or where they agree not to exercise them.2: Basic insurance legal principles and terminology 49 Insured has no rights The insurer's right to subrogate relies on the insured having rights against a negligent party.
+Explanation: Subrogation is the principle that allows an insurer, once it has indemnified the insured, to take over the insured's right to recover payment from a third party responsible for the loss. The insurer's right to subrogate depends on the insured having rights against that party (for example, a negligent motorist). In some situations insurers are barred from exercising subrogation rights, or agree not to do so.
 
 --------------------------------------------------------------------------------
 Question 3
@@ -650,7 +650,7 @@ C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22 ,000.
 D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55 ,000.
 
 Answer: A
-Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+Explanation: Under the sum insured method, each insurer pays in proportion to their share of the total sum insured. Total sum insured is £100,000 + £150,000 = £250,000. Karen's insurer pays (100,000 ÷ 250,000) × £55,000 = £22,000; Terry's pays (150,000 ÷ 250,000) × £55,000 = £33,000.
 
 --------------------------------------------------------------------------------
 Question 55
@@ -1214,7 +1214,7 @@ C. Immediately after the quotation is received.
 D. Immediately after the premium is paid.
 
 Answer: A
-Explanation: Reputation protection (for example, by dealing with the costs and logistics of communicating with customers whose data might have been taken).
+Explanation: Under the duty of fair presentation (and the principle of good faith), material facts that the insurer would want to know must be disclosed during the proposal stage, before the contract is concluded. A history of burglaries is material to the risk and must be disclosed at that time.
 
 --------------------------------------------------------------------------------
 Question 102
@@ -1226,7 +1226,7 @@ C. Subrogation.
 D. Good faith.
 
 Answer: C
-Explanation: Precluded subrogation rights There are some situations in which insurers are barred from exercising subrogation rights, or where they agree not to exercise them.2: Basic insurance legal principles and terminology 49 Insured has no rights The insurer's right to subrogate relies on the insured having rights against a negligent party.
+Explanation: Subrogation is the principle that allows an insurer, once it has indemnified the insured, to take over the insured's right to recover payment from a third party responsible for the loss. The insurer's right to subrogate depends on the insured having rights against that party (for example, a negligent motorist). In some situations insurers are barred from exercising subrogation rights, or agree not to do so.
 
 --------------------------------------------------------------------------------
 Question 103
@@ -1454,7 +1454,7 @@ C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22, 000.
 D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55, 000.
 
 Answer: A
-Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+Explanation: Under the sum insured method, each insurer pays in proportion to their share of the total sum insured. Total sum insured is £100,000 + £150,000 = £250,000. Karen's insurer pays (100,000 ÷ 250,000) × £55,000 = £22,000; Terry's pays (150,000 ÷ 250,000) × £55,000 = £33,000.
 
 --------------------------------------------------------------------------------
 Question 122
@@ -1850,7 +1850,7 @@ C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22 ,000.
 D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55 ,000.
 
 Answer: A
-Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+Explanation: Under the sum insured method, each insurer pays in proportion to their share of the total sum insured. Total sum insured is £100,000 + £150,000 = £250,000. Karen's insurer pays (100,000 ÷ 250,000) × £55,000 = £22,000; Terry's pays (150,000 ÷ 250,000) × £55,000 = £33,000.
 
 --------------------------------------------------------------------------------
 Question 155
@@ -2222,7 +2222,7 @@ C. Karen ’s insurer is liable for £33 ,000 and Terry ’s for £22 ,000.
 D. Karen ’s insurer is liable for £55 ,000 and Terry ’s for £55 ,000.
 
 Answer: A
-Explanation: Karen insures the building for £10 ,0 , whilst Tery insures it for £150 ,0.
+Explanation: Under the sum insured method, each insurer pays in proportion to their share of the total sum insured. Total sum insured is £100,000 + £150,000 = £250,000. Karen's insurer pays (100,000 ÷ 250,000) × £55,000 = £22,000; Terry's pays (150,000 ÷ 250,000) × £55,000 = £33,000.
 
 --------------------------------------------------------------------------------
 Question 186
