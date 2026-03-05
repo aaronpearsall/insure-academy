@@ -13,19 +13,26 @@ A study app for practising multiple choice questions for insurance exams. Design
 2. **Adding a module**: Create `modules/<NewName>/past_papers/` and `modules/<NewName>/study_text/`; the app picks it up automatically.
 3. **Question explanations**: Put files with "explanation", "answer", or "concept" in the name inside the module’s `study_text/` folder. See `study_text/EXPLANATIONS_FORMAT.txt` for format (in the repo root or under a module).
 4. **Install Dependencies**: Run `pip3 install -r requirements.txt`
-5. **Set Login Credentials** (Optional): Set environment variables for custom credentials:
-   - `export APP_USERNAME=your_username`
-   - `export APP_PASSWORD=your_password`
-   - `export SECRET_KEY=your_secret_key` (for session security)
+5. **Set Environment Variables** (see `.env.example`):
+   - `SECRET_KEY` – Required for session security
+   - `APP_USERNAME` / `APP_PASSWORD` – Legacy login (optional)
+   - `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` – For Google sign-in
+   - `STRIPE_SECRET_KEY` / `STRIPE_PUBLISHABLE_KEY` / `STRIPE_PRICE_ID` / `STRIPE_WEBHOOK_SECRET` – For subscriptions
+   - `DATABASE_URL` – SQLite path (default: `sqlite:///insure_academy.db`)
 6. **Run the App**: Run `python3 app.py` and open `http://localhost:5001` in your browser
 
 ## Login
 
-**Default Credentials:**
+**Legacy (single user):**
 - Username: `aaron`
 - Password: `insagent2025`
 
-**Important:** Change these credentials before hosting online by setting environment variables.
+**New users:** Sign up with email or Google. After signup, a subscription is required before full access.
+
+**Environment variables:**
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` – For "Sign in with Google"
+- `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_ID` – For subscription checkout
+- `STRIPE_WEBHOOK_SECRET` – For Stripe webhook events (checkout.session.completed, customer.subscription.*)
 
 ## Features
 

@@ -246,21 +246,27 @@ function renderPlanner() {
       const credits = unit ? unit.credits : (row.credits != null ? row.credits : '');
       const studyHours = unit ? unit.studyHours : (row.study_hours != null ? row.study_hours : '');
       const isDone = row.status === 'passed';
+      const isStudying = !!row.studying;
 
       tr.classList.toggle('planner-row-done', isDone);
+      tr.classList.toggle('planner-row-studying', isStudying);
 
-      const tickHtml = `<button type="button" class="planner-tick ${isDone ? 'planner-tick-done' : ''}" title="${isDone ? 'Mark incomplete' : 'Mark complete'}">
+      const tickDisabled = isStudying;
+      const tickHtml = `<button type="button" class="planner-tick ${isDone ? 'planner-tick-done' : ''} ${tickDisabled ? 'planner-tick-disabled' : ''}" ${tickDisabled ? 'disabled' : ''} title="${tickDisabled ? 'Complete studying first' : isDone ? 'Mark incomplete' : 'Mark complete'}">
         <svg class="planner-tick-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
           ${isDone ? '<polyline points="9 12 11 14 15 10"/>' : ''}
         </svg>
       </button>`;
 
+      const studyingHtml = `<input type="checkbox" class="planner-studying-checkbox" ${isStudying ? 'checked' : ''} title="Currently studying (cannot mark complete while studying)">`;
+
       tr.innerHTML = `
         <td>${selectHtml}</td>
         <td class="planner-cell-credits">${credits}</td>
         <td class="planner-cell-hours">${studyHours}</td>
         <td><input type="date" class="planner-input" value="${row.target_date || ''}"></td>
+        <td class="planner-cell-center">${studyingHtml}</td>
         <td class="planner-cell-center">${tickHtml}</td>
         <td class="planner-cell-center">
           <button type="button" class="planner-remove-row" title="Remove row">×</button>
@@ -268,7 +274,24 @@ function renderPlanner() {
       `;
       tbody.appendChild(tr);
 
+      tr.querySelector('.planner-studying-checkbox').addEventListener('change', (e) => {
+        row.studying = e.target.checked;
+        tr.classList.toggle('planner-row-studying', row.studying);
+        const tickBtn = tr.querySelector('.planner-tick');
+        tickBtn.disabled = row.studying;
+        tickBtn.classList.toggle('planner-tick-disabled', row.studying);
+        tickBtn.title = row.studying ? 'Complete studying first' : (row.status === 'passed' ? 'Mark incomplete' : 'Mark complete');
+        if (row.studying) {
+          row.status = 'planned';
+          tr.classList.remove('planner-row-done');
+          tickBtn.classList.remove('planner-tick-done');
+          tickBtn.querySelector('.planner-tick-svg').innerHTML = '<circle cx="12" cy="12" r="10"/>';
+        }
+        updateSummaries();
+      });
+
       tr.querySelector('.planner-tick').addEventListener('click', () => {
+        if (row.studying) return;
         row.status = row.status === 'passed' ? 'planned' : 'passed';
         tr.classList.toggle('planner-row-done', row.status === 'passed');
         tr.querySelector('.planner-tick').classList.toggle('planner-tick-done', row.status === 'passed');
@@ -310,6 +333,7 @@ function addPlannerRow(level, code) {
     study_hours: unit ? unit.studyHours : null,
     target_date: '',
     status: 'planned',  // ticked = 'passed'
+    studying: false,
   });
   renderPlanner();
 }
@@ -353,6 +377,7 @@ function collectPlannerFromDOM() {
       const credits = parseInt(creditsEl?.textContent || '0', 10) || null;
       const studyHours = parseInt(hoursEl?.textContent || '0', 10) || null;
       const targetDate = cells[3]?.querySelector('input')?.value || '';
+      const studying = cells[4]?.querySelector('.planner-studying-checkbox')?.checked || false;
       const isDone = tr.querySelector('.planner-tick')?.classList.contains('planner-tick-done');
       const status = isDone ? 'passed' : 'planned';
 
@@ -365,6 +390,7 @@ function collectPlannerFromDOM() {
         study_hours: unit ? unit.studyHours : studyHours,
         target_date: targetDate,
         status,
+        studying,
       });
     });
   });
@@ -380,6 +406,7 @@ function collectPlannerFromDOM() {
       credits: row.credits,
       target_date: row.target_date,
       status: row.status,
+      studying: row.studying,
     }));
 }
 

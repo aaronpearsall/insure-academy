@@ -1,12 +1,19 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import json
 import re
 import secrets
+import sqlite3
 from pathlib import Path
 from functools import wraps
+from urllib.parse import urlencode
 try:
     from pypdf import PdfReader
 except ImportError:
@@ -26,6 +33,37 @@ DEFAULT_USERNAME = os.environ.get('APP_USERNAME', 'aaron')
 _default_password = os.environ.get('APP_PASSWORD', 'insagent2025')
 DEFAULT_PASSWORD_HASH = os.environ.get('APP_PASSWORD_HASH', generate_password_hash(_default_password, method='pbkdf2:sha256'))
 
+# Auth & subscription config
+_db_url = os.environ.get('DATABASE_URL', 'sqlite:///insure_academy.db')
+DATABASE_PATH = _db_url.replace('sqlite:///', '').split('?')[0]
+if not DATABASE_PATH or DATABASE_PATH == _db_url:
+    DATABASE_PATH = str(Path(__file__).parent / 'insure_academy.db')
+elif not os.path.isabs(DATABASE_PATH):
+    DATABASE_PATH = str(Path(__file__).parent / DATABASE_PATH)
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
+STRIPE_PRICE_ID = os.environ.get('STRIPE_PRICE_ID', '')  # monthly price
+STRIPE_PRICE_ANNUAL_ID = os.environ.get('STRIPE_PRICE_ANNUAL_ID', '')  # annual price (optional)
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
+
+# OAuth (Google) - register once
+try:
+    from authlib.integrations.flask_client import OAuth
+    _oauth = OAuth(app)
+    if GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET:
+        _oauth.register(
+            name='google',
+            client_id=GOOGLE_CLIENT_ID,
+            client_secret=GOOGLE_CLIENT_SECRET,
+            server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+            client_kwargs={'scope': 'openid email profile'}
+        )
+    oauth = _oauth
+except ImportError:
+    oauth = None
+
 # Directories: one folder per module, each with past_papers/ and study_text/
 MODULES_DIR = Path("modules")
 QUESTIONS_FILE = Path("questions.json")
@@ -42,6 +80,104 @@ def get_module_names():
     if not MODULES_DIR.exists():
         return []
     return [m for m in ALLOWED_MODULES if (MODULES_DIR / m).is_dir()]
+
+
+def get_db():
+    """Get SQLite connection."""
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def init_db():
+    """Create users table if not exists."""
+    conn = get_db()
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE NOT NULL,
+            password_hash TEXT,
+            google_id TEXT UNIQUE,
+            stripe_customer_id TEXT,
+            subscription_status TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+
+def get_user_by_id(user_id):
+    """Get user by id."""
+    conn = get_db()
+    row = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def get_user_by_email(email):
+    """Get user by email."""
+    conn = get_db()
+    row = conn.execute("SELECT * FROM users WHERE email = ?", (email.lower().strip(),)).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def get_user_by_google_id(google_id):
+    """Get user by Google ID."""
+    conn = get_db()
+    row = conn.execute("SELECT * FROM users WHERE google_id = ?", (google_id,)).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def create_user(email, password_hash=None, google_id=None):
+    """Create a new user. Returns user dict or None if email exists."""
+    email = email.lower().strip()
+    conn = get_db()
+    try:
+        conn.execute(
+            "INSERT INTO users (email, password_hash, google_id) VALUES (?, ?, ?)",
+            (email, password_hash, google_id)
+        )
+        conn.commit()
+        row = conn.execute("SELECT * FROM users WHERE id = last_insert_rowid()").fetchone()
+        return dict(row) if row else None
+    except sqlite3.IntegrityError:
+        return None
+    finally:
+        conn.close()
+
+
+def update_user_subscription(user_id, status, stripe_customer_id=None):
+    """Update user subscription status."""
+    conn = get_db()
+    if stripe_customer_id:
+        conn.execute(
+            "UPDATE users SET subscription_status = ?, stripe_customer_id = ? WHERE id = ?",
+            (status, stripe_customer_id, user_id)
+        )
+    else:
+        conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (status, user_id))
+    conn.commit()
+    conn.close()
+
+
+def update_user_password(user_id, password_hash):
+    """Update user password."""
+    conn = get_db()
+    conn.execute("UPDATE users SET password_hash = ? WHERE id = ?", (password_hash, user_id))
+    conn.commit()
+    conn.close()
+
+
+def user_has_active_subscription(user):
+    """Check if user has active subscription. Legacy users (no user dict) are treated as subscribed."""
+    if not user:
+        return True  # legacy
+    status = (user.get('subscription_status') or '').strip().lower()
+    return status == 'active'
+
 
 class QuestionParser:
     """Parse questions from exam papers"""
@@ -1364,7 +1500,22 @@ def update_wrong_stack_from_results(questions, answers):
 
 
 def login_required(f):
-    """Decorator to require login for routes"""
+    """Decorator to require login for routes. Redirects to /subscribe if not subscribed."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session or not session['logged_in']:
+            return redirect(url_for('login'))
+        # Subscription check: legacy users (no user_id) skip; DB users must have active subscription
+        if session.get('user_id'):
+            user = get_user_by_id(session['user_id'])
+            if not user_has_active_subscription(user):
+                return redirect(url_for('subscribe'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def login_required_only(f):
+    """Decorator to require login only (no subscription check). Use for subscribe/checkout routes."""
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'logged_in' not in session or not session['logged_in']:
@@ -1372,26 +1523,294 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """Login page"""
+    """Login page - supports legacy (username) and new (email) users."""
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        identifier = (request.form.get('username') or request.form.get('email') or '').strip()
+        password = request.form.get('password', '')
         
-        # Check credentials
-        if username == DEFAULT_USERNAME and check_password_hash(DEFAULT_PASSWORD_HASH, password):
+        # Legacy: username + password
+        if identifier == DEFAULT_USERNAME and check_password_hash(DEFAULT_PASSWORD_HASH, password):
             session['logged_in'] = True
-            session['username'] = username
+            session['username'] = identifier
+            session['user_id'] = None  # legacy
             return redirect(url_for('index'))
-        else:
-            return render_template('login.html', error='Invalid username or password')
+        
+        # New: email + password from DB
+        if '@' in identifier:
+            user = get_user_by_email(identifier)
+            if user and user.get('password_hash') and check_password_hash(user['password_hash'], password):
+                session['logged_in'] = True
+                session['username'] = user['email']
+                session['user_id'] = user['id']
+                if not user_has_active_subscription(user):
+                    return redirect(url_for('subscribe'))
+                return redirect(url_for('index'))
+        
+        return render_template('login.html', error='Invalid email or password')
     
-    # If already logged in, redirect to home
+    if session.get('logged_in'):
+        if session.get('user_id'):
+            user = get_user_by_id(session['user_id'])
+            if not user_has_active_subscription(user):
+                return redirect(url_for('subscribe'))
+        return redirect(url_for('index'))
+    
+    error = request.args.get('error')
+    if error == 'google_auth_failed':
+        error_msg = 'Google sign-in failed. Please try again.'
+    elif error == 'google_no_email':
+        error_msg = 'Could not get email from Google. Please use email sign-up.'
+    elif error == 'google_create_failed':
+        error_msg = 'Could not create account. Please try again.'
+    elif error == 'google_not_configured':
+        error_msg = 'Google sign-in is not configured.'
+    else:
+        error_msg = None
+    return render_template('login.html', google_client_id=GOOGLE_CLIENT_ID, error=error_msg)
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    """Sign up with email + password."""
     if session.get('logged_in'):
         return redirect(url_for('index'))
     
-    return render_template('login.html')
+    if request.method == 'POST':
+        email = (request.form.get('email') or '').strip().lower()
+        password = request.form.get('password', '')
+        confirm = request.form.get('confirm_password', '')
+        
+        if not email or '@' not in email:
+            return render_template('signup.html', error='Please enter a valid email address.')
+        if len(password) < 8:
+            return render_template('signup.html', error='Password must be at least 8 characters.')
+        if password != confirm:
+            return render_template('signup.html', error='Passwords do not match.')
+        
+        existing = get_user_by_email(email)
+        if existing:
+            return render_template('signup.html', error='An account with this email already exists.')
+        
+        password_hash = generate_password_hash(password, method='pbkdf2:sha256')
+        user = create_user(email, password_hash=password_hash)
+        if not user:
+            return render_template('signup.html', error='Could not create account. Please try again.')
+        
+        session['logged_in'] = True
+        session['username'] = user['email']
+        session['user_id'] = user['id']
+        return redirect(url_for('subscribe'))
+    
+    return render_template('signup.html', google_client_id=GOOGLE_CLIENT_ID)
+
+
+@app.route('/auth/google')
+def auth_google():
+    """Initiate Google OAuth."""
+    if not oauth or not hasattr(oauth, 'google'):
+        return redirect(url_for('login') + '?error=google_not_configured')
+    redirect_uri = url_for('auth_google_callback', _external=True)
+    return oauth.google.authorize_redirect(redirect_uri)
+
+
+@app.route('/auth/google/callback')
+def auth_google_callback():
+    """Handle Google OAuth callback."""
+    if not oauth or not hasattr(oauth, 'google'):
+        return redirect(url_for('login') + '?error=google_not_configured')
+    try:
+        token = oauth.google.authorize_access_token()
+    except Exception:
+        return redirect(url_for('login') + '?error=google_auth_failed')
+    
+    user_info = token.get('userinfo') or {}
+    google_id = user_info.get('sub')
+    email = (user_info.get('email') or '').strip().lower()
+    
+    if not google_id or not email:
+        return redirect(url_for('login') + '?error=google_no_email')
+    
+    user = get_user_by_google_id(google_id)
+    if not user:
+        user = get_user_by_email(email)
+        if user:
+            # Link Google to existing email account
+            conn = get_db()
+            conn.execute("UPDATE users SET google_id = ? WHERE id = ?", (google_id, user['id']))
+            conn.commit()
+            conn.close()
+            user = get_user_by_id(user['id'])
+        else:
+            user = create_user(email, google_id=google_id)
+    
+    if not user:
+        return redirect(url_for('login') + '?error=google_create_failed')
+    
+    session['logged_in'] = True
+    session['username'] = user['email']
+    session['user_id'] = user['id']
+    
+    if not user_has_active_subscription(user):
+        return redirect(url_for('subscribe'))
+    return redirect(url_for('index'))
+
+
+@app.route('/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    """Change password for email users."""
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('index'))  # legacy users have no change-password
+    
+    user = get_user_by_id(user_id)
+    if not user or not user.get('password_hash'):
+        return redirect(url_for('index'))  # Google-only users
+    
+    if request.method == 'POST':
+        current = request.form.get('current_password', '')
+        new_password = request.form.get('new_password', '')
+        confirm = request.form.get('confirm_password', '')
+        
+        if not check_password_hash(user['password_hash'], current):
+            return render_template('change-password.html', error='Current password is incorrect.')
+        if len(new_password) < 8:
+            return render_template('change-password.html', error='New password must be at least 8 characters.')
+        if new_password != confirm:
+            return render_template('change-password.html', error='New passwords do not match.')
+        
+        update_user_password(user_id, generate_password_hash(new_password, method='pbkdf2:sha256'))
+        return redirect(url_for('index'))
+    
+    return render_template('change-password.html')
+
+
+@app.route('/subscribe')
+def subscribe():
+    """Subscription page - must be logged in."""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('index'))  # legacy users skip subscription
+    user = get_user_by_id(user_id)
+    if user_has_active_subscription(user):
+        return redirect(url_for('index'))
+    return render_template('subscribe.html', stripe_publishable_key=STRIPE_PUBLISHABLE_KEY,
+                          stripe_price_id=STRIPE_PRICE_ID, stripe_price_annual_id=STRIPE_PRICE_ANNUAL_ID)
+
+
+@app.route('/create-checkout-session', methods=['POST'])
+@login_required_only
+def create_checkout_session():
+    """Create Stripe Checkout session for subscription."""
+    import stripe
+    stripe.api_key = STRIPE_SECRET_KEY
+    if not STRIPE_SECRET_KEY or not STRIPE_PRICE_ID:
+        return jsonify({'error': 'Stripe not configured'}), 500
+    
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'Legacy users do not need subscription'}), 400
+    
+    user = get_user_by_id(user_id)
+    price_id = request.json.get('price_id') if request.is_json else request.form.get('price_id')
+    if not price_id:
+        price_id = STRIPE_PRICE_ID
+    
+    try:
+        customer_id = user.get('stripe_customer_id')
+        if not customer_id:
+            customer = stripe.Customer.create(email=user['email'])
+            customer_id = customer.id
+            conn = get_db()
+            conn.execute("UPDATE users SET stripe_customer_id = ? WHERE id = ?", (customer_id, user_id))
+            conn.commit()
+            conn.close()
+        
+        session_obj = stripe.checkout.Session.create(
+            customer=customer_id,
+            mode='subscription',
+            line_items=[{'price': price_id, 'quantity': 1}],
+            success_url=url_for('subscribe_success', _external=True),
+            cancel_url=url_for('subscribe', _external=True),
+            metadata={'user_id': str(user_id)}
+        )
+        return jsonify({'url': session_obj.url})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/subscribe/success')
+def subscribe_success():
+    """Redirect after successful subscription - webhook will set status."""
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    return render_template('subscribe.html', stripe_publishable_key=STRIPE_PUBLISHABLE_KEY,
+                          stripe_price_id=STRIPE_PRICE_ID, stripe_price_annual_id=STRIPE_PRICE_ANNUAL_ID,
+                          success=True)
+
+
+@app.route('/webhook/stripe', methods=['POST'])
+def stripe_webhook():
+    """Handle Stripe webhooks for checkout.session.completed and customer.subscription events."""
+    import stripe
+    payload = request.get_data()
+    sig_header = request.headers.get('Stripe-Signature', '')
+    
+    if not STRIPE_WEBHOOK_SECRET:
+        return '', 400
+    
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, STRIPE_WEBHOOK_SECRET)
+    except ValueError:
+        return '', 400
+    except Exception:
+        return '', 400
+    
+    if event['type'] == 'checkout.session.completed':
+        session_obj = event['data']['object']
+        user_id = session_obj.get('metadata', {}).get('user_id')
+        subscription_id = session_obj.get('subscription')
+        if user_id and subscription_id:
+            update_user_subscription(int(user_id), 'active', session_obj.get('customer'))
+        
+        # Also handle subscription object from session
+        if 'subscription' in session_obj and session_obj['subscription']:
+            sub = stripe.Subscription.retrieve(session_obj['subscription'])
+            status = (sub.get('status') or '').lower()
+            if status == 'active':
+                customer_id = sub.get('customer')
+                conn = get_db()
+                rows = conn.execute("SELECT id FROM users WHERE stripe_customer_id = ?", (str(customer_id),)).fetchall()
+                conn.close()
+                for row in rows:
+                    update_user_subscription(row[0], 'active')
+    
+    elif event['type'] == 'customer.subscription.updated':
+        sub = event['data']['object']
+        status = (sub.get('status') or '').lower()
+        customer_id = sub.get('customer')
+        conn = get_db()
+        rows = conn.execute("SELECT id FROM users WHERE stripe_customer_id = ?", (str(customer_id),)).fetchall()
+        conn.close()
+        for row in rows:
+            update_user_subscription(row[0], status)
+    
+    elif event['type'] == 'customer.subscription.deleted':
+        sub = event['data']['object']
+        customer_id = sub.get('customer')
+        conn = get_db()
+        rows = conn.execute("SELECT id FROM users WHERE stripe_customer_id = ?", (str(customer_id),)).fetchall()
+        conn.close()
+        for row in rows:
+            update_user_subscription(row[0], 'canceled')
+    
+    return '', 200
+
 
 @app.route('/logout')
 def logout():
@@ -1405,14 +1824,17 @@ def index():
     return render_template('selection.html')
 
 @app.route('/quiz')
+@login_required
 def quiz():
     return render_template('quiz.html')
 
 @app.route('/results')
+@login_required
 def results():
     return render_template('results.html')
 
 @app.route('/history')
+@login_required
 def history():
     return render_template('history.html')
 
@@ -1834,6 +2256,7 @@ def submit_results():
     return jsonify({'success': True, 'message': 'Results saved'})
 
 if __name__ == '__main__':
+    init_db()
     # Ensure modules dir exists; create default module folders if empty
     MODULES_DIR.mkdir(exist_ok=True)
     for name in ["LM1", "M05", "LM2", "M92"]:

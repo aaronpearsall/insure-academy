@@ -17,6 +17,8 @@ instance/
 questions.json
 results_history.json
 wrong_questions.json
+planner.json
+insure_academy.db
 
 # Environment
 .env
