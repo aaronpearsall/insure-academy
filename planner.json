@@ -1,4 +1,101 @@
 {
   "enrolled_units": [],
-  "plan": []
+  "plan": [
+    {
+      "level": "certificate",
+      "code": "IF1",
+      "title": "Insurance, Legal and Regulatory",
+      "credits": 15,
+      "study_hours": 60,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "certificate",
+      "code": "IF2",
+      "title": "General Insurance Business",
+      "credits": 15,
+      "study_hours": 60,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "certificate",
+      "code": "IF3",
+      "title": "Insurance Underwriting Process",
+      "credits": 15,
+      "study_hours": 60,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "diploma",
+      "code": "M05",
+      "title": "Insurance Law",
+      "credits": 25,
+      "study_hours": 120,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "diploma",
+      "code": "M92",
+      "title": "Insurance Business and Finance",
+      "credits": 25,
+      "study_hours": 100,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "advanced",
+      "code": "530",
+      "title": "Economics and Business",
+      "credits": 30,
+      "study_hours": 150,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "advanced",
+      "code": "960",
+      "title": "Advanced Underwriting",
+      "credits": 30,
+      "study_hours": 150,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "advanced",
+      "code": "990",
+      "title": "Insurance Corporate Management",
+      "credits": 30,
+      "study_hours": 150,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "advanced",
+      "code": "945",
+      "title": "Marketing Insurance Products and Services",
+      "credits": 30,
+      "study_hours": 150,
+      "target_date": "",
+      "status": "passed"
+    },
+    {
+      "level": "advanced",
+      "code": "995",
+      "title": "Strategic Underwriting",
+      "credits": 30,
+      "study_hours": 150,
+      "target_date": "",
+      "status": "passed"
+    }
+  ],
+  "exemptions": {
+    "advanced": 0,
+    "certificate": 0,
+    "diploma": 25
+  },
+  "active_modules": []
 }
