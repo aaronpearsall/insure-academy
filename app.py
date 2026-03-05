@@ -216,7 +216,7 @@ class QuestionParser:
         # -> "\n42. Which" / "\n25. What" so question numbers at line start are detected.
         def _norm_page_question(m):
             page_num, q_num = m.group(1), m.group(2)
-            if 1 <= int(page_num) <= 25 and 1 <= int(q_num) <= 50:
+            if 1 <= int(page_num) <= 99 and 1 <= int(q_num) <= 99:
                 return '\n' + q_num + m.group(3) + ' '
             return m.group(0)
         text = re.sub(r'(?<=\s)(\d{1,2})\s+(\d{1,2})([\.\)])\s', _norm_page_question, text)
@@ -225,7 +225,7 @@ class QuestionParser:
         # No space after question number at line start (e.g. "\n26.Why") -> "\n26. Why" so block split matches
         def _norm_line_start_no_space(m):
             q_num = m.group(1)
-            if 1 <= int(q_num) <= 50:
+            if 1 <= int(q_num) <= 99:
                 return m.group(1) + m.group(2) + ' '  # insert space before the capital letter (lookahead)
             return m.group(0)
         text = re.sub(r'(?<=\n)(\d{1,2})([\.\)])(?=[A-Z])', _norm_line_start_no_space, text)
@@ -248,8 +248,9 @@ class QuestionParser:
             question_content = match.group(2).strip()
             
             # Skip if this doesn't look like a real question (no options found)
-            # Real questions should have at least one option (A., B., etc. with or without space after)
-            if not re.search(r'\n[A-E][\.\)](?:\s|(?=[A-Z]))', question_content, re.IGNORECASE):
+            # Real questions should have at least one option (A., B., etc.)
+            # Allow A.£ A.123 A.Word etc. (currency, digits, letters after the period)
+            if not re.search(r'\n[A-E][\.\)](?:\s|(?=[A-Z0-9£$%\-]))', question_content, re.IGNORECASE):
                 continue
             
             # IMPORTANT: Stop extracting content when we hit:
