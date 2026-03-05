@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     loadStats();
     loadDashboardSummary();
+    loadActiveModules();
     loadCurrentUnits();
     await loadModules();
 
@@ -69,6 +70,11 @@ async function loadStats() {
         document.getElementById('statModules').textContent = data.total_modules;
         document.getElementById('statQuizzes').textContent = data.quizzes_completed;
         document.getElementById('statAvgScore').textContent = data.quizzes_completed > 0 ? data.avg_score + '%' : '—';
+        const streakEl = document.getElementById('dashboardStreak');
+        if (streakEl) {
+          const s = data.practice_streak || 0;
+          streakEl.textContent = s === 0 ? '—' : s === 1 ? '1 day' : `${s} days`;
+        }
     } catch (e) {
         console.error('Error loading stats:', e);
     }
@@ -119,9 +125,11 @@ async function loadDashboardSummary() {
 
     if (designationEl) designationEl.textContent = designation;
 
-    // Currently enrolled: unit codes (e.g. LM1, LM2)
+    // Currently enrolled: active modules first, then planner units
+    const activeMods = data.active_modules || [];
+    const enrolledDisplay = activeMods.length ? activeMods.join(', ') : (enrolled.length ? enrolled.map(u => u.code || u.title).join(', ') : '—');
     if (enrolledEl) {
-      enrolledEl.textContent = enrolled.length ? enrolled.map(u => u.code || u.title).join(', ') : '—';
+      enrolledEl.textContent = enrolledDisplay;
     }
 
     // Days until next assessment: soonest future target_date among plan items
@@ -151,6 +159,52 @@ async function loadDashboardSummary() {
     if (designationEl) designationEl.textContent = '—';
     if (enrolledEl) enrolledEl.textContent = '—';
     if (daysEl) daysEl.textContent = '—';
+  }
+}
+
+async function loadActiveModules() {
+  const container = document.getElementById('activeModulesList');
+  if (!container) return;
+  try {
+    const [plannerRes, modulesRes] = await Promise.all([
+      fetch('/api/planner'),
+      fetch('/api/modules')
+    ]);
+    const plannerData = await plannerRes.json();
+    const modulesData = await modulesRes.json();
+    const active = plannerData.active_modules || [];
+    const modules = modulesData.map(m => m.code) || [];
+
+    container.innerHTML = modules.map(code => {
+      const isActive = active.includes(code);
+      return `<button type="button" class="active-module-toggle ${isActive ? 'active' : ''}" data-module="${code}">${code}</button>`;
+    }).join('');
+
+    container.querySelectorAll('.active-module-toggle').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const code = btn.dataset.module;
+        const active = plannerData.active_modules || [];
+        const newActive = active.includes(code)
+          ? active.filter(m => m !== code)
+          : [...active, code];
+        plannerData.active_modules = newActive;
+        btn.classList.toggle('active', newActive.includes(code));
+        try {
+          await fetch('/api/planner/active-modules', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ active_modules: newActive })
+          });
+          if (document.getElementById('dashboardEnrolled')) {
+            document.getElementById('dashboardEnrolled').textContent = newActive.length ? newActive.join(', ') : '—';
+          }
+        } catch (e) {
+          console.error('Failed to save active modules:', e);
+        }
+      });
+    });
+  } catch (e) {
+    container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Unable to load modules.</span>';
   }
 }
 

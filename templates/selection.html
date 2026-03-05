@@ -53,7 +53,7 @@
 
       <main class="page-content">
 
-        <!-- Dashboard Summary: Designation, Enrolled, Days Until -->
+        <!-- Dashboard Summary: Designation, Enrolled, Days Until, Streak -->
         <div class="dashboard-summary section-card">
           <div class="dashboard-summary-grid">
             <div class="dashboard-summary-item">
@@ -67,6 +67,10 @@
             <div class="dashboard-summary-item">
               <div class="dashboard-summary-label">Days until next assessment</div>
               <div class="dashboard-summary-value" id="dashboardDaysUntil">—</div>
+            </div>
+            <div class="dashboard-summary-item">
+              <div class="dashboard-summary-label">Practice streak</div>
+              <div class="dashboard-summary-value" id="dashboardStreak">—</div>
             </div>
           </div>
         </div>
@@ -119,7 +123,19 @@
           </div>
         </div>
 
-        <!-- Current Units -->
+        <!-- My Current Modules -->
+        <div class="section-card">
+          <div class="section-label">My Current Modules</div>
+          <p class="planner-help-text" style="margin-top:4px;margin-bottom:12px;">Select the modules you're studying. They'll appear here and on the dashboard.</p>
+          <div id="activeModulesList" class="active-modules-list">
+            <span style="color:var(--text-muted);font-size:13px;">Loading…</span>
+          </div>
+          <div class="current-units-footer" style="margin-top:12px;">
+            <a href="/planner" class="btn btn-secondary btn-sm">Open Exam Planner →</a>
+          </div>
+        </div>
+
+        <!-- Current Units (from planner) -->
         <div class="section-card">
           <div class="section-label">My Current Units</div>
           <div id="currentUnitsList" class="current-units-list">

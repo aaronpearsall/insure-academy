@@ -1310,18 +1310,21 @@ def load_planner():
                 data.setdefault('enrolled_units', [])
                 data.setdefault('plan', [])
                 data.setdefault('exemptions', {})
+                data.setdefault('active_modules', [])
                 return data
         except Exception:
             pass
-    return {'enrolled_units': [], 'plan': [], 'exemptions': {}}
+    return {'enrolled_units': [], 'plan': [], 'exemptions': {}, 'active_modules': []}
 
 
 def save_planner(data):
     """Persist study planner data."""
+    existing = load_planner() if PLANNER_FILE.exists() else {}
     cleaned = {
-        'enrolled_units': data.get('enrolled_units', []),
-        'plan': data.get('plan', []),
-        'exemptions': data.get('exemptions', {}),
+        'enrolled_units': data.get('enrolled_units', existing.get('enrolled_units', [])),
+        'plan': data.get('plan', existing.get('plan', [])),
+        'exemptions': data.get('exemptions', existing.get('exemptions', {})),
+        'active_modules': data.get('active_modules', existing.get('active_modules', [])),
     }
     with open(PLANNER_FILE, 'w', encoding='utf-8') as f:
         json.dump(cleaned, f, indent=2, ensure_ascii=False)
@@ -1436,6 +1439,20 @@ def planner_api():
     data = request.get_json(silent=True) or {}
     save_planner(data)
     return jsonify({'ok': True})
+
+
+@app.route('/api/planner/active-modules', methods=['POST'])
+@login_required
+def update_active_modules():
+    """Update which modules the user has selected for home screen display."""
+    data = request.get_json(silent=True) or {}
+    active = data.get('active_modules', [])
+    if not isinstance(active, list):
+        active = []
+    existing = load_planner()
+    existing['active_modules'] = [m for m in active if m in get_module_names()]
+    save_planner(existing)
+    return jsonify({'ok': True, 'active_modules': existing['active_modules']})
 
 @app.route('/api/questions')
 @login_required
@@ -1638,12 +1655,36 @@ def get_stats():
     total_correct = sum(r.get('correct', 0) for r in history)
     total_qs_attempted = sum(r.get('total', 0) for r in history)
     avg_score = round((total_correct / total_qs_attempted) * 100) if total_qs_attempted > 0 else 0
+
+    # Practice streak: consecutive days with at least one quiz
+    streak = 0
+    if history:
+        from datetime import datetime, timezone, timedelta
+        dates = set()
+        for r in history:
+            ts = r.get('timestamp', '')
+            if ts:
+                try:
+                    dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
+                    dates.add(dt.date())
+                except (ValueError, TypeError):
+                    pass
+        if dates:
+            dates_sorted = sorted(dates, reverse=True)
+            today = datetime.now(timezone.utc).date()
+            for i, d in enumerate(dates_sorted):
+                expected = today - timedelta(days=i)
+                if d == expected:
+                    streak += 1
+                else:
+                    break
     
     return jsonify({
         'total_questions': len(questions),
         'total_modules': len(modules),
         'quizzes_completed': len(history),
-        'avg_score': avg_score
+        'avg_score': avg_score,
+        'practice_streak': streak
     })
 
 @app.route('/api/results', methods=['POST'])

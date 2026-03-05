@@ -440,8 +440,42 @@ body {
 
 .dashboard-summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.active-modules-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.active-module-toggle {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.active-module-toggle:hover {
+  border-color: var(--text-muted);
+}
+
+.active-module-toggle.active {
+  border-color: var(--primary);
+  background: var(--primary-light, #eef2ff);
+  color: var(--primary);
 }
 
 .dashboard-summary-item {

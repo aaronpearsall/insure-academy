@@ -404,7 +404,7 @@ function updateSummaries() {
   const advPlanCredits = withCode.filter(r => r.level === 'advanced').reduce((s, r) => s + (r.credits || 0), 0);
   const certTotalCredits = certUnitCredits + certExempt;
   const dipTotalCredits = certTotalCredits + dipPlanCredits + dipExempt;
-  const advTotalCredits = certTotalCredits + dipPlanCredits + advPlanCredits + advExempt;
+  const advTotalCredits = certTotalCredits + dipPlanCredits + advPlanCredits + dipExempt + advExempt;
 
   // Criteria met: passed units + exemptions
   const certPassedCredits = certPassed.reduce((s, r) => s + (r.credits || 0), 0);
