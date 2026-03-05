@@ -30,6 +30,7 @@ DEFAULT_PASSWORD_HASH = os.environ.get('APP_PASSWORD_HASH', generate_password_ha
 MODULES_DIR = Path("modules")
 QUESTIONS_FILE = Path("questions.json")
 PLANNER_FILE = Path("planner.json")
+WRONG_QUESTIONS_FILE = Path("wrong_questions.json")
 
 # Only these modules are shown and loaded (no "All Modules"; practice is per module).
 # LM1 and LM2 are London Market units; M05 is the existing diploma unit.
@@ -1308,10 +1309,11 @@ def load_planner():
                 # Ensure expected keys exist
                 data.setdefault('enrolled_units', [])
                 data.setdefault('plan', [])
+                data.setdefault('exemptions', {})
                 return data
         except Exception:
             pass
-    return {'enrolled_units': [], 'plan': []}
+    return {'enrolled_units': [], 'plan': [], 'exemptions': {}}
 
 
 def save_planner(data):
@@ -1319,9 +1321,44 @@ def save_planner(data):
     cleaned = {
         'enrolled_units': data.get('enrolled_units', []),
         'plan': data.get('plan', []),
+        'exemptions': data.get('exemptions', {}),
     }
     with open(PLANNER_FILE, 'w', encoding='utf-8') as f:
         json.dump(cleaned, f, indent=2, ensure_ascii=False)
+
+
+def load_wrong_questions():
+    """Load the set of question IDs the user has gotten wrong (for review stack)."""
+    if not WRONG_QUESTIONS_FILE.exists():
+        return []
+    try:
+        with open(WRONG_QUESTIONS_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+
+def save_wrong_questions(question_ids):
+    """Persist the wrong-questions stack."""
+    with open(WRONG_QUESTIONS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(list(question_ids), f)
+
+
+def update_wrong_stack_from_results(questions, answers):
+    """Add incorrect question IDs to stack, remove correct ones."""
+    wrong_ids = set(load_wrong_questions())
+    for i, ans in enumerate(answers or []):
+        if i >= len(questions):
+            break
+        q_id = questions[i].get('id')
+        if not q_id:
+            continue
+        if ans.get('correct'):
+            wrong_ids.discard(q_id)
+        else:
+            wrong_ids.add(q_id)
+    save_wrong_questions(wrong_ids)
+
 
 def login_required(f):
     """Decorator to require login for routes"""
@@ -1410,13 +1447,14 @@ def get_questions():
 @app.route('/api/questions/filter', methods=['POST'])
 @login_required
 def get_filtered_questions():
-    """Get filtered questions by count, year, learning objective, curve ball, or multiple choice"""
-    data = request.json
+    """Get filtered questions by count, year, learning objective, curve ball, wrong questions, or multiple choice"""
+    data = request.json or {}
     count = data.get('count')
     year = data.get('year')
     learning_objective = data.get('learning_objective')
     multiple_choice_only = data.get('multiple_choice_only', False)
     curve_ball_only = data.get('curve_ball_only', False)
+    wrong_questions_only = data.get('wrong_questions_only', False)
     module_filter = data.get('module')
     
     all_questions = load_questions()
@@ -1425,6 +1463,16 @@ def get_filtered_questions():
     if not module_filter or module_filter not in get_module_names():
         return jsonify([])
     all_questions = [q for q in all_questions if q.get('module') == module_filter]
+    
+    # Filter by wrong-questions stack (questions user got wrong before)
+    if wrong_questions_only:
+        wrong_ids = set(load_wrong_questions())
+        filtered = [q for q in all_questions if q.get('id') in wrong_ids]
+        import random
+        random.shuffle(filtered)
+        if count:
+            filtered = filtered[:int(count)]
+        return jsonify(filtered)
     
     # Filter by curve ball only if specified
     if curve_ball_only:
@@ -1540,6 +1588,19 @@ def get_multiple_choice_count():
     multiple_choice_count = sum(1 for q in questions if q.get('is_multiple_choice', False))
     return jsonify({'count': multiple_choice_count})
 
+@app.route('/api/wrong-questions-count')
+@login_required
+def get_wrong_questions_count():
+    """Get count of questions in the wrong-questions stack for the given module."""
+    questions = load_questions()
+    module_filter = request.args.get('module')
+    if not module_filter:
+        return jsonify({'count': 0})
+    wrong_ids = set(load_wrong_questions())
+    count = sum(1 for q in questions if q.get('module') == module_filter and q.get('id') in wrong_ids)
+    return jsonify({'count': count})
+
+
 @app.route('/api/curve-ball-count')
 @login_required
 def get_curve_ball_count():
@@ -1614,6 +1675,12 @@ def save_results():
     }
     
     results_history.append(result_entry)
+
+    # Update wrong-question stack: add incorrect, remove correct
+    questions = data.get('questions', [])
+    answers = data.get('answers', [])
+    if questions and answers:
+        update_wrong_stack_from_results(questions, answers)
     
     with open(results_file, 'w', encoding='utf-8') as f:
         json.dump(results_history, f, indent=2, ensure_ascii=False)

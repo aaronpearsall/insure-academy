@@ -71,18 +71,30 @@
               <div class="planner-summary-title">Certificate in Insurance (40 credits)</div>
               <div class="planner-summary-value" id="summaryCertCredits">0</div>
               <div class="planner-summary-caption">Credits: 0/40 · Core: IF1 or LM1+LM2</div>
+              <div class="planner-exemption-row">
+                <label class="planner-exemption-label">Exemption credits:</label>
+                <input type="number" min="0" class="planner-exemption-input" id="exemptionCert" placeholder="0">
+              </div>
               <div class="planner-criteria-status" id="summaryCertMet"></div>
             </div>
             <div class="planner-summary-card">
               <div class="planner-summary-title">Diploma (120 total, 90 at L4+)</div>
               <div class="planner-summary-value" id="summaryDipCredits">0</div>
               <div class="planner-summary-caption">Credits: 0/120 · Core: M05 + (M92 or 530)</div>
+              <div class="planner-exemption-row">
+                <label class="planner-exemption-label">Exemption credits:</label>
+                <input type="number" min="0" class="planner-exemption-input" id="exemptionDip" placeholder="0">
+              </div>
               <div class="planner-criteria-status" id="summaryDipMet"></div>
             </div>
             <div class="planner-summary-card">
               <div class="planner-summary-title">Advanced Diploma (290 total, 150 Adv)</div>
               <div class="planner-summary-value" id="summaryAdvCredits">0</div>
               <div class="planner-summary-caption">Credits: 0/290 · Core: M05 + M92/530 + 820/930/960</div>
+              <div class="planner-exemption-row">
+                <label class="planner-exemption-label">Exemption credits:</label>
+                <input type="number" min="0" class="planner-exemption-input" id="exemptionAdv" placeholder="0">
+              </div>
               <div class="planner-criteria-status" id="summaryAdvMet"></div>
             </div>
           </div>
@@ -118,7 +130,7 @@
                       <th>Credits</th>
                       <th>Study hrs</th>
                       <th>Target Exam Date</th>
-                      <th>Status</th>
+                      <th class="planner-cell-center">Done</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -140,7 +152,7 @@
                       <th>Credits</th>
                       <th>Study hrs</th>
                       <th>Target Exam Date</th>
-                      <th>Status</th>
+                      <th class="planner-cell-center">Done</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -162,7 +174,7 @@
                       <th>Credits</th>
                       <th>Study hrs</th>
                       <th>Target Exam Date</th>
-                      <th>Status</th>
+                      <th class="planner-cell-center">Done</th>
                       <th></th>
                     </tr>
                   </thead>

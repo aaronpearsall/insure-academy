@@ -38,9 +38,9 @@ const CII_UNITS = {
     { code: 'M96', title: 'Liability Insurances', credits: 25, studyHours: 100, rqf: 4, core: false },
     { code: 'M97', title: 'Reinsurance', credits: 30, studyHours: 120, rqf: 4, core: false },
     { code: 'M98', title: 'Marine Hull and Associated Liabilities', credits: 30, studyHours: 100, rqf: 4, core: false },
-    { code: '530', title: 'Economics and Business', credits: 30, studyHours: 150, rqf: 4, core: true },
   ],
   advanced: [
+    { code: '530', title: 'Economics and Business', credits: 30, studyHours: 150, rqf: 6, core: true },
     { code: '820', title: 'Advanced Claims', credits: 30, studyHours: 150, rqf: 6, core: true },
     { code: '930', title: 'Advanced Insurance Broking', credits: 30, studyHours: 150, rqf: 6, core: true },
     { code: '945', title: 'Marketing Insurance Products and Services', credits: 30, studyHours: 150, rqf: 6, core: false },

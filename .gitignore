@@ -16,6 +16,7 @@ instance/
 # Data files
 questions.json
 results_history.json
+wrong_questions.json
 
 # Environment
 .env

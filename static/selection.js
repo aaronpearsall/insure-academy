@@ -47,6 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    const wrongBtn = document.getElementById('wrongQuestionsBtn');
+    if (wrongBtn) {
+        wrongBtn.addEventListener('click', () => {
+            selectQuizMode({ wrong_questions_only: true, module: currentModule }, wrongBtn);
+        });
+    }
+
     document.getElementById('startQuizBtn').addEventListener('click', () => {
         if (selectedOptions) startQuiz(selectedOptions);
     });
@@ -86,18 +93,24 @@ async function loadDashboardSummary() {
       const certPassed = passed.filter(r => r.level === 'certificate');
       const dipPassed = passed.filter(r => r.level === 'diploma');
       const advPassed = passed.filter(r => r.level === 'advanced');
+      const ex = data.exemptions || {};
+      const certExempt = parseInt(ex.certificate, 10) || 0;
+      const dipExempt = parseInt(ex.diploma, 10) || 0;
+      const advExempt = parseInt(ex.advanced, 10) || 0;
 
       const certCredits = certPassed.reduce((s, r) => s + (r.credits || 0), 0);
       const dipCredits = dipPassed.reduce((s, r) => s + (r.credits || 0), 0);
       const advCredits = advPassed.reduce((s, r) => s + (r.credits || 0), 0);
-      const dipTotal = certCredits + dipCredits;
-      const advTotal = certCredits + dipCredits + advCredits;
-      const dipLevel4Plus = dipCredits + advCredits;
+      const certTotal = certCredits + certExempt;
+      const dipTotal = certTotal + dipCredits + dipExempt;
+      const advTotal = dipTotal + advCredits + advExempt;
+      const dipLevel4Plus = dipCredits + advCredits + dipExempt + advExempt;
+      const advLevel6Credits = advCredits + advExempt;
 
-      const certMet = certCredits >= QUALIFICATION_RULES.certificate.minCredits && QUALIFICATION_RULES.certificate.checkCore(certPassed);
-      const dipMet = dipTotal >= QUALIFICATION_RULES.diploma.minTotal && dipLevel4Plus >= QUALIFICATION_RULES.diploma.minDiplomaPlus && QUALIFICATION_RULES.diploma.checkCore(dipPassed);
+      const certMet = certTotal >= QUALIFICATION_RULES.certificate.minCredits && QUALIFICATION_RULES.certificate.checkCore(certPassed);
+      const dipMet = dipTotal >= QUALIFICATION_RULES.diploma.minTotal && dipLevel4Plus >= QUALIFICATION_RULES.diploma.minDiplomaPlus && QUALIFICATION_RULES.diploma.checkCore([...dipPassed, ...advPassed]);
       const allPassed = [...certPassed, ...dipPassed, ...advPassed];
-      const advMet = advTotal >= QUALIFICATION_RULES.advanced.minTotal && advCredits >= QUALIFICATION_RULES.advanced.minAdvanced && dipLevel4Plus >= QUALIFICATION_RULES.advanced.minDiplomaPlus && QUALIFICATION_RULES.advanced.checkCore(allPassed);
+      const advMet = advTotal >= QUALIFICATION_RULES.advanced.minTotal && advLevel6Credits >= QUALIFICATION_RULES.advanced.minAdvanced && dipLevel4Plus >= QUALIFICATION_RULES.advanced.minDiplomaPlus && QUALIFICATION_RULES.advanced.checkCore(allPassed);
 
       if (advMet) designation = 'ACII';
       else if (dipMet) designation = 'DipCII';
@@ -224,6 +237,7 @@ function refreshModuleData() {
     loadLearningObjectives(moduleParam);
     loadMultipleChoiceCount(moduleParam);
     loadCurveBallCount(moduleParam);
+    loadWrongQuestionsCount(moduleParam);
     // LM1 has no multiple selection questions; only show for other modules (e.g. M05)
     const multipleSection = document.getElementById('multipleSelectionSection');
     if (multipleSection) {
@@ -341,6 +355,24 @@ async function loadCurveBallCount(moduleParam = '') {
     }
 }
 
+async function loadWrongQuestionsCount(moduleParam = '') {
+    if (!currentModule) return;
+    try {
+        const res = await fetch(`/api/wrong-questions-count${moduleParam}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        const count = data.count || 0;
+
+        const wrongBtn = document.getElementById('wrongQuestionsBtn');
+        if (wrongBtn) {
+            wrongBtn.textContent = count === 0 ? '0 in stack' : `Practice ${count} in stack`;
+            wrongBtn.disabled = count === 0;
+        }
+    } catch (e) {
+        console.error('Error loading wrong questions count:', e);
+    }
+}
+
 function selectQuizMode(options, clickedButton) {
     selectedOptions = options;
     document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('selected'));
@@ -355,7 +387,10 @@ function showConfirmation(options) {
     let modeText = '';
     let detailText = '';
 
-    if (options.curve_ball_only) {
+    if (options.wrong_questions_only) {
+        modeText = 'Review Stack';
+        detailText = 'Questions you got wrong';
+    } else if (options.curve_ball_only) {
         modeText = 'Curve Ball Questions';
         detailText = options.count ? `${options.count} questions` : 'All available';
     } else if (options.multiple_choice_only) {

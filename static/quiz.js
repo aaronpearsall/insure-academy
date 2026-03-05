@@ -593,6 +593,7 @@ function finishQuiz() {
 function getModeDescription() {
     const options = JSON.parse(sessionStorage.getItem('quizOptions') || '{}');
     const modSuffix = options.module ? ` · ${options.module}` : '';
+    if (options.wrong_questions_only) return `Review Stack${modSuffix}`;
     if (options.curve_ball_only) {
         if (options.count) return `${options.count} Curve Ball Questions${modSuffix}`;
         return `All Curve Ball Questions${modSuffix}`;

@@ -1,6 +1,6 @@
 // Exam Planner logic: load/save plan and update credit summaries
 
-let plannerData = { enrolled_units: [], plan: [] };
+let plannerData = { enrolled_units: [], plan: [], exemptions: {} };
 let currentView = 'modules';
 let calendarDate = new Date();
 
@@ -121,8 +121,30 @@ function renderCalendar() {
   gridEl.innerHTML = html;
 }
 
+function renderExemptions() {
+  const ex = plannerData.exemptions || {};
+  const certEl = document.getElementById('exemptionCert');
+  const dipEl = document.getElementById('exemptionDip');
+  const advEl = document.getElementById('exemptionAdv');
+  if (certEl) certEl.value = ex.certificate != null ? ex.certificate : '';
+  if (dipEl) dipEl.value = ex.diploma != null ? ex.diploma : '';
+  if (advEl) advEl.value = ex.advanced != null ? ex.advanced : '';
+}
+
 function bindPlannerEvents() {
   populateAddModuleDropdown();
+  ['exemptionCert', 'exemptionDip', 'exemptionAdv'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => {
+        const level = id === 'exemptionCert' ? 'certificate' : id === 'exemptionDip' ? 'diploma' : 'advanced';
+        const val = parseInt(el.value, 10);
+        plannerData.exemptions = plannerData.exemptions || {};
+        plannerData.exemptions[level] = isNaN(val) ? 0 : Math.max(0, val);
+        updateSummaries();
+      });
+    }
+  });
   const addSelect = document.getElementById('addModuleSelect');
   if (addSelect) {
     addSelect.addEventListener('change', (e) => {
@@ -177,10 +199,12 @@ async function loadPlanner() {
   try {
     const res = await fetch('/api/planner');
     plannerData = await res.json();
+    plannerData.exemptions = plannerData.exemptions || {};
   } catch (e) {
-    plannerData = { enrolled_units: [], plan: [] };
+    plannerData = { enrolled_units: [], plan: [], exemptions: {} };
   }
   renderPlanner();
+  renderExemptions();
 }
 
 function getUnitByCode(level, code) {
@@ -221,25 +245,36 @@ function renderPlanner() {
 
       const credits = unit ? unit.credits : (row.credits != null ? row.credits : '');
       const studyHours = unit ? unit.studyHours : (row.study_hours != null ? row.study_hours : '');
+      const isDone = row.status === 'passed';
+
+      tr.classList.toggle('planner-row-done', isDone);
+
+      const tickHtml = `<button type="button" class="planner-tick ${isDone ? 'planner-tick-done' : ''}" title="${isDone ? 'Mark incomplete' : 'Mark complete'}">
+        <svg class="planner-tick-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          ${isDone ? '<polyline points="9 12 11 14 15 10"/>' : ''}
+        </svg>
+      </button>`;
 
       tr.innerHTML = `
         <td>${selectHtml}</td>
         <td class="planner-cell-credits">${credits}</td>
         <td class="planner-cell-hours">${studyHours}</td>
         <td><input type="date" class="planner-input" value="${row.target_date || ''}"></td>
-        <td>
-          <select class="planner-input">
-            <option value="planned" ${row.status === 'planned' ? 'selected' : ''}>Planned</option>
-            <option value="studying" ${row.status === 'studying' ? 'selected' : ''}>Studying</option>
-            <option value="booked" ${row.status === 'booked' ? 'selected' : ''}>Booked</option>
-            <option value="passed" ${row.status === 'passed' ? 'selected' : ''}>Passed</option>
-          </select>
-        </td>
+        <td class="planner-cell-center">${tickHtml}</td>
         <td class="planner-cell-center">
           <button type="button" class="planner-remove-row" title="Remove row">×</button>
         </td>
       `;
       tbody.appendChild(tr);
+
+      tr.querySelector('.planner-tick').addEventListener('click', () => {
+        row.status = row.status === 'passed' ? 'planned' : 'passed';
+        tr.classList.toggle('planner-row-done', row.status === 'passed');
+        tr.querySelector('.planner-tick').classList.toggle('planner-tick-done', row.status === 'passed');
+        tr.querySelector('.planner-tick-svg').innerHTML = row.status === 'passed' ? '<circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/>' : '<circle cx="12" cy="12" r="10"/>';
+        updateSummaries();
+      });
 
       tr.querySelector('.planner-unit-select').addEventListener('change', (e) => {
         const code = e.target.value;
@@ -274,7 +309,7 @@ function addPlannerRow(level, code) {
     credits: unit ? unit.credits : null,
     study_hours: unit ? unit.studyHours : null,
     target_date: '',
-    status: 'planned',
+    status: 'planned',  // ticked = 'passed'
   });
   renderPlanner();
 }
@@ -288,6 +323,16 @@ function removePlannerRow(level, index) {
     return seen !== index;
   });
   renderPlanner();
+}
+
+function collectExemptions() {
+  const certEl = document.getElementById('exemptionCert');
+  const dipEl = document.getElementById('exemptionDip');
+  const advEl = document.getElementById('exemptionAdv');
+  plannerData.exemptions = plannerData.exemptions || {};
+  plannerData.exemptions.certificate = Math.max(0, parseInt(certEl?.value || '0', 10) || 0);
+  plannerData.exemptions.diploma = Math.max(0, parseInt(dipEl?.value || '0', 10) || 0);
+  plannerData.exemptions.advanced = Math.max(0, parseInt(advEl?.value || '0', 10) || 0);
 }
 
 function collectPlannerFromDOM() {
@@ -308,9 +353,8 @@ function collectPlannerFromDOM() {
       const credits = parseInt(creditsEl?.textContent || '0', 10) || null;
       const studyHours = parseInt(hoursEl?.textContent || '0', 10) || null;
       const targetDate = cells[3]?.querySelector('input')?.value || '';
-      const status = cells[4]?.querySelector('select')?.value || 'planned';
-
-      // Keep empty rows so user can select unit later
+      const isDone = tr.querySelector('.planner-tick')?.classList.contains('planner-tick-done');
+      const status = isDone ? 'passed' : 'planned';
 
       const unit = getUnitByCode(level, code);
       updatedPlan.push({
@@ -328,7 +372,7 @@ function collectPlannerFromDOM() {
   plannerData.plan = updatedPlan;
 
   plannerData.enrolled_units = updatedPlan
-    .filter(row => row.status === 'studying' || row.status === 'booked')
+    .filter(row => row.status !== 'passed' && row.code)
     .map(row => ({
       code: row.code,
       title: row.title,
@@ -342,36 +386,49 @@ function collectPlannerFromDOM() {
 function updateSummaries() {
   if (typeof QUALIFICATION_RULES === 'undefined') return;
   const plan = plannerData.plan || [];
+  const withCode = plan.filter(r => r.code);
   const passed = plan.filter(r => r.status === 'passed' && r.code);
 
   const certPassed = passed.filter(r => r.level === 'certificate');
   const dipPassed = passed.filter(r => r.level === 'diploma');
   const advPassed = passed.filter(r => r.level === 'advanced');
 
+  const ex = plannerData.exemptions || {};
+  const certExempt = parseInt(ex.certificate, 10) || 0;
+  const dipExempt = parseInt(ex.diploma, 10) || 0;
+  const advExempt = parseInt(ex.advanced, 10) || 0;
+
+  // Total credits from ALL added units + exemptions
+  const certUnitCredits = withCode.filter(r => r.level === 'certificate').reduce((s, r) => s + (r.credits || 0), 0);
+  const dipPlanCredits = withCode.filter(r => r.level === 'diploma').reduce((s, r) => s + (r.credits || 0), 0);
+  const advPlanCredits = withCode.filter(r => r.level === 'advanced').reduce((s, r) => s + (r.credits || 0), 0);
+  const certTotalCredits = certUnitCredits + certExempt;
+  const dipTotalCredits = certTotalCredits + dipPlanCredits + dipExempt;
+  const advTotalCredits = certTotalCredits + dipPlanCredits + advPlanCredits + advExempt;
+
+  // Criteria met: passed units + exemptions
   const certPassedCredits = certPassed.reduce((s, r) => s + (r.credits || 0), 0);
   const dipPassedCredits = dipPassed.reduce((s, r) => s + (r.credits || 0), 0);
   const advPassedCredits = advPassed.reduce((s, r) => s + (r.credits || 0), 0);
-
-  // Diploma total = cert + diploma passed; Diploma-level credits = diploma + advanced (RQF 4+)
-  const dipTotalCredits = certPassedCredits + dipPassedCredits;
-  const dipLevel4PlusCredits = dipPassedCredits + advPassedCredits;
-
-  // Advanced total = cert + diploma + advanced; need 150 at advanced, 55 at diploma+
-  const advTotalCredits = certPassedCredits + dipPassedCredits + advPassedCredits;
-  const advLevel4PlusCredits = dipPassedCredits + advPassedCredits;
+  const certTotalForCriteria = certPassedCredits + certExempt;
+  const dipTotalForCriteria = certTotalForCriteria + dipPassedCredits + dipExempt;
+  const advTotalForCriteria = dipTotalForCriteria + advPassedCredits + advExempt;
+  const dipLevel4PlusCredits = dipPassedCredits + advPassedCredits + dipExempt + advExempt;
+  const advLevel4PlusCredits = dipPassedCredits + advPassedCredits + dipExempt + advExempt;
+  const advLevel6Credits = advPassedCredits + advExempt;
 
   const certMet = QUALIFICATION_RULES.certificate;
   const certCoreOk = certMet.checkCore(certPassed);
-  const certCriteriaMet = certPassedCredits >= certMet.minCredits && certCoreOk;
+  const certCriteriaMet = certTotalForCriteria >= certMet.minCredits && certCoreOk;
 
   const dipMet = QUALIFICATION_RULES.diploma;
-  const dipCoreOk = dipMet.checkCore(dipPassed);
-  const dipCriteriaMet = dipTotalCredits >= dipMet.minTotal && dipLevel4PlusCredits >= dipMet.minDiplomaPlus && dipCoreOk;
+  const dipCoreOk = dipMet.checkCore([...dipPassed, ...advPassed]); // 530 is in advanced
+  const dipCriteriaMet = dipTotalForCriteria >= dipMet.minTotal && dipLevel4PlusCredits >= dipMet.minDiplomaPlus && dipCoreOk;
 
   const advMet = QUALIFICATION_RULES.advanced;
   const allPassed = [...certPassed, ...dipPassed, ...advPassed];
   const advCoreOk = advMet.checkCore(allPassed);
-  const advCriteriaMet = advTotalCredits >= advMet.minTotal && advPassedCredits >= advMet.minAdvanced && advLevel4PlusCredits >= advMet.minDiplomaPlus && advCoreOk;
+  const advCriteriaMet = advTotalForCriteria >= advMet.minTotal && advLevel6Credits >= advMet.minAdvanced && advLevel4PlusCredits >= advMet.minDiplomaPlus && advCoreOk;
 
   const certEl = document.getElementById('summaryCertCredits');
   const dipEl = document.getElementById('summaryDipCredits');
@@ -380,7 +437,7 @@ function updateSummaries() {
   const dipMetEl = document.getElementById('summaryDipMet');
   const advMetEl = document.getElementById('summaryAdvMet');
 
-  if (certEl) certEl.textContent = `${certPassedCredits}/40`;
+  if (certEl) certEl.textContent = `${certTotalCredits}/40`;
   if (dipEl) dipEl.textContent = `${dipTotalCredits}/120`;
   if (advEl) advEl.textContent = `${advTotalCredits}/290`;
 
@@ -403,6 +460,7 @@ function updateSummaries() {
 
 async function savePlanner() {
   collectPlannerFromDOM();
+  collectExemptions();
   const statusEl = document.getElementById('plannerSaveStatus');
   if (statusEl) {
     statusEl.textContent = 'Saving...';

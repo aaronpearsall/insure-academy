@@ -1453,6 +1453,48 @@ body {
   text-align: center;
 }
 
+.planner-row-done {
+  background: var(--success-light) !important;
+  border-left: 4px solid var(--success);
+}
+
+.planner-row-done td {
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.planner-tick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.planner-tick:hover {
+  border-color: var(--text-muted);
+}
+
+.planner-tick-svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+}
+
+.planner-tick-done {
+  border-color: var(--success);
+  background: var(--success-light);
+}
+
+.planner-tick-done .planner-tick-svg {
+  color: var(--success);
+}
+
 .planner-cell-credits,
 .planner-cell-hours {
   font-size: 12.5px;
@@ -1462,6 +1504,28 @@ body {
 
 .planner-unit-select {
   min-width: 240px;
+}
+
+.planner-exemption-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.planner-exemption-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.planner-exemption-input {
+  width: 64px;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
 }
 
 .planner-criteria-status {
