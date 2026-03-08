@@ -60,6 +60,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.getElementById('changeSelectionBtn').addEventListener('click', clearSelection);
+
+    const reloadBtn = document.getElementById('reloadQuestionsBtn');
+    if (reloadBtn) {
+        reloadBtn.addEventListener('click', async () => {
+            reloadBtn.disabled = true;
+            reloadBtn.textContent = 'Reloading...';
+            try {
+                const res = await fetch('/api/reload-questions', { method: 'POST' });
+                const data = await res.json();
+                if (res.ok) {
+                    await loadStats();
+                    await loadModules();
+                    refreshModuleData();
+                    reloadBtn.textContent = 'Reloaded (' + data.count + ')';
+                } else {
+                    reloadBtn.textContent = 'Reload questions';
+                }
+            } catch (e) {
+                reloadBtn.textContent = 'Reload questions';
+            }
+            reloadBtn.disabled = false;
+            setTimeout(() => { if (reloadBtn) reloadBtn.textContent = 'Reload questions'; }, 2000);
+        });
+    }
 });
 
 async function loadStats() {
