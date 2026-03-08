@@ -17,12 +17,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     loadStats();
     loadDashboardSummary();
-    loadActiveModules();
-    loadCurrentUnits();
-    await loadModules();
+    await loadCurrentUnitsAndModules();
 
-    // After modules load, currentModule is set to first (LM1); refresh data for it
-    refreshModuleData();
+    // After modules load, currentModule is set; refresh data for it
+    if (currentModule) refreshModuleData();
 
     document.querySelectorAll('.quiz-btn[data-mode="count"]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -71,8 +69,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const data = await res.json();
                 if (res.ok) {
                     await loadStats();
-                    await loadModules();
-                    refreshModuleData();
+                    await loadCurrentUnitsAndModules();
+                    if (currentModule) refreshModuleData();
                     reloadBtn.textContent = 'Reloaded (' + data.count + ')';
                 } else {
                     reloadBtn.textContent = 'Reload questions';
@@ -149,9 +147,9 @@ async function loadDashboardSummary() {
 
     if (designationEl) designationEl.textContent = designation;
 
-    // Currently enrolled: active modules first, then planner units
-    const activeMods = data.active_modules || [];
-    const enrolledDisplay = activeMods.length ? activeMods.join(', ') : (enrolled.length ? enrolled.map(u => u.code || u.title).join(', ') : '—');
+    // Currently enrolled: units marked as currently studying in the planner
+    const studyingUnits = (data.plan || []).filter(r => r.studying && r.code);
+    const enrolledDisplay = studyingUnits.length ? studyingUnits.map(u => u.code || u.title).join(', ') : '—';
     if (enrolledEl) {
       enrolledEl.textContent = enrolledDisplay;
     }
@@ -186,118 +184,76 @@ async function loadDashboardSummary() {
   }
 }
 
-async function loadActiveModules() {
-  const container = document.getElementById('activeModulesList');
-  if (!container) return;
+async function loadCurrentUnitsAndModules() {
+  const unitsContainer = document.getElementById('currentUnitsList');
+  const tabsContainer = document.getElementById('moduleTabs');
+  if (!unitsContainer || !tabsContainer) return;
+
   try {
     const [plannerRes, modulesRes] = await Promise.all([
       fetch('/api/planner'),
       fetch('/api/modules')
     ]);
     const plannerData = await plannerRes.json();
-    const modulesData = await modulesRes.json();
-    const active = plannerData.active_modules || [];
-    const modules = modulesData.map(m => m.code) || [];
+    const allModules = await modulesRes.json();
+    const plan = plannerData.plan || [];
+    const allowedCodes = new Set((allModules || []).map(m => m.code));
 
-    container.innerHTML = modules.map(code => {
-      const isActive = active.includes(code);
-      return `<button type="button" class="active-module-toggle ${isActive ? 'active' : ''}" data-module="${code}">${code}</button>`;
-    }).join('');
+    // Only units marked as "currently studying" in the exam planner
+    const studyingUnits = plan.filter(r => r.studying && r.code);
+    const studyingModuleCodes = [...new Set(studyingUnits.map(u => u.code))].filter(c => allowedCodes.has(c));
+    const studyingModules = (allModules || []).filter(m => studyingModuleCodes.includes(m.code));
 
-    container.querySelectorAll('.active-module-toggle').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const code = btn.dataset.module;
-        const active = plannerData.active_modules || [];
-        const newActive = active.includes(code)
-          ? active.filter(m => m !== code)
-          : [...active, code];
-        plannerData.active_modules = newActive;
-        btn.classList.toggle('active', newActive.includes(code));
-        try {
-          await fetch('/api/planner/active-modules', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ active_modules: newActive })
-          });
-          if (document.getElementById('dashboardEnrolled')) {
-            document.getElementById('dashboardEnrolled').textContent = newActive.length ? newActive.join(', ') : '—';
-          }
-        } catch (e) {
-          console.error('Failed to save active modules:', e);
-        }
+    // My Current Units: show only studying units
+    if (!studyingUnits.length) {
+      unitsContainer.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">No units marked as studying yet. Use the Exam Planner to add units and tick &quot;Currently studying&quot;.</span>';
+    } else {
+      unitsContainer.innerHTML = studyingUnits.map(u => {
+        const code = u.code || '';
+        const title = u.title || '';
+        const level = u.level || '';
+        const credits = u.credits != null ? `${u.credits} credits` : '';
+        const when = u.target_date ? `Target: ${u.target_date}` : '';
+        const meta = [level, credits, when].filter(Boolean).join(' · ');
+        return `<div class="current-unit-row">
+          <div class="current-unit-main">
+            <div class="current-unit-code">${code}</div>
+            <div class="current-unit-title">${title}</div>
+          </div>
+          <div class="current-unit-meta">${meta}</div>
+        </div>`;
+      }).join('');
+    }
+
+    // Module filter: only show toggles for modules being studied
+    tabsContainer.innerHTML = '';
+    if (studyingModules.length === 0) {
+      tabsContainer.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Add units and mark as currently studying in the Exam Planner to practice.</span>';
+      currentModule = null;
+    } else {
+      studyingModules.forEach((mod, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'module-tab' + (index === 0 ? ' active' : '');
+        btn.dataset.module = mod.code;
+        btn.textContent = mod.code;
+        btn.addEventListener('click', () => selectModule(mod.code, btn));
+        tabsContainer.appendChild(btn);
+        if (index === 0) currentModule = mod.code;
       });
-    });
-  } catch (e) {
-    container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Unable to load modules.</span>';
-  }
-}
 
-async function loadCurrentUnits() {
-  const container = document.getElementById('currentUnitsList');
-  if (!container) return;
-  try {
-    const res = await fetch('/api/planner');
-    const data = await res.json();
-    const units = (data.enrolled_units || []).filter(u => u && (u.code || u.title));
-    if (!units.length) {
-      container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">No units marked as studying or booked yet. Use the Exam Planner to add your units.</span>';
-      return;
-    }
-    container.innerHTML = units.map(u => {
-      const code = u.code || '';
-      const title = u.title || '';
-      const level = u.level || '';
-      const credits = u.credits != null ? `${u.credits} credits` : '';
-      const when = u.target_date ? `Target: ${u.target_date}` : '';
-      const meta = [level, credits, when].filter(Boolean).join(' · ');
-      return `<div class="current-unit-row">
-        <div class="current-unit-main">
-          <div class="current-unit-code">${code}</div>
-          <div class="current-unit-title">${title}</div>
-        </div>
-        <div class="current-unit-meta">${meta}</div>
-      </div>`;
-    }).join('');
-  } catch (e) {
-    container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Unable to load units.</span>';
-  }
-}
-
-async function loadModules() {
-    try {
-        const res = await fetch('/api/modules');
-        const modules = await res.json();
-
-        const container = document.getElementById('moduleTabs');
-        container.innerHTML = '';
-
-        if (modules.length === 0) {
-            container.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">No modules. Add exam_papers/LM1 and exam_papers/LM2.</span>';
-            return;
+      const multipleSection = document.getElementById('multipleSelectionSection');
+      if (multipleSection) {
+        if (currentModule === 'LM1') {
+          multipleSection.classList.add('hidden');
+        } else {
+          multipleSection.classList.remove('hidden');
         }
-
-        modules.forEach((mod, index) => {
-            const btn = document.createElement('button');
-            btn.className = 'module-tab' + (index === 0 ? ' active' : '');
-            btn.dataset.module = mod.code;
-            btn.textContent = mod.code;
-            btn.addEventListener('click', () => selectModule(mod.code, btn));
-            container.appendChild(btn);
-            if (index === 0) currentModule = mod.code;
-        });
-
-        // Hide Multiple Selection section for LM1 (no multiple selection in that module)
-        const multipleSection = document.getElementById('multipleSelectionSection');
-        if (multipleSection) {
-            if (currentModule === 'LM1') {
-                multipleSection.classList.add('hidden');
-            } else {
-                multipleSection.classList.remove('hidden');
-            }
-        }
-    } catch (e) {
-        console.error('Error loading modules:', e);
+      }
     }
+  } catch (e) {
+    unitsContainer.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Unable to load.</span>';
+    tabsContainer.innerHTML = '<span style="color:var(--text-muted);font-size:13px;">Unable to load.</span>';
+  }
 }
 
 function selectModule(moduleCode, clickedBtn) {

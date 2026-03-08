@@ -1038,24 +1038,24 @@ class StudyTextIndex:
 
     @staticmethod
     def _explanation_is_low_value(explanation, question_text):
-        """True if the explanation is just the question repeated (adds no conceptual detail)."""
+        """True if the explanation adds no conceptual detail (circular or just restates answer)."""
         if not explanation or not question_text:
             return True
         def norm(s):
             s = re.sub(r'[^\w\s]', ' ', (s or '').lower())
             return re.sub(r'\s+', ' ', s).strip()
-        qn = norm(question_text)
         en = norm(explanation)
         if len(en) < 15:
             return True
-        # One is almost a substring of the other (allowing small typos/word order)
+        # Circular: "the correct answer is X. you selected Y" - no conceptual content
+        if re.search(r'correct answer is .+ you selected', en) or re.search(r'you selected .+ correct answer', en):
+            return True
+        qn = norm(question_text)
         qw = set(qn.split())
         ew = set(en.split())
         overlap = len(qw & ew) / max(len(qw), 1)
-        # If >75% of question words appear in explanation and explanation isn't much longer, it's a repeat
         if overlap >= 0.75 and len(ew) <= len(qw) * 1.3:
             return True
-        # Explanation is just the question with a full stop
         if qn in en and len(en) <= len(qn) + 5:
             return True
         return False
@@ -1104,20 +1104,22 @@ class StudyTextIndex:
         relevant_sections = self.find_relevant_text(question_text, options_text, module=module)
         
         if not relevant_sections:
-            # Fallback explanation if no study text found
+            # Fallback when no study text found - avoid circular "correct is X, you selected Y"
+            mod_ref = f" {module} study text" if module else " the study text"
             if is_correct:
-                return f"Correct! {correct_answer_text} is the right answer."
+                return f"Correct! {correct_answer_text} is the right answer. Refer to the{mod_ref} for more detail on this topic."
             else:
-                return f"The correct answer is {correct_answer_text}. You selected {selected_answer_text}."
+                return f"The correct answer is {correct_answer_text}. For a full explanation of why this is correct and how it relates to the syllabus, refer to the{mod_ref}."
         
         core_explanation = self._extract_explanation_from_sections(
             question_text, options_text or [], relevant_sections, correct_answer_text
         )
         if core_explanation is None:
+            mod_ref = f" {module} study text" if module else " the study text"
             if is_correct:
-                return f"Correct! {correct_answer_text} is the right answer."
+                return f"Correct! {correct_answer_text} is the right answer. Refer to the{mod_ref} for more detail."
             else:
-                return f"The correct answer is {correct_answer_text}. You selected {selected_answer_text}."
+                return f"The correct answer is {correct_answer_text}. For a full explanation, refer to the{mod_ref}."
         
         # Clean up formatting and spelling/grammar
         core_explanation = re.sub(r'[•\-\*]\s*', '', core_explanation)

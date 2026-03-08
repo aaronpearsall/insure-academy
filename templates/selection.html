@@ -128,30 +128,20 @@
           </div>
         </div>
 
-        <!-- My Current Modules -->
-        <div class="section-card">
-          <div class="section-label">My Current Modules</div>
-          <p class="planner-help-text" style="margin-top:4px;margin-bottom:12px;">Select the modules you're studying. They'll appear here and on the dashboard.</p>
-          <div id="activeModulesList" class="active-modules-list">
-            <span style="color:var(--text-muted);font-size:13px;">Loading…</span>
-          </div>
-          <div class="current-units-footer" style="margin-top:12px;">
-            <a href="/planner" class="btn btn-secondary btn-sm">Open Exam Planner →</a>
-          </div>
-        </div>
-
-        <!-- Current Units (from planner) -->
+        <!-- My Current Units (from planner - units marked as currently studying) -->
         <div class="section-card">
           <div class="section-label">My Current Units</div>
+          <p class="planner-help-text" style="margin-top:4px;margin-bottom:12px;">Units you've marked as <strong>currently studying</strong> in the Exam Planner.</p>
           <div id="currentUnitsList" class="current-units-list">
-            <span style="color:var(--text-muted);font-size:13px;">No units added yet. Use the Exam Planner to add your units.</span>
+            <span style="color:var(--text-muted);font-size:13px;">No units marked as studying yet. Use the Exam Planner to add units and tick &quot;Currently studying&quot;.</span>
           </div>
           <div class="current-units-footer">
             <a href="/planner" class="btn btn-secondary btn-sm">Open Exam Planner →</a>
           </div>
         </div>
 
-        <!-- Module (required: LM1 or LM2; no mixing) -->
+        <!-- Module filter and practice modes (shown only when studying modules exist) -->
+        <div id="practiceSection">
         <div class="module-tabs-row">
           <span class="module-tabs-label">Module</span>
           <div id="moduleTabs"></div>
@@ -210,6 +200,8 @@
           </div>
         </div>
 
+        </div><!-- /#practiceSection -->
+
         <!-- Confirmation Banner -->
         <div id="selectionConfirmation" class="confirm-banner hidden">
           <div class="confirm-info">
@@ -227,6 +219,6 @@
   </div>
 
   <script src="{{ url_for('static', filename='cii_units.js') }}"></script>
-  <script src="{{ url_for('static', filename='selection.js') }}?v=6"></script>
+  <script src="{{ url_for('static', filename='selection.js') }}?v=7"></script>
 </body>
 </html>

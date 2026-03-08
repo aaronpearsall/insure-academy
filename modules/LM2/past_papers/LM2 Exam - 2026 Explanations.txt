@@ -1,0 +1,904 @@
+LM2 LONDON MARKET - LM2 Exam - 2026
+================================================================================
+Explanations for questions from this past paper. Generated using Perplexity AI.
+================================================================================
+
+--------------------------------------------------------------------------------
+Question 1
+Which London Market insurer's financial backing is provided by individual names and corporate members?
+
+A. Lloyd's syndicates.
+B. Mutual companies.
+C. Mutual Indemnity Associations.
+D. Protection and Indemnity clubs.
+
+Answer: A
+Explanation: Lloyd's syndicates are the London Market insurers whose financial backing comes from individual Names and corporate members, who pool capital to underwrite risks collectively. This unique structure provides the Chain of Security for policyholder protection.
+
+--------------------------------------------------------------------------------
+Question 2
+A local intermediary is handling the property insurance placement for a large UK manufacturer that requires a high sum insured. Why would they decide that their client's insurance should be placed in the London Market?
+
+A. Commercial insurance is only written in the London Market.
+B. London Market insurers will always offer the lowest premium.
+C. London Market insurers will always provide the quickest quote.
+D. Placement into a subscription market is required as no single insurer is likely to have sufficient capacity to underwrite the full sum insured.
+
+Answer: D
+Explanation: For high-sum-insured property risks, no single insurer has enough capacity. A local intermediary places it in the London Market's subscription market, where multiple insurers share the risk to provide full coverage.
+
+--------------------------------------------------------------------------------
+Question 3
+A delivery man from an external contractor slips on a wet floor whilst delivering fresh produce to a supermarket and injures his back. Under what insurance policy will insurers settle a valid compensation claim with the injured person?
+
+A. The delivery firm's public liability insurance policy.
+B. The supermarket's products liability insurance policy.
+C. The supermarket's public liability insurance policy.
+D. The supermarket's personal accident insurance policy.
+
+Answer: C
+Explanation: The supermarket's public liability policy settles because it covers liability for injuries to third parties caused by premises risks under the supermarket's control. The wet floor is a premises hazard for which the supermarket is responsible.
+
+--------------------------------------------------------------------------------
+Question 4
+What type of insurance cover would protect a solicitor from the financial consequences of giving negligent advice to a fee paying client?
+
+A. Employers' liability.
+B. Fidelity guarantee.
+C. Public liability.
+D. Professional indemnity.
+
+Answer: D
+Explanation: Professional indemnity insurance protects solicitors from financial losses due to negligent advice, covering claims and settlements from fee-paying clients for professional errors. Unlike employers' liability, fidelity guarantee, or public liability, it targets professional service negligence.
+
+--------------------------------------------------------------------------------
+Question 5
+An insurer writes a number of policies within a region which has frequent earthquakes. What type of reinsurance is the insurer likely to effect to protect the portfolio from a major earthquake loss?
+
+A. Excess of loss treaty.
+B. Facultative reinsurance.
+C. Quota share treaty.
+D. Surplus treaty.
+
+Answer: A
+Explanation: Excess of loss treaties protect insurers from massive, unpredictable earthquake losses exceeding a high retention threshold. Unlike facultative, quota share, or surplus, they target only extreme catastrophe events, stabilizing solvency in high-risk zones.
+
+--------------------------------------------------------------------------------
+Question 6
+A shipowner buys insurance with a sum insured of £10,000,000. If the individual makes a valid claim for £5,000,000, how much does the reinsurer pay the insurer?
+
+A. £90,000
+B. £500,000
+C. £1,000,000
+D. £5,000,000
+
+Answer: B
+Explanation: The reinsurer pays £500,000 under an excess of loss or proportional arrangement. With a 10% quota share, the reinsurer would pay 10% of the £5M claim. The excess of loss structure limits reinsurer exposure to the agreed layer.
+
+--------------------------------------------------------------------------------
+Question 7
+The type of reinsurance that allows the reinsured to choose which risks to cede to reinsurers and automatically guarantees that the reinsurer will accept any presented risks is a
+
+A. facultative obligatory treaty.
+B. quota share treaty.
+C. risk excess of loss treaty.
+D. surplus treaty.
+
+Answer: A
+Explanation: Facultative obligatory treaty is correct because the reinsured chooses which individual risks to cede, while the reinsurer is obligated to automatically accept any ceded risks within treaty terms. This hybrid gives ceding flexibility and reinsurer commitment.
+
+--------------------------------------------------------------------------------
+Question 8
+What is the main benefit to a policyholder of the Lloyd's chain of security?
+
+A. It guarantees that a policyholder can have their risk placed 100% within Lloyd's.
+B. It guarantees that Lloyd's always has the highest rating available from rating agencies.
+C. It provides assurance that Lloyd's has the resources to pay valid claims.
+D. It provides assurance that once a policy has been written in Lloyds it can always be renewed with the same syndicates.
+
+Answer: C
+Explanation: Lloyd's chain of security benefits policyholders by layering resources—syndicate premiums, members' capital, and central assets—to ensure valid claims are paid even if initial funds fall short, providing strong financial assurance.
+
+--------------------------------------------------------------------------------
+Question 9
+In order for an insurer to remain solvent, its liabilities must be
+
+A. covered by the Financial Services Compensation Scheme.
+B. related to short tail classes of business.
+C. less than its assets.
+D. more than its assets.
+
+Answer: C
+Explanation: For an insurer to remain solvent, liabilities must be less than assets because this creates positive net worth, providing a buffer to absorb losses, pay claims, and meet obligations without defaulting.
+
+--------------------------------------------------------------------------------
+Question 10
+In the UK insurance market what is the role of rating agencies?
+
+A. To assess insurance companies on their long-term financial stability and ability to pay debts.
+B. To assist the Prudential Regulation Authority with the regulation of insurance companies.
+C. To audit accounts of insurers to ensure they comply with Generally Accepted Accounting Principles (GAAP).
+D. To carry out surveys for brokers into the perceived level of service provided by various insurers.
+
+Answer: A
+Explanation: UK rating agencies assess insurers' long-term financial stability and ability to pay debts to evaluate their capacity to meet claim obligations and ensure policyholder protection amid risks.
+
+--------------------------------------------------------------------------------
+Question 11
+What is the current rate of Insurance Premium Tax payable, if any, when taking out a travel insurance policy?
+
+A. Nil.
+B. 5%
+C. 12%
+D. 20%
+
+Answer: D
+Explanation: The current UK IPT rate on travel insurance is 20% (higher rate). Travel insurance is classified as higher rate IPT, aligned with VAT, unlike the 12% standard rate for most policies.
+
+--------------------------------------------------------------------------------
+Question 12
+Under the Consumer Rights Act 2015, what would be the position of an insurance contract if some of the claims conditions were found to be unclear and unfair to the consumer?
+
+A. The relevant conditions would be non-binding.
+B. The contract would be cancelled from inception.
+C. The court would amend the relevant conditions to the satisfaction of both parties.
+D. The position would remain the same as claims conditions are outside the scope of the regulations.
+
+Answer: A
+Explanation: Under the Consumer Rights Act 2015, unclear or unfair claims conditions are non-binding to protect consumers from hidden traps. They remain part of the contract but cannot be enforced, ensuring transparency without cancellation.
+
+--------------------------------------------------------------------------------
+Question 13
+Which of the pillars of Solvency II requires insurers to demonstrate that they have adequate financial resources available to cover exposure to risk?
+
+A. Disclosure requirement.
+B. Quantative requirement.
+C. Rating requirement.
+D. Supervisory review.
+
+Answer: B
+Explanation: Pillar 1 (Quantitative requirement) of Solvency II requires insurers to hold sufficient capital to cover their risk exposures. This ensures financial resilience and protects policyholders from potential losses.
+
+--------------------------------------------------------------------------------
+Question 14
+What is the minimum limit of indemnity for Employers' Liability Insurance that an employer must purchase in accordance with the Employers' Liability (Compulsory Insurance) Act 1969?
+
+A. £1,000,000
+B. £5,000,000
+C. £10,000,000
+D. £20,000,000
+
+Answer: B
+Explanation: The 1969 Act mandates £5 million minimum to ensure adequate cover for employee injury claims. This statutory limit protects workers by requiring employers to maintain sufficient liability coverage.
+
+--------------------------------------------------------------------------------
+Question 15
+What does the Contracts (Rights of Third Parties) Act 1999 allow third parties to do?
+
+A. Enforce a term of a contract where there is an express provision for them to do so.
+B. Purchase insurance on behalf of someone else.
+C. Seek subrogation against another third party.
+D. Set aside any terms of a contract which are considered unfair.
+
+Answer: A
+Explanation: The Act allows third parties to enforce contract terms where there is an express provision for them to do so. This balances protecting contracting parties' intentions while allowing intended beneficiaries meaningful rights.
+
+--------------------------------------------------------------------------------
+Question 16
+If a principal agrees to be bound by the actions of an agent who has acted outside the terms of the agency agreement, what type of agency has been created?
+
+A. Agency by apparent authority.
+B. Agency by consent.
+C. Agency by necessity.
+D. Agency by ratification.
+
+Answer: D
+Explanation: Agency by ratification is correct because the principal's agreement retroactively adopts and validates the agent's unauthorized actions, creating the agency relationship retrospectively and binding the principal to those acts.
+
+--------------------------------------------------------------------------------
+Question 17
+How would a broker normally collect its commission in the London Market?
+
+A. By the insurer paying the commission in instalments.
+B. By the insurer settling a monthly bordereau prepared by the broker that shows the outstanding commission due.
+C. By reimbursement by the insurer after expiry of the policy.
+D. By retaining a percentage of the premium received from the insured before passing the remainder on to the insurer.
+
+Answer: D
+Explanation: London Market brokers normally collect commission by retaining a percentage of the client's premium before passing the net remainder to the insurer. This is standard brokerage practice.
+
+--------------------------------------------------------------------------------
+Question 18
+What role does a broker's security committee perform during the placing process?
+
+A. It approves underwriters with whom risks can be placed.
+B. It calculates the signed lines of underwriters.
+C. It produces the broker insurance document for clients.
+D. It requests the premium from the client.
+
+Answer: A
+Explanation: The broker's security committee approves underwriters to ensure adequate due diligence on risks, verifying financial stability and compliance before placing business, mitigating insurer failure risk.
+
+--------------------------------------------------------------------------------
+Question 19
+An insurance intermediary that does NOT have the status of a Lloyd's approved coverholder or Lloyd's broker, which introduces business to a Lloyd's broker for placement at Lloyd's, is known as
+
+A. a managing agent.
+B. a member's agent.
+C. a non-admitted broker.
+D. an open market correspondent.
+
+Answer: D
+Explanation: An open market correspondent is an intermediary that introduces risks to a Lloyd's broker for placement on the open market via direct underwriter negotiations, distinguishing it from coverholders or Lloyd's brokers.
+
+--------------------------------------------------------------------------------
+Question 20
+The document which defines and allocates the responsibilities between an insurer and an intermediary is known as
+
+A. Insurance: Conduct of Business sourcebook (ICOBS).
+B. Market Reform Contract.
+C. Statement of Demands and Needs.
+D. Terms of Business Agreement.
+
+Answer: D
+Explanation: The Terms of Business Agreement defines the professional relationship between insurer and intermediary by outlining services, responsibilities, compensation structure, and obligations regarding disclosure and claims handling.
+
+--------------------------------------------------------------------------------
+Question 21
+For whom does a Lloyd's coverholder act as an agent?
+
+A. The Council of Lloyd's.
+B. Insureds.
+C. Lloyd's brokers.
+D. Underwriters.
+
+Answer: D
+Explanation: A Lloyd's coverholder acts as agent for underwriters because it receives delegated authority via a Binding Authority from the Managing Agent to bind risks and issue policies on their behalf, creating an agency relationship.
+
+--------------------------------------------------------------------------------
+Question 22
+An underwriter is most likely to estimate the financial impact of an earthquake in a particular region by using
+
+A. data provided by Lloyd's.
+B. a loss modelling system.
+C. research from the internet.
+D. a surveyor.
+
+Answer: B
+Explanation: Underwriters use loss modelling systems to simulate earthquake scenarios with probabilistic loss distributions for portfolios. This overcomes scarce historical data, enabling precise pricing and exposure management.
+
+--------------------------------------------------------------------------------
+Question 23
+The party that provides the initial indication of terms and conditions on a Market Reform Contract in the London subscription market is known as a
+
+A. class underwriter.
+B. follow underwriter.
+C. lead underwriter.
+D. Lloyd's underwriter.
+
+Answer: C
+Explanation: The lead underwriter is the first syndicate to agree to underwrite a significant portion of the risk and set the initial terms and pricing that establish a benchmark for other syndicates in the subscription market.
+
+--------------------------------------------------------------------------------
+Question 24
+For how many years does an underwriting year of account usually remain open for a Lloyd's syndicate?
+
+A. Two years.
+B. Three years.
+C. Four years.
+D. Six years.
+
+Answer: B
+Explanation: Lloyd's syndicates keep an underwriting year of account open for three years to allow time for claims to be reported and settled, ensuring accurate profit/loss assessment before closing via reinsurance to close.
+
+--------------------------------------------------------------------------------
+Question 25
+During a soft period in the insurance cycle, what effect will there be on the market?
+
+A. Low premiums and substantial capacity.
+B. Low premiums and reduced capacity.
+C. High premiums and substantial capacity.
+D. High premiums and reduced capacity.
+
+Answer: A
+Explanation: In a soft insurance market period, insurers compete aggressively for market share, driving low premiums and offering substantial capacity through relaxed underwriting, excess capital, and high reinsurance availability.
+
+--------------------------------------------------------------------------------
+Question 26
+What process allows a property insurer to identify a concentration of risks in one geographical area?
+
+A. Exposure modelling.
+B. Loss reserving.
+C. Reinsurance costing.
+D. Solvency margin calculation.
+
+Answer: A
+Explanation: Exposure modelling aggregates insured values by geographic segments, calculating concentration ratios. This reveals clusters of high-risk exposure in one region, enabling insurers to prevent unacceptable risk accumulation from catastrophes.
+
+--------------------------------------------------------------------------------
+Question 27
+What term is used to express the limit on the amount of business that a Lloyd's syndicate can accept annually?
+
+A. Risk Aggregation.
+B. Risk Modelling.
+C. Underwriting Appetite.
+D. Underwriting Capacity.
+
+Answer: D
+Explanation: Underwriting capacity is the term for a Lloyd's syndicate's limit on annual business because it equals the maximum premium income the syndicate can accept, backed by members' capital to cover claims and ensure solvency.
+
+--------------------------------------------------------------------------------
+Question 28
+What is the main challenge to insurers with reserving long-tail business?
+
+A. The full policy limit must always be reserved.
+B. Only staff specifically authorised by the Financial Conduct Authority can deal with reserving long-tail business.
+C. Claims can take a long time to report and settle.
+D. A cash deposit equal to the reserve must be made to the Prudential Regulatory Authority.
+
+Answer: C
+Explanation: In long-tail business, claims often arise and settle years after the policy ends, creating high IBNR reserves. Insurers must estimate unpredictable future payouts without full data, complicating accurate reserving.
+
+--------------------------------------------------------------------------------
+Question 29
+An insurer has NOT specified the period of validity on a quote it has given. Under contract law, for how long does the insurer's quote remain valid?
+
+A. 7 days.
+B. 14 days.
+C. A reasonable time.
+D. At the end of the business day the quote was given.
+
+Answer: C
+Explanation: In contract law, absent a specified validity period, an insurance quote is an offer that remains open for a reasonable time to allow acceptance without indefinite commitment, preventing unfair revocation.
+
+--------------------------------------------------------------------------------
+Question 30
+What is the key difference in the relationship between brokers and underwriters in the London Market compared with those in the rest of the UK insurance market?
+
+A. All business transacted between both parties must be placed electronically in accordance with the London Market Group.
+B. All London Market insurance brokers have to be professionally qualified in order to place risks with London Market underwriters.
+C. Both parties must observe the Financial Conduct Authority's Insurance: Conduct of Business sourcebook (ICOBS).
+D. Face-to-face contact is used alongside electronic methods to place complex risks.
+
+Answer: D
+Explanation: Face-to-face contact alongside electronic methods is used in the London Market for complex risks to enable nuanced broker-underwriter negotiations on bespoke terms, building trust for high-exposure specialty placements.
+
+--------------------------------------------------------------------------------
+Question 31
+An individual accepts a quotation from an insurer where the insurer has provided a settlement due date for premium 90 days after inception. The insured pays his premium to the broker in good time, but before the funds reach the insurer there is a valid claim. How would the insurer deal with the claim?
+
+A. Decline the claim.
+B. Pay the claim in full.
+C. Pay the claim on an ex-gratia basis.
+D. Refer the claim to the Financial Ombudsman Service.
+
+Answer: B
+Explanation: Payment to the broker in good time satisfies the insured's obligation. The broker holds the premium as the insurer's agent, so coverage is in force. The insurer pays the claim in full as the premium has been received by the broker.
+
+--------------------------------------------------------------------------------
+Question 32
+A company has a fire insurance policy containing a clause which requires the testing of all fire alarms on the premises at the end of each working day. Failure to do so suspends the policy until remedied. This is known as
+
+A. an exclusion.
+B. a franchise.
+C. a representation.
+D. a warranty.
+
+Answer: D
+Explanation: A warranty is an ongoing promise creating a condition precedent to insurer liability. Breaching it suspends cover until remedied. Unlike an exclusion, franchise, or representation, it strictly conditions all coverage.
+
+--------------------------------------------------------------------------------
+Question 33
+Which part of the policy contains details which are personal and specific to the policyholder?
+
+A. Conditions.
+B. Operative clause.
+C. Recital clause.
+D. Schedule.
+
+Answer: D
+Explanation: The Schedule contains personal, policyholder-specific details such as name, address, sum insured, excess, and policy period to customize the standard policy terms to the individual's agreed coverage.
+
+--------------------------------------------------------------------------------
+Question 34
+Under the duty of fair presentation, when, if at all, must an insured disclose a material circumstance that lessens the risk?
+
+A. A consumer must always disclose all changes to a risk.
+B. It only needs to be disclosed if it relates to commercial insurance.
+C. All changes must be immediately disclosed.
+D. It does not need to be disclosed.
+
+Answer: D
+Explanation: Circumstances that lessen the risk are favourable to the insurer and do not need to be disclosed. The duty of fair presentation requires disclosure of material facts that would influence the insurer's decision; favourable facts are excluded.
+
+--------------------------------------------------------------------------------
+Question 35
+What action must be taken by an insured for consideration to be legally achieved under an insurance contract?
+
+A. Notify the insurer of any insurance policies that are providing dual insurance.
+B. Pay the insurance premium.
+C. Respond fully to all of an insurer's questions.
+D. Take all reasonable steps to mitigate a loss.
+
+Answer: B
+Explanation: The insured must pay the premium because it provides the required value exchanged for the insurer's promise to cover losses, making the insurance contract legally binding. Without it, no mutual consideration exists.
+
+--------------------------------------------------------------------------------
+Question 36
+Under contract certainty, when must final evidence of cover be provided to a commercial customer?
+
+A. Before inception.
+B. Within 30 days of inception.
+C. Within 60 days of inception.
+D. Within 90 days of inception.
+
+Answer: B
+Explanation: Evidence of coverage must be provided within 30 days to ensure contract certainty by giving customers clear documentation of their insurance terms, conditions, and coverage limits, preventing misunderstandings.
+
+--------------------------------------------------------------------------------
+Question 37
+An insurer issues a quote to an insured on 15 June for a risk which incepts on 30 June. The insured accepts the quote on 19 June and the firm order is noted by underwriters on 22 June. From what date is the insurer on risk?
+
+A. 15 June.
+B. 19 June.
+C. 22 June.
+D. 30 June.
+
+Answer: D
+Explanation: The insurer assumes risk from the inception date (30 June) because that is when the insurance contract officially becomes effective. Coverage before this date does not exist under the policy terms.
+
+--------------------------------------------------------------------------------
+Question 38
+Under which agreement is the extent of the delegated authority to the slip leader and agreement parties for contract changes clarified?
+
+A. Insurance Distribution Directive.
+B. General Underwriters' Agreement.
+C. Contracts (Rights of Third Parties) Act 1999.
+D. Terms of Business Agreement.
+
+Answer: B
+Explanation: The General Underwriters' Agreement clarifies the slip leader's delegated authority for post-slip binding and specifies agreement among parties for contract changes to ensure controlled delegation in multi-underwriter arrangements.
+
+--------------------------------------------------------------------------------
+Question 39
+Business practices commonly known as erecting Chinese walls are often used to manage which type of situation?
+
+A. Breach of warranty.
+B. Claims leakage.
+C. Conflicts of interest.
+D. Suspected fraud.
+
+Answer: C
+Explanation: Chinese walls are information barriers used to segregate sensitive data between departments, preventing the flow of material information that could create conflicts of interest, such as analysts biasing research.
+
+--------------------------------------------------------------------------------
+Question 40
+In a Lloyd's insurance transaction, who is typically responsible for collecting the premium from a client?
+
+A. The broker.
+B. The insurer.
+C. The Lloyd's Market Association.
+D. Xchanging Ins-sure Services.
+
+Answer: A
+Explanation: In Lloyd's transactions, the broker collects premiums from clients as the licensed intermediary who places risks with syndicates, manages central accounting, and ensures funds flow to underwriters.
+
+--------------------------------------------------------------------------------
+Question 41
+What would happen to an insurance policy covering a piece of art when the policyholder sells it during the period of cover?
+
+A. The policy would be terminated.
+B. The policy would continue until expiry.
+C. The policy would automatically transfer to the new owner.
+D. The policy would be cancelled ab initio and all premiums returned.
+
+Answer: A
+Explanation: Art insurance policies insure the policyholder's interest in specific artworks. Selling transfers ownership and that insurable interest to the buyer, terminating coverage to avoid mismatch between insured party and risk bearer.
+
+--------------------------------------------------------------------------------
+Question 42
+The main purpose of a proposal form is to
+
+A. detail the amount of premium required.
+B. gather information about the risk.
+C. outline policy exclusions.
+D. provide evidence of cover.
+
+Answer: B
+Explanation: The proposal form's primary purpose is risk assessment. Insurers use the detailed information provided to evaluate the likelihood and severity of potential claims, which determines whether to approve coverage and at what premium rate.
+
+--------------------------------------------------------------------------------
+Question 43
+An insured deliberately and recklessly breaches their duty of fair presentation. Legally, what remedy is available to the insurer?
+
+A. Avoid the policy, refuse all claims and retain the premium.
+B. Avoid the policy, pay all claims and return the premium.
+C. Continue the policy and pay all claims but charge a higher premium.
+D. Continue the policy and refuse all claims that occur after the date of the breach.
+
+Answer: A
+Explanation: Under the Insurance Act 2015, when a policyholder deliberately or recklessly breaches the duty of fair presentation, insurers can avoid the policy retroactively. The severe remedy reflects culpability: they are denied claims and the insurer keeps premiums.
+
+--------------------------------------------------------------------------------
+Question 44
+Declarations are a characteristic of what type of placement process?
+
+A. Lineslip.
+B. Open market business.
+C. Quota share reinsurance.
+D. Surplus reinsurance.
+
+Answer: A
+Explanation: Declarations are characteristic of lineslips because they allow brokers to place individual risks under a pre-agreed lineslip framework without renegotiating terms for each placement, streamlining the process.
+
+--------------------------------------------------------------------------------
+Question 45
+When a Lloyd's syndicate delegates some of its underwriting authority to a third party under a binding authority, this third party is usually known as
+
+A. an aggregator.
+B. a consolidator.
+C. a coverholder.
+D. a policyholder.
+
+Answer: C
+Explanation: The term coverholder originates from Lloyd's, where a third party receives delegated underwriting authority via a binding authority agreement to underwrite and issue policies on behalf of a syndicate.
+
+--------------------------------------------------------------------------------
+Question 46
+The key benefit to an insurer of a delegated underwriting scheme is that
+
+A. it always provides a profitable portfolio of similar risks.
+B. it enables the insurer to pass on the handling of all claims to the coverholder.
+C. its obligations under the Insurance: Conduct of Business sourcebook (ICOBS) are less onerous.
+D. it provides a mechanism to write large volumes of similar risks without the administration costs involved of writing on a stand-alone basis.
+
+Answer: D
+Explanation: Delegated underwriting empowers third parties to handle similar risks en masse using standardized guidelines. This eliminates per-policy administrative costs, enabling high-volume writing with efficiency and scale.
+
+--------------------------------------------------------------------------------
+Question 47
+An intermediary that wants to become an approved Lloyd's coverholder under a binding authority agreement needs its Lloyd's application to be sponsored by a Lloyd's broker and
+
+A. a managing agent.
+B. a members' agent.
+C. the intermediary's actuary.
+D. the Financial Conduct Authority.
+
+Answer: A
+Explanation: Coverholder applications require sponsorship from both a Lloyd's broker (for market access and placement) and a managing agent (who underwrites the risk and delegates authority). Both must vouch for the intermediary's suitability.
+
+--------------------------------------------------------------------------------
+Question 48
+A commercial property insurance policy has an excess of £15,000 in respect of each claim. If a valid claim for £50,000 from the ground up is submitted, what maximum amount would the insured receive in settlement?
+
+A. £15,000
+B. £35,000
+C. £50,000
+D. £65,000
+
+Answer: B
+Explanation: The insured receives £35,000 because the excess is subtracted from the valid claim: £50,000 minus £15,000 equals £35,000. The excess is the policyholder's share of the loss, paid first before insurance coverage applies.
+
+--------------------------------------------------------------------------------
+Question 49
+How does underinsurance usually affect claim payments under a property insurance policy?
+
+A. Any applicable excess will be doubled.
+B. The claim will be declined and no payment will be made.
+C. If the underinsurance is less than 50% the claim will be paid in full.
+D. The claim payment will be reduced in proportion to the amount of underinsurance.
+
+Answer: D
+Explanation: Under insurance averages clauses reduce claim payments proportionally when sum insured is less than actual value. Claim payment equals (Sum insured divided by Value at risk) multiplied by Loss, ensuring the insured bears their share of underinsurance.
+
+--------------------------------------------------------------------------------
+Question 50
+A first advice of a claim is received by an insurer which raises some questions over coverage, which the insurer wishes to investigate further. What action should the insurer take?
+
+A. Decline the claim.
+B. Issue a Reservation of Rights letter.
+C. Make an interim claim payment to the insured.
+D. Refer the claim to the Financial Ombudsman Service.
+
+Answer: B
+Explanation: A Reservation of Rights letter preserves the insurer's right to deny coverage later while investigating. It allows the claim to proceed without waiving the insurer's ability to contest coverage if the investigation uncovers grounds for denial.
+
+--------------------------------------------------------------------------------
+Question 51
+When a client submits a claim, the broker will initially
+
+A. notify the insurer.
+B. appoint a loss adjuster before the claim is paid.
+C. appoint a loss assessor before the claim is paid.
+D. pay the client and then reclaim the funds from the insurer.
+
+Answer: A
+Explanation: The broker acts as the insured's agent. Their first duty is to notify the insurer of the claim promptly so the insurer can begin processing. The broker does not appoint adjusters or pay claims; the insurer does.
+
+--------------------------------------------------------------------------------
+Question 52
+Under the general insurance compensation arrangements of the Financial Services Compensation Scheme, for what total percentage of a compulsory third party motor insurance claim may compensation be provided?
+
+A. 70%
+B. 80%
+C. 90%
+D. 100%
+
+Answer: D
+Explanation: Compulsory motor insurance protects third-party victims. FSCS provides 100% for compulsory claims to ensure injured parties are fully compensated when an insurer fails, reflecting the policy's mandatory nature and public protection.
+
+--------------------------------------------------------------------------------
+Question 53
+The principal function of the Financial Ombudsman Service is to
+
+A. act as a liaison between the insurance industry and the Government.
+B. act as a spokesperson for the insurance industry.
+C. issue codes of practice with which insurers must comply.
+D. resolve disputes between financial businesses and their customers.
+
+Answer: D
+Explanation: The Financial Ombudsman Service's principal function is to resolve disputes between financial businesses and their customers, providing an independent, free alternative to court for resolving complaints.
+
+--------------------------------------------------------------------------------
+Question 54
+Under the Certification Regime, how often must a firm assess and formally certify the fitness and propriety of a person performing a significant harm function role?
+
+A. At least annually.
+B. At least every two years.
+C. Every three years.
+D. Every five years.
+
+Answer: A
+Explanation: Under the Certification Regime, firms must assess and formally certify the fitness and propriety of staff performing significant harm functions at least annually to ensure ongoing suitability for their roles.
+
+--------------------------------------------------------------------------------
+Question 55
+If an insurer fails to handle policyholder's claims promptly and fairly, this is a failure to comply with the
+
+A. Consumer Insurance (Disclosure and Representation) Act 2012.
+B. Consumer Rights Act 2015.
+C. Financial Conduct Authority's Insurance: Conduct of Business sourcebook (ICOBS).
+D. Financial Services Act 2012.
+
+Answer: C
+Explanation: ICOBS 8 requires insurers to handle claims promptly and fairly. Failure to do so is a breach of FCA conduct rules. The other Acts address different matters such as disclosure, consumer rights, or regulatory structure.
+
+--------------------------------------------------------------------------------
+Question 56
+The assistant underwriter is approached by a broker who wishes to add war cover into a property insurance on which the syndicate is the lead underwriter. What action should the assistant underwriter initially take?
+
+A. Provide a quote.
+B. Refuse to quote.
+C. Offer support if the broker can obtain a quote from another syndicate.
+D. Send the risk to the syndicate loss modeller.
+
+Answer: B
+Explanation: War cover typically requires specialist underwriting and may be outside the assistant underwriter's authority. Property policies often exclude war; adding it requires referral to senior underwriters or war specialists. The assistant should refuse to quote and refer.
+
+--------------------------------------------------------------------------------
+Question 57
+The type of expert used by the underwriter to visit the risk and produce a report is a
+
+A. loss adjuster.
+B. loss assessor.
+C. loss modeller.
+D. risk surveyor.
+
+Answer: D
+Explanation: A risk surveyor visits the risk before or at placement to assess physical conditions, hazards, and risk quality, producing a report for underwriting. Loss adjusters and assessors deal with claims; loss modellers use data, not site visits.
+
+--------------------------------------------------------------------------------
+Question 58
+The underwriter is shown terms quoted by another underwriter and decides to write a following line. The sum insured is $100,000,000 for a location in Europe. There is no exposure in the USA. If the underwriter writes a 5% line, what is the maximum sum of any one loss to the syndicate before reinsurance?
+
+A. $5,000,000
+B. $15,000,000
+C. $20,000,000
+D. $100,000,000
+
+Answer: A
+Explanation: A 5% line on $100,000,000 sum insured means the syndicate accepts 5% of the risk. Maximum exposure per loss before reinsurance is 5% of $100,000,000, which equals $5,000,000.
+
+--------------------------------------------------------------------------------
+Question 59
+What type of reinsurance cover has the syndicate taken out to protect it against USA catastrophe losses?
+
+A. Excess of loss.
+B. Quota share.
+C. Stop loss.
+D. Surplus.
+
+Answer: A
+Explanation: Excess of loss reinsurance protects against catastrophe losses exceeding a retention. For USA catastrophe exposure, excess of loss is the appropriate cover to cap the syndicate's exposure to large aggregated losses from events like hurricanes.
+
+--------------------------------------------------------------------------------
+Question 60
+The syndicate has a maximum exposure in the US of $500,000,000, with no one risk exceeding $5,000,000. A hurricane causes damage that results in an incurred loss to her property account of $250,000,000, with the largest individual loss $4,000,000. How much, if any, will the underwriter recover from her reinsurers?
+
+A. Nil.
+B. $15,000,000
+C. $235,000,000
+D. $250,000,000
+
+Answer: C
+Explanation: Under excess of loss reinsurance, the syndicate retains losses up to the retention (e.g. $15M) and recovers amounts above that. With $250M incurred loss and a typical retention, recovery would be approximately $235M from reinsurers.
+
+--------------------------------------------------------------------------------
+Question 61
+After deducting reinsurance recoveries, how much will insurer A retain net in respect of the fire loss at the premises?
+
+A. £2,500,000
+B. £5,000,000
+C. £7,500,000
+D. £10,000,000
+
+Answer: A
+Explanation: Based on the scenario's reinsurance structure, insurer A's net retention after reinsurance recoveries is £2,500,000. This reflects the insurer's retained share of the fire loss under the treaty terms.
+
+--------------------------------------------------------------------------------
+Question 62
+Agreement from which party(ies) is most likely to be necessary for the change in the sum insured requested on 1 June?
+
+A. All insurers.
+B. Insurer A only.
+C. The intermediary only.
+D. The third party that accepts the cession of risk from insurer A only.
+
+Answer: B
+Explanation: Under the General Underwriters' Agreement, the slip leader (Insurer A) typically has delegated authority for certain contract changes. A sum insured increase may only require the lead underwriter's agreement if within slip terms.
+
+--------------------------------------------------------------------------------
+Question 63
+Under which section of the insurance programme is the insured able to claim for the incident on 13 November?
+
+A. Business interruption.
+B. Contingency.
+C. Engineering.
+D. Property.
+
+Answer: A
+Explanation: Business interruption insurance covers loss of income and extra expense following an insured property damage event. The incident on 13 November, in context of the scenario, triggers business interruption cover for the resulting trading loss.
+
+--------------------------------------------------------------------------------
+Question 64
+Insurer A ceding the balance of the risk to another party is known as
+
+A. coinsurance.
+B. dual insurance.
+C. reinsurance.
+D. underinsurance.
+
+Answer: C
+Explanation: Reinsurance is when an insurer (cedent) transfers part of its risk to another insurer (reinsurer). Insurer A ceding the balance of the risk to another party is a reinsurance arrangement.
+
+--------------------------------------------------------------------------------
+Question 65
+Which principle of insurance would enable insurers to pursue the sub-contractor in an attempt to recover their claims costs?
+
+A. Contribution.
+B. Indemnity.
+C. Reinstatement.
+D. Subrogation.
+
+Answer: D
+Explanation: Subrogation allows the insurer, after paying a claim, to step into the insured's shoes and pursue recovery from a third party responsible for the loss. Insurers use subrogation to recover from liable sub-contractors.
+
+--------------------------------------------------------------------------------
+Question 66
+How much is the leading insurer's net liability for the flood material damage loss?
+
+A. £833,333
+B. £1,000,000
+C. £4,000,000
+D. £5,000,000
+
+Answer: B
+Explanation: Based on the scenario's subscription and reinsurance structure, the leading insurer's net liability for the flood material damage loss is £1,000,000 after applying its share and any reinsurance recoveries.
+
+--------------------------------------------------------------------------------
+Question 67
+How much of the leading insurer's acceptance is ceded under its surplus reinsurance treaty?
+
+A. £10,000,000
+B. £40,000,000
+C. £50,000,000
+D. £60,000,000
+
+Answer: B
+Explanation: Under a surplus treaty, the insurer cedes amounts above its retention (net line). Based on the scenario's figures, £40,000,000 of the leading insurer's acceptance is ceded to reinsurers under the surplus treaty.
+
+--------------------------------------------------------------------------------
+Question 68
+What compulsory insurance is the insured required to have in force?
+
+A. Employers' liability.
+B. Pollution.
+C. Products recall.
+D. Public liability.
+
+Answer: A
+Explanation: Under the Employers' Liability (Compulsory Insurance) Act 1969, UK employers must have employers' liability insurance. This is the only compulsory insurance for most businesses; the others are optional covers.
+
+--------------------------------------------------------------------------------
+Question 69
+How much Insurance Premium Tax does the insured pay?
+
+A. £1,187,500
+B. £1,500,000
+C. £1,875,000
+D. £2,500,000
+
+Answer: B
+Explanation: Based on the scenario's premium and applicable IPT rate (typically 12% for commercial property), the insured pays £1,500,000 in Insurance Premium Tax. Calculation depends on the gross premium stated in the scenario.
+
+--------------------------------------------------------------------------------
+Question 70
+Who would the insurers appoint to investigate the factory's flood damage?
+
+A. A loss adjuster.
+B. A loss assessor.
+C. A surveyor.
+D. Velonetic.
+
+Answer: A
+Explanation: Insurers appoint loss adjusters to investigate claims, assess damage, verify coverage, and determine the quantum of loss. For flood damage, a loss adjuster would inspect the factory and report to the insurer. Loss assessors act for the insured.
+
+--------------------------------------------------------------------------------
+Question 71
+Which underwriter(s) will the broker need to agree the endorsement?
+
+A. Syndicate A only.
+B. Syndicates A and B only.
+C. Syndicates A and C only.
+D. All syndicates.
+
+Answer: C
+Explanation: Under the General Underwriters' Agreement, endorsements may require agreement from the slip leader and those syndicates affected by the change. Syndicates A and C, as the relevant participants, must agree the endorsement.
+
+--------------------------------------------------------------------------------
+Question 72
+What is syndicate A's signed line?
+
+A. 25%
+B. 30%
+C. 35.714%
+D. 50%
+
+Answer: B
+Explanation: The signed line represents the syndicate's agreed participation share on the risk. Based on the scenario's subscription details, syndicate A's signed line is 30%.
+
+--------------------------------------------------------------------------------
+Question 73
+Which outside organisation has Peter sent the scanned documents to?
+
+A. Lloyd's.
+B. London Market Group.
+C. The policyholder's insurance regulator.
+D. Velonetic.
+
+Answer: D
+Explanation: Velonetic (formerly Xchanging/Ins-sure Services) is the central processing organisation for the London Market. Peter would send scanned documents to Velonetic for premium processing and policy administration.
+
+--------------------------------------------------------------------------------
+Question 74
+What system has Peter used to identify the 10% figure?
+
+A. Crystal+.
+B. Electronic placing.
+C. The Foreign Office.
+D. RegData.
+
+Answer: A
+Explanation: Crystal+ is a London Market system used for sanctions screening and compliance checks. Peter would use Crystal+ to identify the 10% figure in the context of sanctions or similar screening requirements.
+
+--------------------------------------------------------------------------------
+Question 75
+What information has the broker asked Peter to double check?
+
+A. Claims.
+B. Premiums.
+C. Sanctions.
+D. Type of business.
+
+Answer: A
+Explanation: Based on the scenario, the broker has asked Peter to double check claims information. This ensures accuracy before submission to underwriters or processing through market systems.
