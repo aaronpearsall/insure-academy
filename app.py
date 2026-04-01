@@ -44,8 +44,7 @@ GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
-STRIPE_PRICE_ID = os.environ.get('STRIPE_PRICE_ID', '')  # monthly price
-STRIPE_PRICE_ANNUAL_ID = os.environ.get('STRIPE_PRICE_ANNUAL_ID', '')  # annual price (optional)
+STRIPE_PRICE_ID = os.environ.get('STRIPE_PRICE_ID', '')  # monthly subscription price
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
 
 # OAuth (Google) - register once
@@ -176,7 +175,7 @@ def user_has_active_subscription(user):
     if not user:
         return True  # legacy
     status = (user.get('subscription_status') or '').strip().lower()
-    return status == 'active'
+    return status in ('active', 'trialing')
 
 
 class QuestionParser:
@@ -1502,6 +1501,12 @@ def update_wrong_stack_from_results(questions, answers):
     save_wrong_questions(wrong_ids)
 
 
+@app.context_processor
+def inject_session_user_id():
+    """Expose session user id for templates (e.g. billing link for account users)."""
+    return {'session_user_id': session.get('user_id')}
+
+
 def login_required(f):
     """Decorator to require login for routes. Redirects to /subscribe if not subscribed."""
     @wraps(f)
@@ -1703,7 +1708,7 @@ def subscribe():
     if user_has_active_subscription(user):
         return redirect(url_for('index'))
     return render_template('subscribe.html', stripe_publishable_key=STRIPE_PUBLISHABLE_KEY,
-                          stripe_price_id=STRIPE_PRICE_ID, stripe_price_annual_id=STRIPE_PRICE_ANNUAL_ID)
+                          stripe_price_id=STRIPE_PRICE_ID)
 
 
 @app.route('/create-checkout-session', methods=['POST'])
@@ -1753,8 +1758,7 @@ def subscribe_success():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     return render_template('subscribe.html', stripe_publishable_key=STRIPE_PUBLISHABLE_KEY,
-                          stripe_price_id=STRIPE_PRICE_ID, stripe_price_annual_id=STRIPE_PRICE_ANNUAL_ID,
-                          success=True)
+                          stripe_price_id=STRIPE_PRICE_ID, success=True)
 
 
 @app.route('/webhook/stripe', methods=['POST'])
@@ -1813,6 +1817,33 @@ def stripe_webhook():
             update_user_subscription(row[0], 'canceled')
     
     return '', 200
+
+
+@app.route('/billing/portal')
+@login_required_only
+def billing_portal():
+    """Redirect to Stripe Customer Portal for payment method, invoices, and cancellation."""
+    import stripe
+    stripe.api_key = STRIPE_SECRET_KEY
+    if not STRIPE_SECRET_KEY:
+        return redirect(url_for('index'))
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('index'))
+    user = get_user_by_id(user_id)
+    if not user:
+        return redirect(url_for('index'))
+    customer_id = user.get('stripe_customer_id')
+    if not customer_id:
+        return redirect(url_for('subscribe'))
+    try:
+        portal = stripe.billing_portal.Session.create(
+            customer=customer_id,
+            return_url=url_for('index', _external=True),
+        )
+        return redirect(portal.url)
+    except Exception:
+        return redirect(url_for('index'))
 
 
 @app.route('/logout')
