@@ -26,20 +26,11 @@
 
       {% if stripe_publishable_key and stripe_price_id %}
       <div class="pricing-cards">
-        {% if stripe_price_annual_id %}
         <div class="pricing-card pricing-card-featured">
-          <div class="pricing-badge">Best Value</div>
-          <div class="pricing-title">Annual</div>
-          <div class="pricing-price">Save 20%</div>
-          <div class="pricing-desc">Billed yearly</div>
-          <button type="button" class="btn btn-primary subscribe-btn" data-price-id="{{ stripe_price_annual_id }}">Subscribe Annually</button>
-        </div>
-        {% endif %}
-        <div class="pricing-card {% if not stripe_price_annual_id %}pricing-card-featured{% endif %}">
           <div class="pricing-title">Monthly</div>
-          <div class="pricing-price">Flexible</div>
-          <div class="pricing-desc">Cancel anytime</div>
-          <button type="button" class="btn btn-primary subscribe-btn" data-price-id="{{ stripe_price_id }}">Subscribe Monthly</button>
+          <div class="pricing-price">Full access</div>
+          <div class="pricing-desc">Billed monthly · cancel anytime</div>
+          <button type="button" class="btn btn-primary subscribe-btn" data-price-id="{{ stripe_price_id }}">Subscribe</button>
         </div>
       </div>
       <div id="subscribeError" class="error-alert hidden"></div>
