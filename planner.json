@@ -1,5 +1,15 @@
 {
-  "enrolled_units": [],
+  "enrolled_units": [
+    {
+      "code": "LM2",
+      "title": "London Market Insurance Principles and Practices",
+      "level": "certificate",
+      "credits": 15,
+      "target_date": "",
+      "status": "planned",
+      "studying": true
+    }
+  ],
   "plan": [
     {
       "level": "certificate",
@@ -8,7 +18,8 @@
       "credits": 15,
       "study_hours": 60,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "certificate",
@@ -17,7 +28,8 @@
       "credits": 15,
       "study_hours": 60,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "certificate",
@@ -26,7 +38,18 @@
       "credits": 15,
       "study_hours": 60,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
+    },
+    {
+      "level": "certificate",
+      "code": "LM2",
+      "title": "London Market Insurance Principles and Practices",
+      "credits": 15,
+      "study_hours": 60,
+      "target_date": "",
+      "status": "planned",
+      "studying": true
     },
     {
       "level": "diploma",
@@ -35,7 +58,8 @@
       "credits": 25,
       "study_hours": 120,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "diploma",
@@ -44,7 +68,8 @@
       "credits": 25,
       "study_hours": 100,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "advanced",
@@ -53,7 +78,8 @@
       "credits": 30,
       "study_hours": 150,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "advanced",
@@ -62,7 +88,8 @@
       "credits": 30,
       "study_hours": 150,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "advanced",
@@ -71,7 +98,8 @@
       "credits": 30,
       "study_hours": 150,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "advanced",
@@ -80,7 +108,8 @@
       "credits": 30,
       "study_hours": 150,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     },
     {
       "level": "advanced",
@@ -89,7 +118,8 @@
       "credits": 30,
       "study_hours": 150,
       "target_date": "",
-      "status": "passed"
+      "status": "passed",
+      "studying": false
     }
   ],
   "exemptions": {

@@ -1,6 +1,7 @@
-// Selection page logic - v5 (LM1/LM2 only; no mixing)
+// Selection page logic - v5 (per-module practice; no mixing)
+const CERTIFICATE_EXAM_MODULES = new Set(['LM1', 'LM2', 'I10']);
 let selectedOptions = null;
-let currentModule = null;  // always LM1 or LM2 once loaded
+let currentModule = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -243,7 +244,7 @@ async function loadCurrentUnitsAndModules() {
 
       const multipleSection = document.getElementById('multipleSelectionSection');
       if (multipleSection) {
-        if (currentModule === 'LM1') {
+        if (CERTIFICATE_EXAM_MODULES.has(currentModule)) {
           multipleSection.classList.add('hidden');
         } else {
           multipleSection.classList.remove('hidden');
@@ -272,10 +273,10 @@ function refreshModuleData() {
     loadMultipleChoiceCount(moduleParam);
     loadCurveBallCount(moduleParam);
     loadWrongQuestionsCount(moduleParam);
-    // LM1 has no multiple selection questions; only show for other modules (e.g. M05)
+    // Certificate exam modules (LM1, LM2, I10) have no multiple-selection questions
     const multipleSection = document.getElementById('multipleSelectionSection');
     if (multipleSection) {
-        if (currentModule === 'LM1') {
+        if (CERTIFICATE_EXAM_MODULES.has(currentModule)) {
             multipleSection.classList.add('hidden');
         } else {
             multipleSection.classList.remove('hidden');

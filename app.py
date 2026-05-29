@@ -70,12 +70,12 @@ PLANNER_FILE = Path("planner.json")
 WRONG_QUESTIONS_FILE = Path("wrong_questions.json")
 
 # Only these modules are shown and loaded (no "All Modules"; practice is per module).
-# LM1 and LM2 are London Market units; M05 is the existing diploma unit.
-ALLOWED_MODULES = ["LM1", "LM2", "M05"]
+# LM1, LM2, and I10 are certificate units (past papers); M05 is the diploma unit.
+ALLOWED_MODULES = ["LM1", "LM2", "I10", "M05"]
 
 
 def get_module_names():
-    """Return allowed modules that exist under modules/ (LM1, LM2, M05)."""
+    """Return allowed modules that exist under modules/ (LM1, LM2, I10, M05)."""
     if not MODULES_DIR.exists():
         return []
     return [m for m in ALLOWED_MODULES if (MODULES_DIR / m).is_dir()]
@@ -2293,7 +2293,7 @@ if __name__ == '__main__':
     init_db()
     # Ensure modules dir exists; create default module folders if empty
     MODULES_DIR.mkdir(exist_ok=True)
-    for name in ["LM1", "M05", "LM2", "M92"]:
+    for name in ["LM1", "LM2", "I10", "M05", "M92"]:
         (MODULES_DIR / name / "past_papers").mkdir(parents=True, exist_ok=True)
         (MODULES_DIR / name / "study_text").mkdir(parents=True, exist_ok=True)
     
