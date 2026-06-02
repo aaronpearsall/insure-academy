@@ -4,7 +4,7 @@ let selectedAnswer = null;
 let selectedAnswers = []; // For multiple choice questions
 let answers = []; // Store all answers for results
 let score = 0;
-const QUIZ_CACHE_VERSION = 2; // bump when question ids/content may change
+const QUIZ_CACHE_VERSION = 3; // bump when question ids/content may change
 
 function questionKey(q) {
     return `${q.module || ''}|${q.source_file || ''}|${q.question_number || ''}`;
@@ -143,6 +143,22 @@ function showQuestion() {
     const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
     document.getElementById('progressFill').style.width = progress + '%';
     
+    // Display case study narrative when present (Section B questions)
+    const caseStudyPanel = document.getElementById('caseStudyPanel');
+    const caseStudyText = document.getElementById('caseStudyText');
+    const caseStudyLabel = document.getElementById('caseStudyLabel');
+    if (question.case_study) {
+        caseStudyPanel.classList.remove('hidden');
+        caseStudyText.textContent = question.case_study;
+        if (caseStudyLabel) {
+            const studyNum = question.case_study_number;
+            caseStudyLabel.textContent = studyNum ? `Case Study ${studyNum}` : 'Case Study';
+        }
+    } else {
+        caseStudyPanel.classList.add('hidden');
+        caseStudyText.textContent = '';
+    }
+
     // Display question
     document.getElementById('questionText').textContent = question.question;
     

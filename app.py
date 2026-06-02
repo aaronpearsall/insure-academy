@@ -207,36 +207,159 @@ class QuestionParser:
         return text
     
     @staticmethod
-    def parse_questions(text):
-        """Parse multiple choice questions from text (works for both PDF and text files)"""
-        questions = []
-
-        # Normalize PDF layout: "PageNum QuestionNum. " or "PageNum QuestionNum.Letter" (e.g. " 18 42. Which" or " 14 25.What")
-        # -> "\n42. Which" / "\n25. What" so question numbers at line start are detected.
+    def normalize_pdf_text(text):
+        """Normalize PDF layout so question numbers and footers parse reliably."""
         def _norm_page_question(m):
             page_num, q_num = m.group(1), m.group(2)
             if 1 <= int(page_num) <= 99 and 1 <= int(q_num) <= 99:
                 return '\n' + q_num + m.group(3) + ' '
             return m.group(0)
         text = re.sub(r'(?<=\s)(\d{1,2})\s+(\d{1,2})([\.\)])\s', _norm_page_question, text)
-        # 2024-style: no space after period (e.g. "14 25.What")
         text = re.sub(r'(?<=\s)(\d{1,2})\s+(\d{1,2})([\.\)])(?=[A-Z])', _norm_page_question, text)
-        # No space after question number at line start (e.g. "\n26.Why") -> "\n26. Why" so block split matches
+
         def _norm_line_start_no_space(m):
             q_num = m.group(1)
             if 1 <= int(q_num) <= 99:
-                return m.group(1) + m.group(2) + ' '  # insert space before the capital letter (lookahead)
+                return m.group(1) + m.group(2) + ' '
             return m.group(0)
         text = re.sub(r'(?<=\n)(\d{1,2})([\.\)])(?=[A-Z])', _norm_line_start_no_space, text)
-        # Indented question numbers after newline (e.g. "\n 54. A firm") -> "\n54. A firm"
         text = re.sub(r'(?<=\n)\s+(\d{1,2})([\.\)])\s+', r'\n\1\2 ', text)
-        # I10-style footer: "I10 Examination Guide 202 3  19 56." -> "\n56."
         text = re.sub(
-            r'I10\s+Examination\s+Guide\s+20\s*\d\s+\d{1,2}\s+(\d{1,2})([\.\)])',
+            r'(?:I10|LM2|E\d+)\s+E?\s*xamination\s+Guide\s+20\s*\d\s+\d{1,2}\s+(\d{1,2})([\.\)])',
             r'\n\1\2',
             text,
             flags=re.IGNORECASE,
         )
+        return text
+
+    @staticmethod
+    def _find_question_position(text, question_num):
+        match = re.search(rf'(?<=\n){int(question_num)}\.\s', text)
+        return match.start() if match else None
+
+    @staticmethod
+    def _strip_exam_guide_prefix(line):
+        if not re.search(r'Examination\s+Guide', line, re.IGNORECASE):
+            return line
+        match = re.search(
+            r'(?:I10|LM2|E\d+)\s+E?\s*xamination\s+Guide\s+\d{4}\s+\d{1,2}\s+(.*)$',
+            line,
+            re.IGNORECASE,
+        )
+        if match:
+            remainder = match.group(1).strip()
+            return remainder or None
+        match = re.search(r'Examination\s+Guide\s+\d{4}\s+\d{1,2}\s+(.*)$', line, re.IGNORECASE)
+        if match:
+            remainder = match.group(1).strip()
+            return remainder or None
+        if re.fullmatch(r'Examination\s+Guide\s*', line, re.IGNORECASE):
+            return None
+        return None
+
+    @staticmethod
+    def _clean_case_study_narrative(raw):
+        lines = []
+        for line in raw.split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+            if re.search(
+                r'Section B contains|Four options follow|options are labelled|Section B begins',
+                line,
+                re.IGNORECASE,
+            ):
+                continue
+            if re.match(r'^SECTION B\s*$', line, re.IGNORECASE):
+                continue
+            if re.fullmatch(r'Examination\s+Guide\s*', line, re.IGNORECASE):
+                continue
+            if re.match(r'^\d{1,2}$', line):
+                continue
+            if re.search(r'Examination\s+Guide', line, re.IGNORECASE):
+                line = QuestionParser._strip_exam_guide_prefix(line)
+                if not line:
+                    continue
+            lines.append(line)
+        cleaned = re.sub(r'\s+', ' ', ' '.join(lines)).strip()
+        return QuestionParser.fix_display_spacing(cleaned)
+
+    @staticmethod
+    def extract_case_studies(text, total_questions=75):
+        """Extract Section B case study narratives keyed by first question number in each study."""
+        text = QuestionParser.normalize_pdf_text(text)
+        intro = re.search(r'Section\s+B\s+contains\s+(\w+)\s+case\s+studies', text, re.IGNORECASE)
+        if not intro:
+            return {}
+
+        word_map = {'two': 2, 'four': 4, 'three': 3}
+        num_studies = word_map.get(intro.group(1).lower())
+        if not num_studies and intro.group(1).isdigit():
+            num_studies = int(intro.group(1))
+        if not num_studies:
+            return {}
+
+        questions_per_study = 5
+        section_b_questions = num_studies * questions_per_study
+        first_question = total_questions - section_b_questions + 1
+        study_starts = [first_question + i * questions_per_study for i in range(num_studies)]
+
+        first_pos = QuestionParser._find_question_position(text, study_starts[0])
+        if first_pos is None:
+            return {}
+
+        section_b_marker = None
+        for match in re.finditer(r'\bSECTION\s+B\b', text, re.IGNORECASE):
+            if match.start() < first_pos:
+                section_b_marker = match
+        if not section_b_marker:
+            return {}
+
+        case_studies = {}
+        for index, question_start in enumerate(study_starts):
+            question_pos = QuestionParser._find_question_position(text, question_start)
+            if question_pos is None:
+                continue
+
+            if index == 0:
+                raw = text[section_b_marker.end():question_pos]
+            else:
+                previous_last = question_start - 1
+                previous_pos = QuestionParser._find_question_position(text, previous_last)
+                if previous_pos is None:
+                    continue
+                block = text[previous_pos:question_pos]
+                option_d_matches = list(re.finditer(r'(?m)^D[\.\)]\s*.+$', block))
+                raw = block[option_d_matches[-1].end():] if option_d_matches else block
+
+            narrative = QuestionParser._clean_case_study_narrative(raw)
+            if len(narrative) > 40:
+                case_studies[str(question_start)] = narrative
+
+        return case_studies
+
+    @staticmethod
+    def attach_case_studies_to_questions(questions, case_studies):
+        """Attach case study text to Section B questions (five per study)."""
+        if not case_studies:
+            return
+        study_starts = sorted(int(key) for key in case_studies.keys())
+        for question in questions:
+            q_num = question.get('question_number', '')
+            if not str(q_num).isdigit():
+                continue
+            q_num_int = int(q_num)
+            for study_index, study_start in enumerate(study_starts):
+                if study_start <= q_num_int < study_start + 5:
+                    question['case_study'] = case_studies[str(study_start)]
+                    question['case_study_number'] = study_index + 1
+                    break
+
+    @staticmethod
+    def parse_questions(text):
+        """Parse multiple choice questions from text (works for both PDF and text files)"""
+        questions = []
+        text = QuestionParser.normalize_pdf_text(text)
         
         # Pattern to match questions starting with numbers (1., 2., etc.)
         # Format: "1. Question text\nA. Option A\nB. Option B\nC. Option C\nD. Option D"
@@ -706,7 +829,9 @@ class QuestionParser:
                     continue
 
                 answer_key, learning_objectives = QuestionParser.extract_answer_key(text)
+                case_studies = QuestionParser.extract_case_studies(text)
                 questions = QuestionParser.parse_questions(text)
+                QuestionParser.attach_case_studies_to_questions(questions, case_studies)
 
                 for question in questions:
                     question['question'] = QuestionParser.fix_display_spacing(question['question'])
