@@ -2154,7 +2154,7 @@ def get_available_years():
         year_match = re.search(r'(\d{4})', source)
         if year_match:
             years.add(year_match.group(1))
-    return jsonify(sorted(list(years), reverse=True))
+    return jsonify(sorted(list(years)))
 
 @app.route('/api/learning-objectives')
 @login_required
