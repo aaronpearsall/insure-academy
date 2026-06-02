@@ -4,6 +4,32 @@ let selectedAnswer = null;
 let selectedAnswers = []; // For multiple choice questions
 let answers = []; // Store all answers for results
 let score = 0;
+const QUIZ_CACHE_VERSION = 2; // bump when question ids/content may change
+
+function questionKey(q) {
+    return `${q.module || ''}|${q.source_file || ''}|${q.question_number || ''}`;
+}
+
+function escapeHtml(text) {
+    if (text == null) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+async function fetchFilteredQuestions(quizOptions) {
+    const response = await fetch('/api/questions/filter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(quizOptions)
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to load questions (${response.status})`);
+    }
+    return response.json();
+}
 
 // Check authentication on page load
 document.addEventListener('DOMContentLoaded', async () => {
@@ -20,12 +46,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '/login';
         return;
     }
-    // Try to restore progress from localStorage
-    const restored = restoreProgress();
+    // Try to restore progress from localStorage (re-fetches fresh questions)
+    const restored = await restoreProgress();
     
     // If no saved progress, load fresh questions
     if (!restored || questions.length === 0) {
-        loadQuestions();
+        await loadQuestions();
     } else {
         // Restore UI state
         showQuestion();
@@ -71,15 +97,7 @@ async function loadQuestions() {
         const quizOptions = JSON.parse(sessionStorage.getItem('quizOptions') || '{}');
         
         // Fetch filtered questions
-        const response = await fetch('/api/questions/filter', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(quizOptions)
-        });
-        
-        questions = await response.json();
+        questions = await fetchFilteredQuestions(quizOptions);
         
         // Initialize answers array if not restored
         if (answers.length === 0) {
@@ -164,8 +182,8 @@ function showQuestion() {
         }
         
         optionDiv.innerHTML = `
-            <span class="option-label">${option.letter}</span>
-            <span class="option-text">${option.text}</span>
+            <span class="option-label">${escapeHtml(option.letter)}</span>
+            <span class="option-text">${escapeHtml(option.text)}</span>
         `;
         
         if (!answer.answered) {
@@ -327,7 +345,22 @@ async function submitAnswer() {
             })
         });
         
+        if (response.status === 401 || response.status === 403) {
+            window.location.href = '/login';
+            return;
+        }
+        
         const feedback = await response.json();
+        
+        if (!response.ok) {
+            showError(feedback.error || 'Failed to submit answer. Try reloading the quiz.');
+            return;
+        }
+        
+        if (feedback.error) {
+            showError(feedback.error);
+            return;
+        }
         
         // Store answer
         // Check if this question was already answered
@@ -494,6 +527,7 @@ function updateScore() {
 
 function saveProgress() {
     const progress = {
+        version: QUIZ_CACHE_VERSION,
         questions: questions,
         answers: answers,
         currentQuestionIndex: currentQuestionIndex,
@@ -503,25 +537,50 @@ function saveProgress() {
     localStorage.setItem('quizProgress', JSON.stringify(progress));
 }
 
-function restoreProgress() {
+async function restoreProgress() {
     const saved = localStorage.getItem('quizProgress');
     if (saved) {
         try {
             const progress = JSON.parse(saved);
-            // Check if quiz options match
             const currentOptions = JSON.parse(sessionStorage.getItem('quizOptions') || '{}');
             const savedOptions = progress.quizOptions || {};
             
+            if (progress.version !== QUIZ_CACHE_VERSION) {
+                localStorage.removeItem('quizProgress');
+                return false;
+            }
+            
             // Only restore if options match
             if (JSON.stringify(currentOptions) === JSON.stringify(savedOptions)) {
-                questions = progress.questions || [];
-                answers = progress.answers || [];
-                currentQuestionIndex = progress.currentQuestionIndex || 0;
+                const freshQuestions = await fetchFilteredQuestions(currentOptions);
+                if (!freshQuestions.length) {
+                    return false;
+                }
+
+                // Map saved answers onto fresh questions (stable key, not stale ids)
+                const savedAnswersByKey = {};
+                (progress.questions || []).forEach((q, i) => {
+                    if (q && progress.answers && progress.answers[i]) {
+                        savedAnswersByKey[questionKey(q)] = progress.answers[i];
+                    }
+                });
+
+                questions = freshQuestions;
+                answers = freshQuestions.map(q => {
+                    const saved = savedAnswersByKey[questionKey(q)];
+                    return saved || { answered: false, selected: null, correct: null };
+                });
+
+                currentQuestionIndex = Math.min(
+                    progress.currentQuestionIndex || 0,
+                    Math.max(questions.length - 1, 0)
+                );
                 score = progress.score || 0;
                 return true;
             }
         } catch (e) {
             console.error('Error restoring progress:', e);
+            localStorage.removeItem('quizProgress');
         }
     }
     return false;

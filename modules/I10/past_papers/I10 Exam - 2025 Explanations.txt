@@ -5,7 +5,7 @@ Explanations for questions from this past paper. I10 Insurance Broking Fundament
 
 --------------------------------------------------------------------------------
 Question 1
-For what main source is the financial backing for Lloyd’s syndicates obtained?
+For what main source is the financial backing for Lloyd's syndicates obtained?
 
 A. Brokers.
 B. Corporate members.
@@ -77,7 +77,7 @@ Explanation: Insurer retains $100,000 (its max line) of $400,000 risk. Four-line
 
 --------------------------------------------------------------------------------
 Question 7
-For the purposes of calculating its solvency margin, an insurer’s liabilities will include
+For the purposes of calculating its solvency margin, an insurer's liabilities will include
 
 A. claims reserves only.
 B. paid and unpaid claims and operating costs.
@@ -101,12 +101,12 @@ Explanation: Rating agencies assess insurers' long-term financial stability and 
 
 --------------------------------------------------------------------------------
 Question 9
-The final link of the Lloyd’s chain of security is funded by
+The final link of the Lloyd's chain of security is funded by
 
 A. His Majesty’s Treasury.
 B. premium held in trust funds.
 C. a percentage of gross written premium written in the Lloyd's market.
-D. members’ funds deposited at Lloyd’s.
+D. members’ funds deposited at Lloyd's.
 
 Answer: C
 Explanation: The final link (Central Fund) is funded by a percentage of gross written premium from the Lloyd's market. All market participants contribute proportionally, ensuring collective protection if individual members cannot meet their liabilities.
@@ -257,7 +257,7 @@ Explanation: Agency by ratification occurs when a principal retroactively approv
 
 --------------------------------------------------------------------------------
 Question 22
-What is the main purpose of a broker’s security committee?
+What is the main purpose of a broker's security committee?
 
 A. To approve underwriters that business can be placed with.
 B. To monitor that premiums and claims are paid promptly.
@@ -317,7 +317,7 @@ Explanation: The London Market operates as a true subscription market, where ris
 
 --------------------------------------------------------------------------------
 Question 27
-A commercial property portfolio is placed with a Lloyd's syndicate by a wholesale broker. The risk emanates from an overseas retail broker. What relationship, if any, exists between the Lloyd’s syndicate and the retail broker?
+A commercial property portfolio is placed with a Lloyd's syndicate by a wholesale broker. The risk emanates from an overseas retail broker. What relationship, if any, exists between the Lloyd's syndicate and the retail broker?
 
 A. None.
 B. Agent.
@@ -487,8 +487,8 @@ Explanation: The General Underwriters' Agreement delegates authority for post pl
 Question 41
 When placing a large risk at Lloyd's, an insurance broker will initially present the Market Reform Contract to
 
-A. the Lloyd’s managing agent.
-B. the Lloyd’s members' agent.
+A. the Lloyd's managing agent.
+B. the Lloyd's members' agent.
 C. the underwriter.
 D. Xchanging Ins-sure Services.
 
@@ -581,7 +581,7 @@ Explanation: The insured pays the £125 excess first, then receives up to £575 
 
 --------------------------------------------------------------------------------
 Question 49
-An insured wishes to submit a claim under a policy which its broker has placed with Lloyd’s underwriters. Who should the insured initially contact with details of the claim?
+An insured wishes to submit a claim under a policy which its broker has placed with Lloyd's underwriters. Who should the insured initially contact with details of the claim?
 
 A. The broker.
 B. The slip leader only.
@@ -607,7 +607,7 @@ Explanation: An average adjuster is involved during the claims handling stage. A
 Question 51
 An insurer has been notified of a valid claim for damage under a property policy, but believes that a contractor on the premises at the time may have been partially responsible for the damage. What action is the insurer likely to take?
 
-A. Pay the claim and then seek a recovery in the policyholder’s name from the contractor.
+A. Pay the claim and then seek a recovery in the policyholder's name from the contractor.
 B. Reduce the amount it pays for the claim by an amount it estimates represents the contractor's responsibility.
 C. Refuse to pay the claim and suggest the policyholder sues the contractor.
 D. Seek a contribution from the contractor's insurer before deciding how much to pay the policyholder.
@@ -617,7 +617,7 @@ Explanation: The insurer pays the valid claim to fulfil its indemnity obligation
 
 --------------------------------------------------------------------------------
 Question 52
-The necessity for a Lloyd’ s syndicate NOT to unreasonably reject a claim is a requirement of the
+The necessity for a Lloyd's syndicate NOT to unreasonably reject a claim is a requirement of the
 
 A. Council of Lloyd's.
 B. Financial Conduct Authority.
@@ -800,9 +800,9 @@ Question 67
 What restrictions, if any, does Trevor’s firm have in terms of where he can place business in the London Market?
 
 A. He can only place business with UK companies based in the London Market.
-B. He can place business in both Lloyd’s and the company market.
+B. He can place business in both Lloyd's and the company market.
 C. He can place business at Lloyd's only.
-D. He cannot place any business at Lloyd’s.
+D. He cannot place any business at Lloyd's.
 
 Answer: B
 Explanation: Trevor's firm, as a broker with London Market access, can place business in both Lloyd's and the company market. Brokers with appropriate accreditation have no restriction to one or the other.

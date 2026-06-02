@@ -26,6 +26,15 @@ BAD_PATTERNS = [
     (r"\s+'", "space(s) before apostrophe (e.g. \"holder 's\")"),
     (r'policyh\s+older', "OCR split 'policyh older'"),
     (r'(\d)\s+\.\s+(?=\d)', "space around decimal point in number"),
+    (r'\bin c ases\b', "OCR split 'in c ases'"),
+    (r'\bn ormally\b', "OCR split 'n ormally'"),
+    (r'\bexclusion s\b', "OCR split 'exclusion s'"),
+    (r'\bbec ause\b', "OCR split 'bec ause'"),
+    (r'\bretur n\b', "OCR split 'retur n'"),
+    (r'\binsura nce\b', "OCR split 'insura nce'"),
+    (r'\bg aps\b', "OCR split 'g aps'"),
+    (r'\bwhic h\b', "OCR split 'whic h'"),
+    (r'\bre sponsible\b', "OCR split 're sponsible'"),
 ]
 
 

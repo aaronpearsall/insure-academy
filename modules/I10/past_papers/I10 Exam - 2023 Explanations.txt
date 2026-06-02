@@ -53,7 +53,7 @@ Explanation: Brokers gather and present risk information and handle much of the 
 
 --------------------------------------------------------------------------------
 Question 5
-What type(s) of insurance broker is able to offer Lloyd’s policies to its clients?
+What type(s) of insurance broker is able to offer Lloyd's policies to its clients?
 
 A. Aggregators only.
 B. Lloyd's brokers only.
@@ -92,7 +92,7 @@ Question 8
 Under a contract of insurance, what is brokerage?
 
 A. The commission paid to the broker by the insurer, which is included in the premium.
-B. The commission rebated by the insurer to the insured in c ases with limited broker involvement.
+B. The commission rebated by the insurer to the insured in cases with limited broker involvement.
 C. A fee paid by the insured directly to the broker.
 D. A fee paid by the insured directly to the insurer, in addition to the premium.
 
@@ -101,7 +101,7 @@ Explanation: Brokerage is the remuneration paid by the insurer to the broker, us
 
 --------------------------------------------------------------------------------
 Question 9
-When a Lloyd's broker agrees to place business on behalf of a broker who is NOT a Lloyd's broker, the Lloyd’s broker is operating as a
+When a Lloyd's broker agrees to place business on behalf of a broker who is NOT a Lloyd's broker, the Lloyd's broker is operating as a
 
 A. consolidator.
 B. producing broker.
@@ -161,7 +161,7 @@ Explanation: Helping formulate a business continuity plan goes beyond standard q
 
 --------------------------------------------------------------------------------
 Question 14
-Under a delegated underwriting authority agreement, when would a coverholder n ormally declare bound risks by completing a bordereau and submitting it to the insurer?
+Under a delegated underwriting authority agreement, when would a coverholder normally declare bound risks by completing a bordereau and submitting it to the insurer?
 
 A. Immediately the risk is bound.
 B. Weekly.
@@ -209,7 +209,7 @@ Explanation: The Market Reform Contract is the standard Lloyd's presentation doc
 
 --------------------------------------------------------------------------------
 Question 18
-Whom must a Lloyd's broker initially notify under an insurance policy placed with a Lloyd’s underwriter when a catastrophe claim is reported by a client?
+Whom must a Lloyd's broker initially notify under an insurance policy placed with a Lloyd's underwriter when a catastrophe claim is reported by a client?
 
 A. The Council of Lloyd's.
 B. The leading underwriter only.
@@ -248,7 +248,7 @@ Question 21
 What is one of the benefits to the client where an insurance broker provides a detailed underwriting submission to an insurer?
 
 A. A faster quotation will always be obtained.
-B. Fewer exclusion s and warranties.
+B. Fewer exclusions and warranties.
 C. Increased probability of more favourable terms.
 D. Wider cover will always be offered.
 
@@ -341,9 +341,9 @@ Explanation: When market capacity increases, brokers should use the opportunity 
 
 --------------------------------------------------------------------------------
 Question 29
-Why may a client use an insurance broker’s rent-a-captive facility in preference to establishing its own captive insurance company?
+Why may a client use an insurance broker's rent-a-captive facility in preference to establishing its own captive insurance company?
 
-A. Administrative costs are reduced bec ause a number of facilities are collectively managed by the broker.
+A. Administrative costs are reduced because a number of facilities are collectively managed by the broker.
 B. It requires less insurance premium to fully fund the calculated risk.
 C. There will be more funds available to settle claims.
 D. To avoid conflicts of interest.
@@ -377,7 +377,7 @@ Explanation: Delegated authority (binding authority) is agreed between the insur
 
 --------------------------------------------------------------------------------
 Question 32
-What is the maximum time period after inception du ring which an insurance broker should send an insurance policy to a consumer to comply with the Contract Certainty Code of Practice?
+What is the maximum time period after inception during which an insurance broker should send an insurance policy to a consumer to comply with the Contract Certainty Code of Practice?
 
 A. 5 days.
 B. 7 days.
@@ -391,10 +391,10 @@ Explanation: The Contract Certainty Code of Practice requires consumer policy do
 Question 33
 For what purpose does a firm of insurance brokers send a Terms of business Agreement to a client?
 
-A. It contains the client’s insurance quotation.
+A. It contains the client's insurance quotation.
 B. It details the services that the broker will provide to the client.
 C. It provides a summary of the client's insurance coverage.
-D. It states the client’s insurance requirements.
+D. It states the client's insurance requirements.
 
 Answer: B
 Explanation: The Terms of Business Agreement sets out the services the broker will provide, remuneration, and how the relationship will operate.
@@ -437,7 +437,7 @@ Explanation: A conflict can arise where the broker acts for more than one party 
 
 --------------------------------------------------------------------------------
 Question 37
-Why might a conflict of interest arise if an insurance broker has a delegated authority agreement, whic h includes a profit commission, with an insurer?
+Why might a conflict of interest arise if an insurance broker has a delegated authority agreement, which includes a profit commission, with an insurer?
 
 A. Business can only be placed with an insurer specifically requested by the client.
 B. Business may be placed with other insurers who quote preferential terms.
@@ -476,7 +476,7 @@ Question 40
 The Insurance: Conduct of Business sourcebook (ICOBS) states that an insurance broker, when explaining to a client why an insurer has been approached, must
 
 A. demonstrate that all insurers have been approached.
-B. demonstrate that the quotations are reasonable based on the client’s circumstances.
+B. demonstrate that the quotations are reasonable based on the client's circumstances.
 C. provide the client with a list of the leading insurers in the market sector and those which have been approached.
 D. tell the client the basis of the broking procedure used.
 
@@ -499,7 +499,7 @@ Explanation: ICOBS requires disclosure of the premium and any separate fee clear
 Question 42
 The Financial Conduct Authority's approach to supervision requires insurance brokers to
 
-A. deal only with insurers wh o are members of the Association of British Insurers.
+A. deal only with insurers who are members of the Association of British Insurers.
 B. identify and reduce risks which may affect its clients.
 C. improve the level of qualifications of its team.
 D. submit details of complaints on a monthly basis.
@@ -557,7 +557,7 @@ Explanation: Training records must be retained for at least three years to evide
 
 --------------------------------------------------------------------------------
 Question 47
-Where an employee of a firm of insurance brokers suspects that a client may be involved in money laundering, what action must i nitially be taken?
+Where an employee of a firm of insurance brokers suspects that a client may be involved in money laundering, what action must initially be taken?
 
 A. Cease any business transactions with the client.
 B. Confront the client.
@@ -583,7 +583,7 @@ Explanation: Sanctions screening helps ensure the broker does not act for person
 Question 49
 How may an insurance broker inadvertently receive a bribe from a client?
 
-A. By accepting a lunch invitation to discuss the renewal of a client’s insurance programme.
+A. By accepting a lunch invitation to discuss the renewal of a client's insurance programme.
 B. By receiving a client request to conduct a risk management site inspection.
 C. By receiving a gift for placing a client's insurance programme.
 D. By receiving a request to speak at an international insurance conference.
@@ -665,7 +665,7 @@ Explanation: Client money must be segregated so that, if the broker fails, clien
 
 --------------------------------------------------------------------------------
 Question 56
-What money may be retained in an insurance broker’s client asset account?
+What money may be retained in an insurance broker's client asset account?
 
 A. Commission earned on insurance premiums.
 B. Fees received from clients for insurance services.
@@ -677,7 +677,7 @@ Explanation: Return premiums received from insurers on behalf of clients are cli
 
 --------------------------------------------------------------------------------
 Question 57
-When a risk transfer arrangement is in place with an insurer, who is re sponsible for client funds if the money is lost due to the bankruptcy of an insurance broker?
+When a risk transfer arrangement is in place with an insurer, who is responsible for client funds if the money is lost due to the bankruptcy of an insurance broker?
 
 A. The client.
 B. The Financial Conduct Authority.
@@ -703,7 +703,7 @@ Explanation: The Insurance Distribution Directive harmonises conduct requirement
 Question 59
 What should a firm of insurance brokers consider to help maintain client retention levels?
 
-A. Ensur e faster premium payments are made to insurers.
+A. Ensure faster premium payments are made to insurers.
 B. Increase the level of claims reserves.
 C. Recruit and train quality employees.
 D. Request increased commission levels from insurers.
@@ -764,7 +764,7 @@ Question 64
 Why must an insurance broker have more than one bank account?
 
 A. The Financial Services Compensation Scheme limits the amount of compensation payable following financial failure.
-B. To keep money owed to clients and insurers separate from income earned by the brok er.
+B. To keep money owed to clients and insurers separate from income earned by the broker.
 C. To separate insurance premiums received from domestic and international clients.
 D. Terms of Business Agreements require that separate accounts operate for each insurer.
 
@@ -821,7 +821,7 @@ Explanation: Firms must log complaints formally under their complaints procedure
 
 --------------------------------------------------------------------------------
 Question 69
-How should Tim respond to the client’s statement that the case will be r eferred to the FOS?
+How should Tim respond to the client's statement that the case will be referred to the FOS?
 
 A. The client has an immediate right of referral but the FOS may decide not to accept the case.
 B. The FOS will accept the case immediately.
@@ -845,7 +845,7 @@ Explanation: An FOS decision is binding on the firm if accepted; the complainant
 
 --------------------------------------------------------------------------------
 Question 71
-How does Ste phanie demonstrate good conduct in her business relationship with clients?
+How does Stephanie demonstrate good conduct in her business relationship with clients?
 
 A. By ensuring that key performance indicators are met.
 B. By meeting the regulatory requirements applicable to clients.
@@ -857,7 +857,7 @@ Explanation: Good conduct with clients is demonstrated through consistently exce
 
 --------------------------------------------------------------------------------
 Question 72
-Stephanie demonstrates good conduct in her business rel ationship with insurers by
+Stephanie demonstrates good conduct in her business relationship with insurers by
 
 A. checking insurance policy documentation.
 B. ensuring that contract certainty is achieved.
@@ -869,7 +869,7 @@ Explanation: Paying insurers' premiums on time protects cover and maintains trus
 
 --------------------------------------------------------------------------------
 Question 73
-The type of corporate culture that Ste phanie would like h er team to use is
+The type of corporate culture that Stephanie would like her team to use is
 
 A. client first.
 B. growth.
@@ -893,9 +893,9 @@ Explanation: Following documented procedures and firm guidelines reduces the ris
 
 --------------------------------------------------------------------------------
 Question 75
-How does Steve try to ensure that his team does NOT mis-sell additional insurance p roducts to clients?
+How does Steve try to ensure that his team does NOT mis-sell additional insurance products to clients?
 
-A. B y providing accurate policy documentation.
+A. By providing accurate policy documentation.
 B. By providing concise underwriting submissions.
 C. By providing prompt customer service.
 D. By providing sufficient product information to make an informed decision.

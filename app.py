@@ -583,6 +583,7 @@ class QuestionParser:
         ]
         for pattern, replacement in ocr_splits:
             text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+        text = QuestionParser.fix_ocr_internal_splits(text)
         # Hyphenated compounds split by spaces (e.g. "Long -term", "cost -effective")
         text = re.sub(r'(\w)\s+-\s*(\w)', r'\1-\2', text)
         text = re.sub(r'(\w)-\s+(\w)', r'\1-\2', text)
@@ -590,6 +591,95 @@ class QuestionParser:
         text = re.sub(r'\s+\?', '?', text)
         # Normalise multiple spaces to single
         text = re.sub(r'\s+', ' ', text).strip()
+        return text
+    
+    @staticmethod
+    def fix_ocr_internal_splits(text):
+        """Fix PDF OCR splits inside words (e.g. 'c ases' -> 'cases', 'retur n' -> 'return')."""
+        if not text or not isinstance(text, str):
+            return text or ''
+        # Longer / specific patterns first (I10/LM exam PDFs)
+        internal = [
+            (r'\bin c ases\b', 'in cases'),
+            (r'\bn ormally\b', 'normally'),
+            (r'\bexclusion s\b', 'exclusions'),
+            (r'\bbec ause\b', 'because'),
+            (r'\bdu ring\b', 'during'),
+            (r'\bwhic h includes\b', 'which includes'),
+            (r'\bwhic h\b', 'which'),
+            (r'\bwh o\b', 'who'),
+            (r'\bi nitially\b', 'initially'),
+            (r'\bre sponsible\b', 'responsible'),
+            (r'\bEnsur e\b', 'Ensure'),
+            (r'\br eferred\b', 'referred'),
+            (r'\bSte phanie\b', 'Stephanie'),
+            (r'\bh er\b', 'her'),
+            (r'\binsurance p roducts\b', 'insurance products'),
+            (r'\bp roducts\b', 'products'),
+            (r'\bB y\b', 'By'),
+            (r'\bg aps\b', 'gaps'),
+            (r'\binsura nce\b', 'insurance'),
+            (r'\bA uthority\b', 'Authority'),
+            (r'\bretur n premium\b', 'return premium'),
+            (r'\bretur n\b', 'return'),
+            (r'\bclients tha t\b', 'clients that'),
+            (r'\btha t remain\b', 'that remain'),
+            (r'\btha t\b', 'that'),
+            (r'\bw idest\b', 'widest'),
+            (r'\bwithout c hallenging\b', 'without challenging'),
+            (r'\bc hallenging\b', 'challenging'),
+            (r'\baddit ional\b', 'additional'),
+            (r'\baddit ion\b', 'addition'),
+            (r'\bcha rges\b', 'charges'),
+            (r'\bdifferent te rms\b', 'different terms'),
+            (r'\bte rms\b', 'terms'),
+            (r'\bbroker reco mmend\b', 'broker recommend'),
+            (r'\breco mmend\b', 'recommend'),
+            (r'\bconditio ns\b', 'conditions'),
+            (r'\bshould t he\b', 'should the'),
+            (r'\binsure r\b', 'insurer'),
+            (r'\binsurance poli cyholder\b', 'insurance policyholder'),
+            (r'\binsurance poli cy\b', 'insurance policy'),
+            (r'\binsurance poli\b', 'insurance policy'),
+            (r'\bwill noti fy\b', 'will notify'),
+            (r'\bwill noti\b', 'will notify'),
+            (r'\bcatastrophe ex posures\b', 'catastrophe exposures'),
+            (r'\bcatastrophe ex\b', 'catastrophe exposures'),
+            (r'\binsurance brok er\b', 'insurance broker'),
+            (r'\binsurance brok\b', 'insurance broker'),
+            (r'\bprocedur es\b', 'procedures'),
+            (r'\binsurance por tfolio\b', 'insurance portfolio'),
+            (r'\binsurance por\b', 'insurance portfolio'),
+            (r'\bpor tfolio\b', 'portfolio'),
+            (r'\bbusiness rel ationship\b', 'business relationship'),
+            (r'\brel ationship\b', 'relationship'),
+            (r'\babilit y to\b', 'ability to'),
+            (r'\babilit y\b', 'ability'),
+            (r'\bcomplaint ma de\b', 'complaint made'),
+            (r'\bcomplaint ma\b', 'complaint made'),
+            (r'\bthe brok er\b', 'the broker'),
+            (r'\bthe brok\b', 'the broker'),
+            (r'\bpoli cyholder\b', 'policyholder'),
+            (r'\bpoli cy\b', 'policy'),
+            (r'\bnoti fy\b', 'notify'),
+            (r'\bex posures\b', 'exposures'),
+            (r'\bposures only\b', 'posures only'),
+            (r'\bmediation activit ies\b', 'mediation activities'),
+            (r'\bactivit ies\b', 'activities'),
+            (r'\bcomply with\b', 'comply with'),
+            (r'Lloyd\s*[\'\u2019]\s*s', "Lloyd's"),
+            (r"client\s*[\'\u2019]\s*s", "client's"),
+            (r"broker\s*[\'\u2019]\s*s", "broker's"),
+            (r"insurer\s*[\'\u2019]\s*s", "insurer's"),
+            (r"policyholder\s*[\'\u2019]\s*s", "policyholder's"),
+            (r"client\s*[\'\u2019]\s*s", "client's"),
+            (r"Greg\s*[\'\u2019]\s*s", "Greg's"),
+            (r"Caroline\s*[\'\u2019]\s*s", "Caroline's"),
+            (r',\s+whic h', ', which'),
+            (r'whic h includes', 'which includes'),
+        ]
+        for pattern, replacement in internal:
+            text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
         return text
     
     @staticmethod

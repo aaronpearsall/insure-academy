@@ -10,7 +10,7 @@ One of the main differences between a wholesale broker and a retail broker, invo
 A. acts on behalf of the principal.
 B. deals directly with the proposer.
 C. is remunerated from the overall commission available.
-D. will have access to the Lloyd’s market.
+D. will have access to the Lloyd's market.
 
 Answer: B
 Explanation: The retail broker has the direct client relationship and deals with the proposer. The wholesale broker is instructed by the retail broker and places business in specialist markets such as Lloyd's.
@@ -65,7 +65,7 @@ Explanation: The compliance officer (or compliance function) is responsible for 
 
 --------------------------------------------------------------------------------
 Question 6
-When a Lloyd’s insurance broker uses the subscription market to place an insurance policy, this is a process of
+When a Lloyd's insurance broker uses the subscription market to place an insurance policy, this is a process of
 
 A. co-insurance.
 B. co-ordination.
@@ -197,7 +197,7 @@ Explanation: Removing or reducing an excess usually increases the premium becaus
 
 --------------------------------------------------------------------------------
 Question 17
-Which document does a Lloyd’s insurance broker use to place business with Lloyd’s underwriters?
+Which document does a Lloyd's insurance broker use to place business with Lloyd's underwriters?
 
 A. A bordereau.
 B. A certificate of insurance.
@@ -209,7 +209,7 @@ Explanation: Lloyd's brokers place business with Lloyd's underwriters using a Ma
 
 --------------------------------------------------------------------------------
 Question 18
-What characteristics does a Lloyd’s insurance broker look for in an insurer when selecting a leading underwriter to provide a quotation on a risk in the subscription market?
+What characteristics does a Lloyd's insurance broker look for in an insurer when selecting a leading underwriter to provide a quotation on a risk in the subscription market?
 
 A. The ability to always underwrite the largest proportion of the insurance risk.
 B. The ability to provide the lowest premium quotation which is then supported by following insurers subject to different terms and conditions.
@@ -413,7 +413,7 @@ Explanation: Where two clients compete for limited capacity, the broker should d
 
 --------------------------------------------------------------------------------
 Question 35
-What type of task may an insurance broker outsource without seeking the client’s permission?
+What type of task may an insurance broker outsource without seeking the client's permission?
 
 A. An additional service for which the client has paid a fee.
 B. A service which requires a level of expertise outside the broker's skill set.
@@ -499,7 +499,7 @@ Explanation: The FCA's risk-based supervision directs more resource to firms jud
 Question 42
 Where an insurance broker carries out regulated activities without authorisation, this is
 
-A. acceptable provided it is a Lloyd’s broker.
+A. acceptable provided it is a Lloyd's broker.
 B. acceptable provided it only places reinsurance.
 C. a civil offence.
 D. a criminal offence.
@@ -509,10 +509,10 @@ Explanation: Carrying on regulated insurance mediation without FCA authorisation
 
 --------------------------------------------------------------------------------
 Question 43
-Which body is responsible for the regulation of Lloyd’s brokers?
+Which body is responsible for the regulation of Lloyd's brokers?
 
 A. British Insurance Brokers' Association.
-B. Council of Lloyd’s.
+B. Council of Lloyd's.
 C. Financial Conduct Authority.
 D. Prudential Regulation Authority.
 
@@ -562,7 +562,7 @@ A copy of a client's passport has been obtained by an insurance broker for proof
 A. It should not be retained as this would be a breach of data protection regulations.
 B. 12 months.
 C. 5 years.
-D. For as long as the policyholder remains the insurance broker’s client.
+D. For as long as the policyholder remains the insurance broker's client.
 
 Answer: C
 Explanation: Customer due diligence records, including copies of identity documents, are normally retained for five years after the end of the business relationship (AML requirements).
@@ -632,7 +632,7 @@ Question 53
 Which body requires insurance brokers to maintain the competency of their employees?
 
 A. British Insurance Brokers' Association.
-B. Council of Lloyd’s.
+B. Council of Lloyd's.
 C. Financial Conduct Authority.
 D. Prudential Regulation Authority.
 
@@ -716,7 +716,7 @@ Question 60
 The requirements of the Insurance Distribution Directive 2018 enable the Financial Conduct Authority to regulate
 
 A. all insurance contracts.
-B. Lloyd’s brokers only.
+B. Lloyd's brokers only.
 C. the point of sale of consumer insurance products.
 D. transactions relating to commercial insurance only.
 
@@ -881,12 +881,12 @@ Explanation: After a complaint, the firm should review procedures and implement 
 
 --------------------------------------------------------------------------------
 Question 74
-Greg’s initial response to the client’ s verbal complaint should be to
+Greg's initial response to the client's verbal complaint should be to
 
 A. explain that the case is being referred directly to the firm's professional indemnity insurer.
 B. explain the complaints procedure and ensure the client has a copy.
 C. insist that the client submits the full details of the complaint to the firm in writing.
-D. point out that a joint investigation with the client’s insurer is necessary.
+D. point out that a joint investigation with the client's insurer is necessary.
 
 Answer: B
 Explanation: On receiving a verbal complaint, the broker should explain the complaints procedure and ensure the client has a copy, while recording the complaint promptly.
