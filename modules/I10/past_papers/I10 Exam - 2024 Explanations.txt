@@ -1,0 +1,905 @@
+I10 INSURANCE BROKING FUNDAMENTALS - I10 Exam - 2024
+================================================================================
+Explanations for questions from this past paper. I10 Insurance Broking Fundamentals.
+================================================================================
+
+--------------------------------------------------------------------------------
+Question 1
+One of the main differences between a wholesale broker and a retail broker, involved in the same placement, is that only the retail broker
+
+A. acts on behalf of the principal.
+B. deals directly with the proposer.
+C. is remunerated from the overall commission available.
+D. will have access to the Lloyd's market.
+
+Answer: B
+Explanation: The retail broker has the direct client relationship and deals with the proposer, while the wholesale broker is instructed by the retail broker and places business in the market. Both may act for a principal and access Lloyd's; commission sharing does not define the distinction.
+
+--------------------------------------------------------------------------------
+Question 2
+The principal of a reinsurance broker is the
+
+A. insurance broker.
+B. insured.
+C. insurer.
+D. reinsurer.
+
+Answer: C
+Explanation: A reinsurance broker acts for the ceding insurer as principal when placing reinsurance. The insured is the principal of a retail broker, and the reinsurer is the counterparty, not the broker's principal.
+
+--------------------------------------------------------------------------------
+Question 3
+What is the benefit to an insurer of having an insurance policy placed through an insurance broker?
+
+A. Full disclosure of the policyholder's material circumstances will always be made.
+B. The insurance broker is responsible for paying the insurance premium in the event of non-payment by the policyholder.
+C. The insurance broker will explain the technical aspects of the insurance policy to the policyholder.
+D. The policyholder retention rate is always greater than that achieved for a direct placement.
+
+Answer: C
+Explanation: Brokers add value for insurers by helping policyholders understand policy terms and obligations, which supports proper use of cover and fair presentation. Disclosure, premium payment and retention are not guaranteed outcomes of broker placement.
+
+--------------------------------------------------------------------------------
+Question 4
+What type of risks are placed by insurance brokers?
+
+A. All types of risk.
+B. Commercial risks only.
+C. Global risks only.
+D. Personal lines risk only.
+
+Answer: A
+Explanation: Insurance brokers place personal lines, commercial, specialist and reinsurance business across the market. They are not restricted to commercial, global or personal lines risks only.
+
+--------------------------------------------------------------------------------
+Question 5
+Within an insurance brokerage, who is usually responsible for ensuring that mediation activities comply with the Financial Conduct A uthority's requirements?
+
+A. An account executive.
+B. The compliance officer.
+C. The data protection officer.
+D. The finance director.
+
+Answer: B
+Explanation: The compliance officer is typically responsible for ensuring the firm's mediation activities meet FCA requirements, including systems, monitoring and regulatory reporting. Other roles have specific duties but not overall compliance ownership.
+
+--------------------------------------------------------------------------------
+Question 6
+When a Lloyd’ s insurance broker uses the subscription market to place an insurance policy, this is a process of
+
+A. co-insurance.
+B. co-ordination.
+C. consolidation.
+D. contribution.
+
+Answer: A
+Explanation: Placing a risk with several Lloyd's underwriters on a subscription basis is co-insurance: multiple insurers each take a stated proportion of the same risk. The other terms describe different market processes.
+
+--------------------------------------------------------------------------------
+Question 7
+A firm of insurance brokers which establishes a network will seek to attract members who are
+
+A. clients.
+B. insurers.
+C. other insurance brokers.
+D. reinsurers.
+
+Answer: C
+Explanation: Broker networks are formed by a host broker recruiting other brokers as members to access facilities, expertise or buying power. Clients, insurers and reinsurers are not the members of such networks.
+
+--------------------------------------------------------------------------------
+Question 8
+An insurance broker obtains quotations from a number of insurers for a client. In what circumstances may the broker take into account the amount of commission that will be paid when deciding which insurer to recommend?
+
+A. Where no fee is charged in addit ion to the commission earned.
+B. Where the approval of the regulator has been obtained.
+C. Where the client's interests are not prejudiced.
+D. Where the policy is placed via Lloyd's.
+
+Answer: C
+Explanation: Commission may influence insurer selection only where the client's interests are not prejudiced, consistent with treating customers fairly and conflicts management. Regulator approval or Lloyd's placement does not permit commission-led recommendations.
+
+--------------------------------------------------------------------------------
+Question 9
+Why does an insurer use a reinsurance broker to place its property catastrophe worldwide reinsurance exposure?
+
+A. To provide an enhanced claims service.
+B. To reduce its administration expenses.
+C. To use the reinsurance broker's expertise to reinsure the exposure with one large reinsurer only.
+D. To use the reinsurance broker's expertise to reinsure the exposure with a number of financially strong reinsurers.
+
+Answer: D
+Explanation: Catastrophe reinsurance is usually spread across several strong reinsurers to reduce credit and aggregation risk. The reinsurance broker's market knowledge and relationships enable that placement; a single reinsurer or claims service is not the primary purpose.
+
+--------------------------------------------------------------------------------
+Question 10
+Who instructs a wholesale insurance broker to place an insurance policy?
+
+A. An appointed representative.
+B. An insured.
+C. An insurer.
+D. A retail insurance broker.
+
+Answer: D
+Explanation: A wholesale broker is instructed by the retail broker acting for the insured, not directly by the insured in this chain. Insurers and appointed representatives do not typically instruct wholesale brokers in the standard placement model.
+
+--------------------------------------------------------------------------------
+Question 11
+Which element of the amount payable by a client must an insurance broker show separately on an invoice?
+
+A. Commission.
+B. Fee.
+C. Administrative cha rges.
+D. Work transfer fee.
+
+Answer: B
+Explanation: Where a broker charges a separate fee in addition to commission, the fee must be shown separately on the client invoice for transparency. Commission and other elements are disclosed under separate IDD and disclosure rules.
+
+--------------------------------------------------------------------------------
+Question 12
+How does an insurance broker who has a claims advocacy role assist and advise the client?
+
+A. It handles all aspects of the claim.
+B. It assists the client when problems arise which cannot be resolved directly with the insurer.
+C. When requested to by the insurer to expedite the claim process.
+D. When specialist or complex risks are involved.
+
+Answer: B
+Explanation: Claims advocacy means supporting the client when claims issues cannot be resolved directly with the insurer, not handling every aspect of the claim or acting only at the insurer's request.
+
+--------------------------------------------------------------------------------
+Question 13
+What should be a major consideration for an insurance broker when designing a global insurance programme for a multinational client?
+
+A. Achieving the lowest possible insurance premium.
+B. Avoiding g aps in insurance coverage.
+C. Ensuring that the client discloses all material information.
+D. Obtaining identical insurance coverage for each territory.
+
+Answer: B
+Explanation: For multinational programmes the priority is consistent, gap-free cover across territories, not necessarily identical wordings or the lowest premium. Disclosure remains important but avoiding coverage gaps is the major design consideration.
+
+--------------------------------------------------------------------------------
+Question 14
+What action should an insurance broker immediately take upon realisation that it will be unable to fully meet a client's demands and needs?
+
+A. Inform the client of policy restrictions in coverage.
+B. Insert any policy restrictions into the insurance policy.
+C. Send the client a revised demands and needs statement.
+D. Terminate the insurance placement.
+
+Answer: A
+Explanation: If the broker cannot fully meet the client's demands and needs, it must promptly inform the client of restrictions in the cover proposed. Revised statements and policy insertion follow, but immediate client notification is required.
+
+--------------------------------------------------------------------------------
+Question 15
+A coverholder under a delegated authority agreement will be an employee of
+
+A. an insurance broker.
+B. an insurer.
+C. the policyholder.
+D. the reinsurer.
+
+Answer: A
+Explanation: Under delegated authority the coverholder is normally an employee or agent of the insurance broker (or insurer) authorised to bind business within agreed limits. The policyholder and reinsurer are not the coverholder's employer in this context.
+
+--------------------------------------------------------------------------------
+Question 16
+If a proposer requests that an excess does NOT apply to his new insurance policy, the insura nce broker should explain the
+
+A. consequent limitations on cover.
+B. effect on premium levels.
+C. imposition of warranties.
+D. restrictions on the policy term.
+
+Answer: B
+Explanation: Removing or waiving an excess generally increases the premium because the insured retains less of the risk. The broker should explain that premium effect rather than warranties or policy term restrictions.
+
+--------------------------------------------------------------------------------
+Question 17
+Which document does a Lloyd’ s insurance broker use to place business with Lloyd’ s underwriters?
+
+A. A bordereau.
+B. A certificate of insurance.
+C. A Market Reform Contract.
+D. A Terms of Business Agreement.
+
+Answer: C
+Explanation: Lloyd's business is placed using a Market Reform Contract (MRC), which sets out the risk details and contractual terms for underwriters. Bordereaux, certificates and Terms of Business serve other purposes.
+
+--------------------------------------------------------------------------------
+Question 18
+What characteristics does a Lloyd's insurance broker look for in an insurer when selecting a leading underwriter to provide a quotation on a risk in the subscription market?
+
+A. The ability to always underwrite the largest proportion of the insurance risk.
+B. The ability to provide the lowest premium quotation which is then supported by following insurers subject to different te rms and conditions.
+C. The capacity to underwrite 100% of the risk which is then automatically reinsured to following insurers.
+D. Specialised knowledge of the class of business to provide a quotation which will be supported by following insurers.
+
+Answer: D
+Explanation: The lead underwriter must have expertise in the class so its terms and pricing are credible and likely to be followed in the subscription market. Lowest premium or largest line alone do not make an effective lead.
+
+--------------------------------------------------------------------------------
+Question 19
+A proposal form is being completed in respect of a professional indemnity risk. What is the broker’ s usual role in this process?
+
+A. To advise the client on what material circumstances to disclose on the form.
+B. To complete the form and ask the client to verify its accuracy before signing it.
+C. To complete those questions where the client is unsure of the meaning.
+D. To verify the accuracy of the information provided by the client before asking the client to sign it.
+
+Answer: A
+Explanation: The broker's usual role is to advise the client what material circumstances to disclose; the client completes and signs the proposal. The broker does not normally complete or verify the form on the client's behalf.
+
+--------------------------------------------------------------------------------
+Question 20
+Why might an insurance broker reco mmend a packaged insurance policy to a client?
+
+A. To cover a number of risks under one policy.
+B. Long-term insurance coverage is guaranteed.
+C. A lower excess is always available.
+D. To provide an individually-designed insurance policy.
+
+Answer: A
+Explanation: Packaged policies combine several covers under one policy, which can be efficient for smaller clients. They are standard products, not individually designed policies, and do not guarantee long-term cover or lower excesses.
+
+--------------------------------------------------------------------------------
+Question 21
+An insurance broker has regularly placed a certain type of risk with a leading insurer, but market trading conditions have changed. How should the broker approach the renewal?
+
+A. Maintain continuity with this insurer.
+B. Negotiate improvements in terms and conditio ns with this insurer.
+C. Review breadth of cover across the market sector.
+D. Review capacity across the market sector leaders.
+
+Answer: C
+Explanation: When market conditions change, the broker should review breadth of cover across the sector rather than automatically renewing with the same insurer. Capacity and continuity may be considered but a market review of cover is appropriate.
+
+--------------------------------------------------------------------------------
+Question 22
+What factor must an insurance broker take into account when deciding which insurers to approach for a quotation?
+
+A. The amount of commission paid by the insurer.
+B. The financial security of the insurer.
+C. Whether a delegated authority agreement is in place with the insurer.
+D. Whether the insurer offers monthly instalments for payment of the premium.
+
+Answer: B
+Explanation: Brokers must consider the financial security of insurers they recommend, as part of due diligence and treating customers fairly. Commission, instalment facilities and delegated authority are secondary to security.
+
+--------------------------------------------------------------------------------
+Question 23
+A recognised advantage to a client of using an insurance broker's risk survey service is that it can
+
+A. guarantee access to insurance at a competitive premium.
+B. identify risks of which the client may otherwise be unaware.
+C. provide certainty of a cost-effective management solution.
+D. simplify the process of obtaining cover for otherwise uninsurable risks.
+
+Answer: B
+Explanation: Risk surveys help identify hazards and exposures the client may not have recognised, improving risk management and insurability. They do not guarantee premiums, make uninsurable risks coverable or guarantee solutions.
+
+--------------------------------------------------------------------------------
+Question 24
+An insurance broker is reviewing an insurance programme for a client at a time of increasing competition for restricted capacity in the market. What should t he broker recommend in order to maintain existing premium levels?
+
+A. Improvements to risk management.
+B. Payment of the premium in instalments.
+C. A reduction in sums insured.
+D. The removal of warranties and exclusions.
+
+Answer: A
+Explanation: In a hard market with restricted capacity, improved risk management makes the risk more attractive and can help maintain premium levels. Reducing sums insured or removing protections would worsen cover or increase risk.
+
+--------------------------------------------------------------------------------
+Question 25
+An insurance broker underwrites risks on a full delegated authority basis. What duties does the broker perform?
+
+A. Accept the business and calculate the premium only.
+B. Accept the business and issue the documentation only.
+C. Calculate the premium and issue the documentation only.
+D. Accept the business, calculate the premium and issue the documentation.
+
+Answer: D
+Explanation: Full delegated authority requires the broker (as coverholder) to accept risks, rate them and issue policy documentation within agreed limits. Partial delegations split these functions.
+
+--------------------------------------------------------------------------------
+Question 26
+Which party under a delegated authority agreement will normally be responsible for underwriting risks?
+
+A. The coverholder.
+B. The insurer.
+C. The reinsurer.
+D. The retail broker.
+
+Answer: A
+Explanation: Under delegated authority the coverholder (often the broker's staff) underwrites within the agreement; the insurer grants authority but does not normally underwrite each risk itself at point of sale.
+
+--------------------------------------------------------------------------------
+Question 27
+What can a broker incorporate into an insurance programme for a client who wishes to maintain rates and terms for a set period?
+
+A. Higher excesses.
+B. A long-term agreement.
+C. A packaged policy with a single insure r.
+D. A risk management review.
+
+Answer: B
+Explanation: A long-term agreement (LTA) can lock in rates and terms for an agreed period where the market allows. Higher excesses, packaged policies or surveys alone do not secure fixed terms.
+
+--------------------------------------------------------------------------------
+Question 28
+What must an insurance broker include within a policyholder's suitability statement?
+
+A. A financial report on the insurer that is being recommended to the policyholder.
+B. As many quotations as possible so that the polic yholder can make an independent review of all possible insurance options.
+C. The reasons why it is recommending an insurance policy and how the insurance coverage meets the policyholder's demands and needs.
+D. Specific questions to establish the policyholder's demands and needs.
+
+Answer: C
+Explanation: The suitability statement must explain why the recommended policy meets the client's demands and needs. Demands and needs are established separately; the statement is not a list of all quotations or an insurer financial report.
+
+--------------------------------------------------------------------------------
+Question 29
+In order to comply with the Financial Conduct Authority's Contract Certainty Code of Practice, within how many days should an insurance broker issue full documentation to clients?
+
+A. 7 days for consumers and 14 days for commercial customers.
+B. 7 days for consumers and 30 days for commercial customers.
+C. 7 days for both consumers and commercial customers.
+D. 30 days for both consumers and commercial customers.
+
+Answer: B
+Explanation: The Contract Certainty Code requires full documentation within 7 days for consumers and 30 days for commercial customers. The 14-day commercial timeline is not the Code standard.
+
+--------------------------------------------------------------------------------
+Question 30
+When incorrect documents are received from an insurer, in what circumstances, if any, can the insurance broker send them to the client to enable it to meet contract certainty timelines?
+
+A. In all circumstances.
+B. In no circumstances.
+C. Only if the broker has manually amended the documents and kept a copy on file.
+D. Only if the broker has obtained the insurer's agreement to make any potential corrections.
+
+Answer: D
+Explanation: Incorrect insurer documents must not be sent to the client to meet deadlines unless the insurer has agreed that the broker may issue them and correct them later. Manual amendment alone is insufficient.
+
+--------------------------------------------------------------------------------
+Question 31
+An insurance broker is appointing a loss adjuster to deal with a claim and will subsequently ask the insurer to make an offer in settlement. The broker is providing what level of claims service, if any?
+
+A. No service.
+B. Claims advocacy.
+C. Delegated authority claims handling.
+D. Full claims service.
+
+Answer: D
+Explanation: Appointing a loss adjuster and seeking a settlement offer from the insurer constitutes a full claims service, beyond advocacy or delegated claims handling alone.
+
+--------------------------------------------------------------------------------
+Question 32
+When providing claims management support, to which party does the broker's main responsibility lie?
+
+A. The adjuster.
+B. The insured.
+C. The insurer.
+D. The regulator.
+
+Answer: B
+Explanation: When managing claims, the broker's primary duty is to the insured (its client), even though it must work with insurers and adjusters. The regulator is not the main stakeholder in claim handling.
+
+--------------------------------------------------------------------------------
+Question 33
+Which document is used to detail each party's duties in the insurance placement process when a retail insurance broker and a wholesale insurance broker are both involved in placing an insurance policy?
+
+A. A demands and needs statement.
+B. An initial disclosure document.
+C. An insurance poli cy.
+D. A Terms of Business Agreement.
+
+Answer: D
+Explanation: A Terms of Business Agreement between retail and wholesale brokers sets out each party's duties in the placement chain. Demands and needs statements and policies address client disclosure and cover.
+
+--------------------------------------------------------------------------------
+Question 34
+An insurance broker has two clients competing for limited market capacity. In order to manage a potential conflict of interest, what should the broker do?
+
+A. Agree to receive a reduced fee or commission in respect of the placement of this business.
+B. Disclose the details to both clients and obtain their agreement on how to proceed.
+C. Disclose the details to potential insurers in order to negotiate increased capacity.
+D. Report the situation to the Financial Conduct Authority for a ruling.
+
+Answer: B
+Explanation: Where two clients compete for limited capacity, the broker must disclose the conflict to both clients and agree how to proceed. Reduced remuneration or insurer-only disclosure does not resolve the conflict properly.
+
+--------------------------------------------------------------------------------
+Question 35
+What type of task may an insurance broker outsource without seeking the client's permission?
+
+A. An additional service for which the client has paid a fee.
+B. A service which requires a level of expertise outside the broker’ s skill set.
+C. One which requires no question of judgement or advice.
+D. One which requires the safekeeping of client monies.
+
+Answer: C
+Explanation: Administrative tasks requiring no judgement or advice may be outsourced without client consent. Advice, client money and paid-for additional services require appropriate client agreement or cannot be outsourced freely.
+
+--------------------------------------------------------------------------------
+Question 36
+Which party(ies) may be the principal of an insurance broker when the broker is dealing with a claim?
+
+A. The insurer only.
+B. The policyholder only.
+C. The third party only.
+D. Both the insurer and the policyholder.
+
+Answer: D
+Explanation: In claims, the broker may act for the policyholder and also assist or act for the insurer depending on appointment and agreement. Either party alone is not the exclusive principal in all claim situations.
+
+--------------------------------------------------------------------------------
+Question 37
+What will be included in an insurance broker's Terms of Business Agreement with a client concerning the duty of disclosure?
+
+A. The broker confirms that all details disclosed by the insurer will be passed to the client.
+B. The broker will always disclose the amount of commission to the client.
+C. The client is assured that all material circumstances will be passed to the insurer.
+D. The cl ient is reminded of the potential consequences of non disclosure.
+
+Answer: D
+Explanation: Terms of Business should remind the client of the consequences of non-disclosure to the insurer, reinforcing the duty of fair presentation. Assurances that all material facts will reach the insurer are not appropriate warranties.
+
+--------------------------------------------------------------------------------
+Question 38
+What will be warranted within the regulatory status section of a Terms of Business Agreement between an insurer and an insurance broker?
+
+A. If either party becomes insolvent, it will noti fy the other party.
+B. The date on which the insurance broker became authorised to transact business.
+C. Whether the broker is a member of the Financial Ombudsman Service.
+D. Whether the insurer is a member of the Association of British Insurers.
+
+Answer: A
+Explanation: The regulatory status section typically warrants that a party will notify the other if it becomes insolvent. Authorisation date, FOS membership and ABI membership are disclosed but not usually framed as this insolvency warranty.
+
+--------------------------------------------------------------------------------
+Question 39
+A firm of motor insurance brokers receives notification of a motor claim in which two separate clients are involved, each insured with a different insurer. What should the claims handler consider?
+
+A. Whether it is necessary to notify each insurer of the incident.
+B. Whether the terms of the agency agreement with the insurer are breached.
+C. Whether there is a conflict of interest.
+D. Which client is at fault and should therefore lose its no claims bonus entitlement.
+
+Answer: C
+Explanation: Where two clients insured with different insurers are involved in the same loss, the broker must consider a conflict of interest and manage it appropriately. Fault and NCB are insurer decisions, not the broker's primary concern.
+
+--------------------------------------------------------------------------------
+Question 40
+The basis of how commission can be withdrawn by an insurance broker from an insurer's money account is usually detailed in
+
+A. a demands and needs statement.
+B. a key features document.
+C. the Client Assets Sourcebook.
+D. a Terms of Business Agreement.
+
+Answer: D
+Explanation: Commission withdrawal from insurer money accounts is usually governed by the Terms of Business Agreement between broker and insurer. CASS and client documents address other matters.
+
+--------------------------------------------------------------------------------
+Question 41
+The Financial Conduct Authority's risk-based approach to the supervision of insurance brokers means that resources are directed to those firms
+
+A. believed to pose the greatest risk to commercial clients.
+B. believed to pose the greatest risk to consumers.
+C. underwriting catastrophe ex posures only.
+D. with a high risk of financial failure only.
+
+Answer: B
+Explanation: The FCA's risk-based approach prioritises supervisory resource on firms posing the greatest risk to consumers. Commercial-only risk, catastrophe underwriting or financial failure alone are not the sole focus.
+
+--------------------------------------------------------------------------------
+Question 42
+Where an insurance broker carries out regulated activities without authorisation, this is
+
+A. acceptable provided it is a Lloyd's broker.
+B. acceptable provided it only places reinsurance.
+C. a civil offence.
+D. a criminal offence.
+
+Answer: D
+Explanation: Carrying on regulated insurance mediation without FCA authorisation is a criminal offence under the Financial Services and Markets Act. Limited exemptions do not apply simply because the firm is a Lloyd's broker or places reinsurance.
+
+--------------------------------------------------------------------------------
+Question 43
+Which body is responsible for the regulation of Lloyd’ s brokers?
+
+A. British Insurance Brokers' Association.
+B. Council of Lloyd's.
+C. Financial Conduct Authority.
+D. Prudential Regulation Authority.
+
+Answer: C
+Explanation: Lloyd's brokers are regulated by the FCA for conduct requirements; Lloyd's and the Council of Lloyd's have separate roles. BIBA is a trade association, not the regulator.
+
+--------------------------------------------------------------------------------
+Question 44
+A commercial client renews its property owner's insurance policy and cancels the cover within 14 days as it has found a cheaper alternative. What premium refund, if any, is it most likely to receive?
+
+A. A full refund in all circumstances.
+B. A full refund, providing no claims have been notified.
+C. A pro-rata refund, providing no claims have been notified.
+D. No refund will be received.
+
+Answer: C
+Explanation: Commercial customers may cancel within the cooling-off period and receive a pro-rata refund if no claims have been notified, under applicable cancellation rules. A full refund in all cases is not correct.
+
+--------------------------------------------------------------------------------
+Question 45
+In which document does the Financial Conduct Authority require that an insurance brok er discloses its address and authorisation status?
+
+A. demands and needs statement.
+B. initial disclosure document.
+C. insurance policy.
+D. statement of facts.
+
+Answer: B
+Explanation: The initial disclosure document must include the broker's address and authorisation status. Demands and needs, policies and statements of fact serve different purposes.
+
+--------------------------------------------------------------------------------
+Question 46
+One of the requirements that the Financial Conduct Authority places on a firm of insurance brokers to ensure competency of employees dealing with consumers, is that they must
+
+A. be supervised in their role for a period of no less than three months.
+B. be supervised until they demonstrate the necessary level of competency to carry out the activity.
+C. complete five hours of structured continuing professional development per month.
+D. obtain an insurance qualification.
+
+Answer: B
+Explanation: Staff dealing with consumers must be supervised until competent to carry out the activity; fixed three-month periods or set CPD hours alone are not the stated requirement. Qualifications may be required but supervision until competent is key.
+
+--------------------------------------------------------------------------------
+Question 47
+A copy of a client's passport has been obtained by an insurance broker for proof of identity checks. For what period of time, if any, should this be retained?
+
+A. It should not be retained as this would be a breach of data protection regulations.
+B. 12 months.
+C. 5 years.
+D. For as long as the policyholder remains the insurance broker's client.
+
+Answer: C
+Explanation: Customer due diligence records such as passport copies are typically retained for five years after the relationship ends, in line with money laundering regulations. Indefinite retention or no retention would breach proportionality or AML rules.
+
+--------------------------------------------------------------------------------
+Question 48
+What penalty could be imposed on an insurance broking firm if it is found to be working with a sanctioned entity?
+
+A. The loss of its Financial Conduct Authority authorisation only.
+B. A large fine only.
+C. A prison sentence only.
+D. A large fine or a prison sentence.
+
+Answer: D
+Explanation: Working with sanctioned entities can result in criminal penalties including imprisonment and fines under financial sanctions legislation, not only loss of authorisation or a civil fine.
+
+--------------------------------------------------------------------------------
+Question 49
+What information does the Employers' Liability Tracing Office (ELTO) require an insurance broker to obtain from a commercial client?
+
+A. Claims experience.
+B. Directors' names and addresses.
+C. Employer reference number.
+D. Name of insurer.
+
+Answer: C
+Explanation: ELTO requires the employer reference number (ERN) to trace employers' liability policies. Claims experience, directors' details and insurer name are not the ELTO's primary data requirement.
+
+--------------------------------------------------------------------------------
+Question 50
+An insurance broker will maintain a gifts and hospitality register to comply with
+
+A. bribery legislation.
+B. data protection legislation.
+C. Financial Conduct Authority requirements.
+D. money laundering requirements.
+
+Answer: A
+Explanation: A gifts and hospitality register supports compliance with the Bribery Act 2010 by recording benefits that could influence conduct. It is not primarily a data protection or AML tool.
+
+--------------------------------------------------------------------------------
+Question 51
+Under the Data Protection Act 2018, what is the maximum fine as a percentage of global turnover, that can be imposed on an insurance broker if there is a data breach?
+
+A. 2%.
+B. 4%.
+C. 5%.
+D. 10%.
+
+Answer: B
+Explanation: Under UK GDPR as applied by the Data Protection Act 2018, the higher tier maximum fine for serious breaches is up to 4% of global annual turnover (or £17.5 million, whichever is higher).
+
+--------------------------------------------------------------------------------
+Question 52
+What action, if any, should an insurance broker take if requested by a policyholder for details of his personal data held within the broker's files?
+
+A. The data can be provided on the payment of a fee.
+B. The data must be provided with no charge.
+C. The policyholder must be asked to obtain permission from the Information Commissioner's Office.
+D. There is no obligation to disclose the data.
+
+Answer: B
+Explanation: Subject access requests must be fulfilled free of charge within one month under UK data protection law. A fee, ICO permission or no obligation to disclose is incorrect for standard requests.
+
+--------------------------------------------------------------------------------
+Question 53
+Which body requires insurance brokers to maintain the competency of their employees?
+
+A. British Insurance Brokers' Association.
+B. Council of Lloyd's.
+C. Financial Conduct Authority.
+D. Prudential Regulation Authority.
+
+Answer: C
+Explanation: The FCA requires firms to maintain staff competence through training, supervision and CPD as part of its Senior Managers and Certification Regime and conduct rules. BIBA and Lloyd's do not set this core requirement.
+
+--------------------------------------------------------------------------------
+Question 54
+At what stage in the money laundering process might an insured request an early cancellation and a return of premium?
+
+A. Due diligence.
+B. Integration.
+C. Layering.
+D. Placement.
+
+Answer: B
+Explanation: Early cancellation and return of premium can indicate integration, where illicit funds are reintroduced into the legitimate economy through the insurance transaction. Placement and layering occur at earlier stages.
+
+--------------------------------------------------------------------------------
+Question 55
+When does the Financial Conduct Authority require an insurance broker to ensure that good customer outcomes have been delivered?
+
+A. At all times and in connection with all insurance customer operations.
+B. Only when providing an insurance customer with advice.
+C. Only when providing an insurance customer with advice, a quotation and after sales procedures.
+D. Only when providing an insurance customer with a quotation and after sales procedur es.
+
+Answer: A
+Explanation: The FCA expects good customer outcomes to be delivered at all times across all insurance customer operations, embodying the Consumer Duty and treating customers fairly. It is not limited to advice or quotation stages only.
+
+--------------------------------------------------------------------------------
+Question 56
+For what main reason, do most insurance brokers try to maintain service excellence to their clients?
+
+A. To encourage new business.
+B. To increase commission payments.
+C. To reduce administrative expenses.
+D. To retain client business at renewal.
+
+Answer: D
+Explanation: Service excellence is mainly aimed at retaining clients at renewal and building long-term relationships. It is not primarily about commission, admin savings or new business alone.
+
+--------------------------------------------------------------------------------
+Question 57
+With what minimum frequency must earned commission be taken from insurer's funds?
+
+A. Every 5 business days.
+B. Every 14 business days.
+C. Every 25 business days.
+D. Every 90 business days.
+
+Answer: C
+Explanation: Earned commission must be withdrawn from insurer accounts at least every 25 business days under CASS client money rules for insurance intermediaries.
+
+--------------------------------------------------------------------------------
+Question 58
+From which bank account would an insurance broker pay a retur n premium to a client?
+
+A. Broker funds.
+B. Client assets.
+C. Contingency funds.
+D. Insurer assets.
+
+Answer: B
+Explanation: Return premiums due to clients are paid from the client assets account, keeping client money segregated from the broker's own funds.
+
+--------------------------------------------------------------------------------
+Question 59
+In what circumstances, if any, is an insurance broker permitted to retain a client's return premium?
+
+A. In all circumstances.
+B. Only if the broker is registered with the regulator.
+C. Only if the client agrees.
+D. In no circumstances.
+
+Answer: C
+Explanation: A broker may retain a return premium only with the client's agreement, for example to offset other amounts due. Retention without consent is not permitted.
+
+--------------------------------------------------------------------------------
+Question 60
+The requirements of the Insurance Distribution Directive 2018 enable the Financial Conduct Authority to regulate
+
+A. all insurance contracts.
+B. Lloyd's brokers only.
+C. the point of sale of consumer insurance products.
+D. transactions relating to commercial insurance only.
+
+Answer: C
+Explanation: The Insurance Distribution Directive strengthens FCA regulation of the sale and distribution of consumer insurance products at the point of sale. It does not regulate all contracts or commercial-only business exclusively.
+
+--------------------------------------------------------------------------------
+Question 61
+Under the Insurance Distribution Directive 2018, in what circumstances, if any, can the requirement for an insurance broker to disclose its commission to a client be waived?
+
+A. In no circumstances.
+B. Where the client is a consumer.
+C. Where the client is a professional customer.
+D. Where the client is a small commercial business.
+
+Answer: C
+Explanation: Commission disclosure to commercial clients may be waived where the client is a professional customer under IDD/FCA rules. Consumers and smaller commercial clients generally require disclosure.
+
+--------------------------------------------------------------------------------
+Question 62
+An insurance broker has a motor insurance por tfolio with a high level of churn. What is the impact on its business?
+
+A. Its turnover is likely to decrease.
+B. Its turnover is likely to increase.
+C. It will be involved in a higher number of claims.
+D. It will receive a higher level of commission.
+
+Answer: A
+Explanation: High churn means policies are cancelled or not renewed frequently, reducing stable premium income and likely decreasing turnover despite new business activity. Churn does not automatically increase commission or claims.
+
+--------------------------------------------------------------------------------
+Question 63
+What is represented by an insurance broker's renewal retention figure?
+
+A. The amount of commission the broker receives from renewed policies.
+B. The number of clients that increase their premium on renewal.
+C. The percentage of clients tha t remain with the same insurer.
+D. The percentage of clients that renew their policies.
+
+Answer: D
+Explanation: Renewal retention measures the percentage of clients who renew their policies with the broker, a key indicator of client loyalty. It is not commission earned, premium increases or staying with the same insurer only.
+
+--------------------------------------------------------------------------------
+Question 64
+Who does an insurance broker always approach when obtaining new business by cross-selling?
+
+A. Commercial clients.
+B. Consumers.
+C. Existing clients.
+D. New clients.
+
+Answer: C
+Explanation: Cross-selling means offering additional products to existing clients who already have a relationship with the broker. New clients, consumers only or commercial only are not the defining target.
+
+--------------------------------------------------------------------------------
+Question 65
+What action is an insurance broker most likely to take to generate new business?
+
+A. Increasing excesses on insurance policies.
+B. Increasing commission levels.
+C. Investing in marketing.
+D. Outsourcing all claims functions.
+
+Answer: C
+Explanation: Marketing investment is a primary means of generating new business prospects. Increasing excesses or commission, or outsourcing all claims, would not typically be the main new business strategy.
+
+--------------------------------------------------------------------------------
+Question 66
+If previous claims are NOT being disclosed, what action is the insurer most likely to take affecting the firm's existing clients?
+
+A. Claims may be declined.
+B. Commission will be reduced.
+C. Cover will always be withdrawn.
+D. Premiums may be reduced.
+
+Answer: A
+Explanation: If the broker systematically fails to disclose prior claims, insurers may scrutinise or decline claims on affected policies where non-disclosure or misrepresentation is material. Cover is not always withdrawn and premiums would not be reduced as a penalty.
+
+--------------------------------------------------------------------------------
+Question 67
+In what way could the firm of insurance brokers improve its delivery of service excellence to clients?
+
+A. Avoiding peer review to speed up the service.
+B. Ensuring procedures are in place to reduce mistakes.
+C. Ensuring the lowest premium is always quoted.
+D. Ensuring the w idest coverage is provided whether required or not.
+
+Answer: B
+Explanation: Robust procedures and controls reduce errors and improve service excellence. Avoiding peer review, always quoting lowest premium or widest cover regardless of need would harm outcomes.
+
+--------------------------------------------------------------------------------
+Question 68
+Bearing in mind the insurer's allegations, in what main way may the firm have breached its operating procedures?
+
+A. Acting without skill, care and diligence.
+B. Bringing the financial services industry into disrepute.
+C. Failing to ensure knowledge and expertise is kept up to date.
+D. Failing to ensure transparency in each transaction.
+
+Answer: A
+Explanation: The insurer's allegation of poor service and errors points to failing to act with skill, care and diligence, a core FCA conduct requirement. Disrepute, CPD and transparency failures are less directly indicated.
+
+--------------------------------------------------------------------------------
+Question 69
+What steps should be taken by the firm of insurance brokers to most appropriately enhance its brand and reputation?
+
+A. Give higher rewards for successful achievement of sales targets.
+B. Improve client communication and interaction.
+C. Increase sales targets.
+D. Offer restricted cover at a lower premium.
+
+Answer: B
+Explanation: Improving communication and client interaction rebuilds trust and reputation after service failures. Higher sales targets or restricted cheap cover would not appropriately address brand damage.
+
+--------------------------------------------------------------------------------
+Question 70
+If the steps taken by the firm are successful, what is the outcome regarding the firm's relationship with the insurer?
+
+A. Enhancement of market share.
+B. Recognition of an increased sales focus.
+C. Reduced insurance premiums.
+D. Restoration of confidence.
+
+Answer: D
+Explanation: Successful remedial action should restore the insurer's confidence in the broker's placement and service standards. Market share, sales focus or premium reduction are not the primary relational outcome.
+
+--------------------------------------------------------------------------------
+Question 71
+In this situation, a potential errors and omissions claim could be pursued against the firm of insurance brokers if Greg's review shows that
+
+A. the firm's explanations to the client were not fully documented.
+B. the firm had accepted the insurer's standard terms without c hallenging them.
+C. the firm had tried to resolve the issue before referring it to the professional indemnity insurer.
+D. the policy condition was clearly stated within the policy wording.
+
+Answer: A
+Explanation: An E&O claim may arise if advice and explanations to the client were not adequately documented, making it hard to defend what was said about cover limitations. Clear policy wording or prior PI contact would weaken, not support, a claim against the firm.
+
+--------------------------------------------------------------------------------
+Question 72
+How does Greg's prior involvement in the case affect his abilit y to initially investigate and resolve this complaint within the regulator's guidelines?
+
+A. He may continue to investigate but must hand over the resolution process to a colleague.
+B. He may continue to investigate and resolve the complaint providing the firm considers him competent.
+C. He must be fully supervised during both the investigation and resolution.
+D. He must take responsibility for resolving the complaint.
+
+Answer: B
+Explanation: Greg may investigate and resolve the complaint if the firm considers him competent despite prior involvement; automatic handover or mandatory supervision is not required unless competence is in doubt.
+
+--------------------------------------------------------------------------------
+Question 73
+What action should the firm of insurance brokers take as a result of the complaint ma de against it?
+
+A. A consultation must take place with the firm's professional indemnity insurer to prevent ongoing risks.
+B. A full report should be sent to the regulator detailing the circumstances.
+C. A full review of the firm's procedures should be undertaken to identify remedial action.
+D. A review must be requested from the FOS to identify areas of improvement.
+
+Answer: C
+Explanation: Following a complaint, the firm should conduct a full review of procedures to identify and implement remedial action. Immediate PI consultation, FCA reporting or FOS review are not the standard first response.
+
+--------------------------------------------------------------------------------
+Question 74
+Greg's initial response to the client's verbal complaint should be to
+
+A. explain that the case is being referred directly to the firm's professional indemnity insurer.
+B. explain the complaints procedure and ensure the client has a copy.
+C. insist that the client submits the full details of the complaint to the firm in writing.
+D. point out that a joint investigation with th e client's insurer is necessary.
+
+Answer: B
+Explanation: On receiving a verbal complaint, Greg should explain the complaints procedure and give the client a copy, ensuring they know how to progress the matter. Referral to PI, insisting on writing only, or joint insurer investigation is premature.
+
+--------------------------------------------------------------------------------
+Question 75
+What practice by the firm of insurance brokers could result in a mis-selling allegation?
+
+A. Complaints handling being processed by account handlers.
+B. Lack of explanation of policy conditions.
+C. Non-payment of valid claims.
+D. The sale of legal expenses cover.
+
+Answer: D
+Explanation: Selling legal expenses cover without assessing needs, explaining scope or establishing eligibility can amount to mis-selling of an ancillary product. Complaints handling by account handlers or non-payment of claims are separate issues.
+

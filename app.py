@@ -228,6 +228,15 @@ class QuestionParser:
                 return m.group(1) + m.group(2) + ' '  # insert space before the capital letter (lookahead)
             return m.group(0)
         text = re.sub(r'(?<=\n)(\d{1,2})([\.\)])(?=[A-Z])', _norm_line_start_no_space, text)
+        # Indented question numbers after newline (e.g. "\n 54. A firm") -> "\n54. A firm"
+        text = re.sub(r'(?<=\n)\s+(\d{1,2})([\.\)])\s+', r'\n\1\2 ', text)
+        # I10-style footer: "I10 Examination Guide 202 3  19 56." -> "\n56."
+        text = re.sub(
+            r'I10\s+Examination\s+Guide\s+20\s*\d\s+\d{1,2}\s+(\d{1,2})([\.\)])',
+            r'\n\1\2',
+            text,
+            flags=re.IGNORECASE,
+        )
         
         # Pattern to match questions starting with numbers (1., 2., etc.)
         # Format: "1. Question text\nA. Option A\nB. Option B\nC. Option C\nD. Option D"
@@ -552,7 +561,33 @@ class QuestionParser:
         # Remove space(s) immediately before full stop when it looks like a decimal (e.g. "1 . 5" -> "1.5")
         text = re.sub(r'(\d)\s+\.\s+(?=\d)', r'\1.', text)
         # Fix common OCR split-words (word broken with stray space)
-        text = re.sub(r'policyh\s+older', 'policyholder', text, flags=re.IGNORECASE)
+        ocr_splits = [
+            (r'policyh\s*o\s*lder', 'policyholder'),
+            (r'mu\s+ltinational', 'multinational'),
+            (r'busine\s+ss', 'business'),
+            (r'Auth\s+ority', 'Authority'),
+            (r'char\s+ges', 'charges'),
+            (r'mis\s+-?\s*selling', 'mis-selling'),
+            (r'cross\s+-?\s*sold', 'cross-sold'),
+            (r'cross\s+-?\s*sell', 'cross-sell'),
+            (r'four\s+-?\s*line', 'four-line'),
+            (r'non\s+-?\s*consumer', 'non-consumer'),
+            (r'person\s+al\b', 'personal'),
+            (r'administeri\s+ng', 'administering'),
+            (r'ma\s+nagement', 'management'),
+            (r'expla\s+ining', 'explaining'),
+            (r'a\s+dvantage', 'advantage'),
+            (r'canguarantee', 'can guarantee'),
+            (r'Ins\s+-?\s*sure', 'Ins-sure'),
+            (r'\bi\s+s\b', 'is'),
+        ]
+        for pattern, replacement in ocr_splits:
+            text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+        # Hyphenated compounds split by spaces (e.g. "Long -term", "cost -effective")
+        text = re.sub(r'(\w)\s+-\s*(\w)', r'\1-\2', text)
+        text = re.sub(r'(\w)-\s+(\w)', r'\1-\2', text)
+        # Space before question mark (e.g. "layers ?" -> "layers?")
+        text = re.sub(r'\s+\?', '?', text)
         # Normalise multiple spaces to single
         text = re.sub(r'\s+', ' ', text).strip()
         return text
