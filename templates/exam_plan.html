@@ -3,175 +3,415 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InsureAcademy - Exam Plan</title>
+  <title>InsureAcademy — Exam Plan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
-    /* ── Readiness Score ── */
-    .readiness-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
+    /* ── Wizard ─────────────────────────────── */
+    .wizard-wrap {
+      min-height: calc(100vh - var(--topbar-height));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+    .wizard-card {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 520px;
+      overflow: hidden;
+    }
+    .wizard-progress {
+      height: 3px;
+      background: #f0f0f0;
+    }
+    .wizard-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #818cf8);
+      transition: width 0.4s ease;
+    }
+    .wizard-body { padding: 40px; }
+    .wizard-step { display: none; }
+    .wizard-step.active { display: block; }
+
+    .wizard-step-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6366f1;
+      margin-bottom: 8px;
+    }
+    .wizard-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #0f0f10;
+      margin-bottom: 6px;
+    }
+    .wizard-sub {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* Option pills */
+    .option-grid {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .option-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .option-grid.cols-1 { grid-template-columns: 1fr; }
+    .option-pill {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+    }
+    .option-pill:hover { border-color: #6366f1; background: #fafafa; }
+    .option-pill.selected {
+      border-color: #6366f1;
+      background: #eef2ff;
+    }
+    .option-pill-icon {
+      font-size: 20px;
+      line-height: 1;
+      width: 32px;
+      text-align: center;
+    }
+    .option-pill-text { flex: 1; }
+    .option-pill-title { font-size: 14px; font-weight: 600; color: #0f0f10; }
+    .option-pill-desc  { font-size: 12px; color: #6b7280; margin-top: 1px; }
+    .option-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid #e5e7eb;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .option-pill.selected .option-check {
+      background: #6366f1;
+      border-color: #6366f1;
+    }
+    .option-pill.selected .option-check::after {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    /* Day toggles */
+    .day-grid {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .day-toggle {
+      flex: 1;
+      aspect-ratio: 1;
+      border-radius: 10px;
+      border: 1.5px solid #e5e7eb;
+      background: white;
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .day-toggle:hover { border-color: #6366f1; color: #6366f1; }
+    .day-toggle.selected {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: white;
+    }
+
+    /* Date input */
+    .date-input-wrap {
+      margin-bottom: 28px;
+    }
+    .date-input-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .date-input-wrap input[type="date"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: #0f0f10;
+      background: white;
+      transition: border-color 0.15s;
+    }
+    .date-input-wrap input[type="date"]:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.08);
+    }
+
+    /* Plan summary */
+    .plan-summary-box {
+      background: #f8f8ff;
+      border: 1px solid #e0e0ff;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+    .plan-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid #ebebff;
+    }
+    .plan-summary-row:last-child { border-bottom: none; }
+    .plan-summary-key { font-size: 13px; color: #6b7280; }
+    .plan-summary-val { font-size: 13px; font-weight: 600; color: #0f0f10; }
+
+    .wizard-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .wizard-btn-back {
+      background: #f3f4f6;
+      color: #374151;
+      border: none;
+      border-radius: 9px;
+      padding: 11px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.15s;
+    }
+    .wizard-btn-back:hover { background: #e5e7eb; }
+    .wizard-btn-next {
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      padding: 11px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+      flex: 1;
+    }
+    .wizard-btn-next:hover { background: #4f46e5; box-shadow: 0 4px 14px rgba(99,102,241,0.3); }
+    .wizard-btn-next:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ── Active plan ─────────────────────────── */
+    .plan-view { max-width: 900px; }
+
+    .readiness-banner {
+      background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+      border-radius: 18px;
       padding: 28px 32px;
-      box-shadow: var(--shadow);
+      color: white;
       display: flex;
       align-items: center;
       gap: 32px;
       margin-bottom: 24px;
     }
-    .readiness-dial {
+    .readiness-dial-wrap {
       position: relative;
-      width: 140px;
-      height: 140px;
+      width: 110px;
+      height: 110px;
       flex-shrink: 0;
     }
-    .readiness-dial svg { width: 140px; height: 140px; transform: rotate(-90deg); }
-    .readiness-dial-track { fill: none; stroke: var(--border); stroke-width: 10; }
-    .readiness-dial-fill  { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
-    .readiness-dial-text  {
+    .readiness-dial-wrap svg {
+      width: 110px; height: 110px;
+      transform: rotate(-90deg);
+    }
+    .dial-track { fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 8; }
+    .dial-fill  { fill: none; stroke: white; stroke-width: 8; stroke-linecap: round;
+                  transition: stroke-dashoffset 1s ease; }
+    .dial-text  {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
+      color: white;
     }
-    .readiness-score-num  { font-size: 32px; font-weight: 700; line-height: 1; }
-    .readiness-score-label{ font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-    .readiness-info { flex: 1; }
-    .readiness-band {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    .band-red        { background: #fef2f2; color: #ef4444; }
-    .band-orange     { background: #fff7ed; color: #f97316; }
-    .band-yellow     { background: #fffbeb; color: #d97706; }
-    .band-green      { background: #ecfdf5; color: #10b981; }
-    .band-dark-green { background: #dcfce7; color: #16a34a; }
+    .dial-score { font-size: 26px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
+    .dial-label { font-size: 10px; opacity: 0.75; margin-top: 2px; }
 
-    .readiness-breakdown {
+    .readiness-info { flex: 1; }
+    .readiness-band-pill {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .readiness-headline {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      margin-bottom: 4px;
+    }
+    .readiness-detail {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+    .readiness-bars {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      margin-top: 16px;
     }
-    .readiness-breakdown-item { text-align: center; }
-    .breakdown-value { font-size: 20px; font-weight: 700; color: var(--primary); }
-    .breakdown-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-    .exam-countdown {
-      background: var(--primary);
-      color: white;
-      border-radius: var(--radius);
+    .rbar { }
+    .rbar-label { font-size: 10px; opacity: 0.65; margin-bottom: 4px; }
+    .rbar-track { height: 4px; background: rgba(255,255,255,0.2); border-radius: 99px; }
+    .rbar-fill  { height: 4px; background: white; border-radius: 99px; transition: width 1s ease; }
+    .rbar-val   { font-size: 12px; font-weight: 700; margin-top: 4px; }
+
+    .exam-countdown-chip {
+      background: rgba(255,255,255,0.15);
+      border-radius: 14px;
       padding: 16px 20px;
       text-align: center;
       flex-shrink: 0;
-      min-width: 120px;
+      min-width: 110px;
     }
-    .countdown-days { font-size: 36px; font-weight: 700; line-height: 1; }
-    .countdown-label { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+    .countdown-num  { font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+    .countdown-text { font-size: 11px; opacity: 0.75; margin-top: 4px; }
+    .countdown-date { font-size: 11px; opacity: 0.6; margin-top: 6px; }
 
-    /* ── Setup / No Plan ── */
-    .setup-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 40px;
+    /* Plan edit row */
+    .plan-edit-row {
+      background: white;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
       box-shadow: var(--shadow);
-      max-width: 560px;
-      margin: 0 auto;
-      text-align: center;
     }
-    .setup-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .setup-card p  { color: var(--text-secondary); margin-bottom: 28px; }
-    .setup-form { text-align: left; display: flex; flex-direction: column; gap: 16px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-    .form-group select,
-    .form-group input[type="date"],
-    .form-group input[type="number"] {
-      width: 100%; padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 14px; font-family: var(--font);
-      color: var(--text-primary);
-      background: var(--white);
+    .plan-edit-row .form-field { flex: 1; min-width: 140px; }
+    .form-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #9ca3af;
+      margin-bottom: 6px;
     }
-    .form-group select:focus,
-    .form-group input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(67,97,238,0.1); }
-
-    /* ── Calendar ── */
-    .calendar-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
+    .form-field input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: #0f0f10;
     }
-    .calendar-nav {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .calendar-nav h2 { font-size: 18px; font-weight: 600; }
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-    }
-    .cal-day-header {
-      text-align: center; font-size: 11px; font-weight: 600;
-      color: var(--text-muted); padding: 4px 0; text-transform: uppercase;
-    }
-    .cal-day {
-      aspect-ratio: 1;
-      border-radius: var(--radius-sm);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      font-size: 13px; cursor: default;
-      position: relative;
-      min-height: 52px;
-    }
-    .cal-day.empty { background: transparent; }
-    .cal-day.other-month { opacity: 0.3; }
-    .cal-day.today { font-weight: 700; border: 2px solid var(--primary); }
-    .cal-day.practice { background: #eef1fd; color: var(--primary); }
-    .cal-day.mock-exam { background: var(--purple-light); color: var(--purple); font-weight: 600; }
-    .cal-day.rest { background: #f9fafb; color: var(--text-muted); }
-    .cal-day.exam-day { background: var(--primary); color: white; font-weight: 700; }
-    .cal-day.completed-day { background: var(--success-light); color: var(--success); }
-    .cal-day-num { font-size: 13px; font-weight: 500; }
-    .cal-day-type { font-size: 9px; margin-top: 2px; opacity: 0.75; }
-    .cal-legend {
-      display: flex; gap: 16px; flex-wrap: wrap;
-      margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);
-    }
-    .cal-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
-    .cal-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
-
-    /* ── Plan controls ── */
-    .plan-controls {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
-      display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;
-    }
-    .plan-controls .form-group { margin: 0; flex: 1; min-width: 160px; }
+    .form-field input:focus { outline: none; border-color: #6366f1; }
     .new-plan-btn {
-      background: #fef2f2; color: #ef4444;
-      border: 1px solid #fecaca;
-      padding: 10px 16px; border-radius: var(--radius-sm);
-      font-size: 13px; font-weight: 500; cursor: pointer;
+      padding: 9px 16px;
+      border-radius: 8px;
+      border: 1.5px solid #fecaca;
+      background: #fef2f2;
+      color: #ef4444;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
       white-space: nowrap;
     }
     .new-plan-btn:hover { background: #fee2e2; }
+
+    /* Calendar */
+    .cal-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: var(--shadow);
+    }
+    .cal-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .cal-nav h3 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+    .cal-grid-wrap {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+    .cal-hdr {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #9ca3af;
+      padding: 6px 0;
+    }
+    .cal-cell {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      min-height: 46px;
+      cursor: default;
+      position: relative;
+    }
+    .cal-cell.empty { background: transparent; }
+    .cal-cell.today { outline: 2px solid #6366f1; outline-offset: -2px; }
+    .cal-cell .cn { font-weight: 600; }
+    .cal-cell .ct { font-size: 9px; margin-top: 1px; opacity: 0.7; }
+    .cal-cell.practice  { background: #eef2ff; color: #6366f1; }
+    .cal-cell.mock-exam { background: #f5f3ff; color: #7c3aed; font-weight: 700; }
+    .cal-cell.rest      { background: #f9fafb; color: #9ca3af; }
+    .cal-cell.exam-day  { background: #0f0f10; color: white; font-weight: 800; border-radius: 10px; }
+    .cal-cell.done      { background: #ecfdf5; color: #059669; }
+
+    .cal-legend {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      margin-top: 18px; padding-top: 16px;
+      border-top: 1px solid #f3f4f6;
+    }
+    .cal-leg-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; color: #6b7280;
+    }
+    .cal-leg-dot { width: 10px; height: 10px; border-radius: 3px; }
 
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
 <div class="app-layout">
-
-  <!-- Sidebar -->
   <aside class="sidebar">
     <a href="/" class="sidebar-logo sidebar-logo-link">
       <div class="logo-icon">IA</div>
@@ -210,7 +450,6 @@
     </div>
   </aside>
 
-  <!-- Main -->
   <div class="main-wrapper">
     <header class="topbar">
       <div class="topbar-left">
@@ -221,93 +460,209 @@
       </div>
     </header>
 
-    <main class="page-content">
+    <!-- ── Wizard (no plan) ───────────────────── -->
+    <div id="wizardView">
+      <div class="wizard-wrap">
+        <div class="wizard-card">
+          <div class="wizard-progress">
+            <div class="wizard-progress-fill" id="wizardProgress" style="width:20%"></div>
+          </div>
+          <div class="wizard-body">
 
-      <!-- No plan: setup screen -->
-      <div id="setupView">
-        <div class="setup-card">
-          <div style="font-size:48px;margin-bottom:16px;">🎯</div>
-          <h2>Build your exam plan</h2>
-          <p>Tell us your exam and date. We'll build a personalised daily study schedule and track your readiness as you practice.</p>
-          <form class="setup-form" id="setupForm">
-            <div class="form-group">
-              <label>Which exam are you preparing for?</label>
-              <select id="setupModule" required>
-                <option value="">-- Select exam --</option>
-                <option value="LM1">LM1 — London Market Insurance Principles</option>
-                <option value="LM2">LM2 — London Market Insurance Specialisation</option>
-                <option value="I10">I10 — Insurance Broking Fundamentals</option>
-                <option value="M05">M05 — Insurance Law</option>
-              </select>
+            <!-- Step 1: Exam -->
+            <div class="wizard-step active" id="step1">
+              <div class="wizard-step-label">Step 1 of 5</div>
+              <div class="wizard-title">Which exam are you sitting?</div>
+              <div class="wizard-sub">We'll build your plan around the specific syllabus and past papers.</div>
+              <div class="option-grid cols-1" id="examOptions">
+                <div class="option-pill" data-val="LM1">
+                  <div class="option-pill-icon">📋</div>
+                  <div class="option-pill-text">
+                    <div class="option-pill-title">LM1 — London Market Principles</div>
+                    <div class="option-pill-desc">Certificate level · ~150 questions</div>
+                  </div>
+                  <div class="option-check"></div>
+                </div>
+                <div class="option-pill" data-val="LM2">
+                  <div class="option-pill-icon">🏢</div>
+                  <div class="option-pill-text">
+                    <div class="option-pill-title">LM2 — London Market Specialisation</div>
+                    <div class="option-pill-desc">Certificate level · ~150 questions</div>
+                  </div>
+                  <div class="option-check"></div>
+                </div>
+                <div class="option-pill" data-val="I10">
+                  <div class="option-pill-icon">🔍</div>
+                  <div class="option-pill-text">
+                    <div class="option-pill-title">I10 — Insurance Broking Fundamentals</div>
+                    <div class="option-pill-desc">Certificate level · ~150 questions</div>
+                  </div>
+                  <div class="option-check"></div>
+                </div>
+                <div class="option-pill" data-val="M05">
+                  <div class="option-pill-icon">⚖️</div>
+                  <div class="option-pill-text">
+                    <div class="option-pill-title">M05 — Insurance Law</div>
+                    <div class="option-pill-desc">Diploma level · ~150 questions</div>
+                  </div>
+                  <div class="option-check"></div>
+                </div>
+              </div>
+              <div class="wizard-actions">
+                <button class="wizard-btn-next" id="step1Next" disabled>Continue →</button>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Exam date</label>
-              <input type="date" id="setupExamDate" required>
+
+            <!-- Step 2: Exam date -->
+            <div class="wizard-step" id="step2">
+              <div class="wizard-step-label">Step 2 of 5</div>
+              <div class="wizard-title">When is your exam?</div>
+              <div class="wizard-sub">We'll work backwards from this date to build your schedule.</div>
+              <div class="date-input-wrap">
+                <label class="date-input-label">Exam date</label>
+                <input type="date" id="examDateInput">
+              </div>
+              <div class="wizard-actions">
+                <button class="wizard-btn-back" onclick="goStep(1)">← Back</button>
+                <button class="wizard-btn-next" id="step2Next" disabled>Continue →</button>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Questions per day</label>
-              <input type="number" id="setupDailyQ" value="20" min="5" max="100">
+
+            <!-- Step 3: Study days -->
+            <div class="wizard-step" id="step3">
+              <div class="wizard-step-label">Step 3 of 5</div>
+              <div class="wizard-title">Which days can you study?</div>
+              <div class="wizard-sub">Select all the days you're typically available. We'll schedule rest days automatically.</div>
+              <div class="day-grid" id="dayGrid">
+                <button class="day-toggle" data-day="1">Mon</button>
+                <button class="day-toggle" data-day="2">Tue</button>
+                <button class="day-toggle" data-day="3">Wed</button>
+                <button class="day-toggle" data-day="4">Thu</button>
+                <button class="day-toggle" data-day="5">Fri</button>
+                <button class="day-toggle" data-day="6">Sat</button>
+                <button class="day-toggle" data-day="0">Sun</button>
+              </div>
+              <div class="wizard-actions">
+                <button class="wizard-btn-back" onclick="goStep(2)">← Back</button>
+                <button class="wizard-btn-next" id="step3Next" disabled>Continue →</button>
+              </div>
             </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">
-              Build my plan →
-            </button>
-          </form>
+
+            <!-- Step 4: Experience -->
+            <div class="wizard-step" id="step4">
+              <div class="wizard-step-label">Step 4 of 5</div>
+              <div class="wizard-title">How familiar are you with this subject?</div>
+              <div class="wizard-sub">This helps us set the right pace — you can always adjust later.</div>
+              <div class="option-grid cols-1" id="levelOptions">
+                <div class="option-pill" data-val="beginner">
+                  <div class="option-pill-icon">🌱</div>
+                  <div class="option-pill-text">
+                    <div class="option-pill-title">Starting fresh</div>
+                    <div class="option-pill-desc">Little to no prior knowledge</div>
+                  </div>
+                  <div class="option-check"></div>
+                </div>
+                <div class="option-pill" data-val="some">
+                  <div class="option-pill-icon">📚</div>
+                  <div class="option-pill-text">
+                    <div class="option-pill-title">Some knowledge</div>
+                    <div class="option-pill-desc">I know the basics but need more depth</div>
+                  </div>
+                  <div class="option-check"></div>
+                </div>
+                <div class="option-pill" data-val="confident">
+                  <div class="option-pill-icon">⚡</div>
+                  <div class="option-pill-text">
+                    <div class="option-pill-title">Confident</div>
+                    <div class="option-pill-desc">Good knowledge, just need exam practice</div>
+                  </div>
+                  <div class="option-check"></div>
+                </div>
+              </div>
+              <div class="wizard-actions">
+                <button class="wizard-btn-back" onclick="goStep(3)">← Back</button>
+                <button class="wizard-btn-next" id="step4Next" disabled>Continue →</button>
+              </div>
+            </div>
+
+            <!-- Step 5: Review & confirm -->
+            <div class="wizard-step" id="step5">
+              <div class="wizard-step-label">Step 5 of 5</div>
+              <div class="wizard-title">Your personalised plan</div>
+              <div class="wizard-sub">Based on your answers, here's what we recommend.</div>
+              <div class="plan-summary-box" id="planSummaryBox"></div>
+              <div class="wizard-actions">
+                <button class="wizard-btn-back" onclick="goStep(4)">← Back</button>
+                <button class="wizard-btn-next" id="buildBtn">Build my plan →</button>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
+    </div>
 
-      <!-- Active plan view -->
-      <div id="planView" class="hidden">
+    <!-- ── Active plan view ───────────────────── -->
+    <div id="planView" class="hidden">
+      <main class="page-content plan-view">
 
-        <!-- Readiness score -->
-        <div class="readiness-card" id="readinessCard">
-          <div class="readiness-dial">
-            <svg viewBox="0 0 140 140">
-              <circle class="readiness-dial-track" cx="70" cy="70" r="60"/>
-              <circle class="readiness-dial-fill" id="dialFill" cx="70" cy="70" r="60"
-                stroke-dasharray="377" stroke-dashoffset="377"/>
+        <!-- Readiness banner -->
+        <div class="readiness-banner">
+          <div class="readiness-dial-wrap">
+            <svg viewBox="0 0 110 110">
+              <circle class="dial-track" cx="55" cy="55" r="46"/>
+              <circle class="dial-fill" id="dialFill" cx="55" cy="55" r="46"
+                stroke-dasharray="289" stroke-dashoffset="289"/>
             </svg>
-            <div class="readiness-dial-text">
-              <div class="readiness-score-num" id="readinessNum">—</div>
-              <div class="readiness-score-label">/ 100</div>
+            <div class="dial-text">
+              <div class="dial-score" id="dialScore">—</div>
+              <div class="dial-label">/100</div>
             </div>
           </div>
+
           <div class="readiness-info">
-            <span class="readiness-band" id="readinessBand">Loading…</span>
-            <div class="readiness-breakdown">
-              <div class="readiness-breakdown-item">
-                <div class="breakdown-value" id="bAccuracy">—</div>
-                <div class="breakdown-label">Accuracy</div>
+            <div class="readiness-band-pill" id="readinessBand">Loading…</div>
+            <div class="readiness-headline" id="readinessHeadline">Calculating your readiness…</div>
+            <div class="readiness-detail" id="readinessDetail"></div>
+            <div class="readiness-bars">
+              <div class="rbar">
+                <div class="rbar-label">Accuracy</div>
+                <div class="rbar-track"><div class="rbar-fill" id="rbarAccuracy" style="width:0%"></div></div>
+                <div class="rbar-val" id="rbarAccuracyVal">—</div>
               </div>
-              <div class="readiness-breakdown-item">
-                <div class="breakdown-value" id="bVolume">—</div>
-                <div class="breakdown-label">Volume</div>
+              <div class="rbar">
+                <div class="rbar-label">Volume</div>
+                <div class="rbar-track"><div class="rbar-fill" id="rbarVolume" style="width:0%"></div></div>
+                <div class="rbar-val" id="rbarVolumeVal">—</div>
               </div>
-              <div class="readiness-breakdown-item">
-                <div class="breakdown-value" id="bConsistency">—</div>
-                <div class="breakdown-label">Consistency</div>
+              <div class="rbar">
+                <div class="rbar-label">Consistency</div>
+                <div class="rbar-track"><div class="rbar-fill" id="rbarConsistency" style="width:0%"></div></div>
+                <div class="rbar-val" id="rbarConsistencyVal">—</div>
               </div>
-              <div class="readiness-breakdown-item">
-                <div class="breakdown-value" id="bRecency">—</div>
-                <div class="breakdown-label">Trend</div>
+              <div class="rbar">
+                <div class="rbar-label">Trend</div>
+                <div class="rbar-track"><div class="rbar-fill" id="rbarTrend" style="width:0%"></div></div>
+                <div class="rbar-val" id="rbarTrendVal">—</div>
               </div>
             </div>
-            <div style="margin-top:12px;font-size:12px;color:var(--text-muted)" id="readinessDetail"></div>
           </div>
-          <div class="exam-countdown" id="examCountdown">
-            <div class="countdown-days" id="countdownDays">—</div>
-            <div class="countdown-label">days until exam</div>
-            <div style="font-size:11px;margin-top:6px;opacity:0.8" id="countdownDate"></div>
+
+          <div class="exam-countdown-chip" id="countdownChip">
+            <div class="countdown-num" id="countdownDays">—</div>
+            <div class="countdown-text">days to go</div>
+            <div class="countdown-date" id="countdownDate"></div>
           </div>
         </div>
 
-        <!-- Plan controls -->
-        <div class="plan-controls">
-          <div class="form-group">
-            <label style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Exam date</label>
+        <!-- Edit controls -->
+        <div class="plan-edit-row">
+          <div class="form-field">
+            <label>Exam date</label>
             <input type="date" id="editExamDate">
           </div>
-          <div class="form-group">
-            <label style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Questions / day</label>
+          <div class="form-field">
+            <label>Questions / day</label>
             <input type="number" id="editDailyQ" min="5" max="100">
           </div>
           <button class="btn btn-primary" id="updatePlanBtn">Update schedule</button>
@@ -315,53 +670,189 @@
         </div>
 
         <!-- Calendar -->
-        <div class="calendar-card">
-          <div class="calendar-nav">
-            <button class="btn btn-secondary btn-sm" id="calPrev">← Prev</button>
-            <h2 id="calTitle">Loading…</h2>
-            <button class="btn btn-secondary btn-sm" id="calNext">Next →</button>
+        <div class="cal-card">
+          <div class="cal-nav">
+            <button class="btn btn-secondary btn-sm" id="calPrev">←</button>
+            <h3 id="calTitle"></h3>
+            <button class="btn btn-secondary btn-sm" id="calNext">→</button>
           </div>
-          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-grid-wrap" id="calGrid"></div>
           <div class="cal-legend">
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#eef1fd"></div> Practice</div>
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#f5f3ff"></div> Mock Exam</div>
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#f9fafb"></div> Rest</div>
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#4361ee"></div> Exam Day</div>
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#ecfdf5"></div> Completed</div>
+            <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#eef2ff"></div> Practice</div>
+            <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#f5f3ff"></div> Mock exam</div>
+            <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#f9fafb;border:1px solid #e5e7eb"></div> Rest</div>
+            <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#0f0f10"></div> Exam day</div>
+            <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#ecfdf5"></div> Completed</div>
           </div>
         </div>
 
-      </div>
-    </main>
+      </main>
+    </div>
+
   </div>
 </div>
 
 <script>
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
+// ── Wizard state ─────────────────────────────────────────────────────────────
+const state = { module: null, examDate: null, studyDays: [], level: null };
+let currentStep = 1;
 let planData = null;
 let calYear, calMonth;
 
-async function init() {
-  const res = await fetch('/api/exam-plan');
-  const data = await res.json();
-  if (!data.plan) {
-    showSetup();
-  } else {
-    planData = data;
-    showPlan();
-    loadReadiness();
-  }
+function goStep(n) {
+  document.getElementById('step' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step' + n).classList.add('active');
+  document.getElementById('wizardProgress').style.width = (n / 5 * 100) + '%';
 }
 
-function showSetup() {
-  document.getElementById('setupView').classList.remove('hidden');
+// Step 1 — exam
+document.querySelectorAll('#examOptions .option-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('#examOptions .option-pill').forEach(x => x.classList.remove('selected'));
+    p.classList.add('selected');
+    state.module = p.dataset.val;
+    document.getElementById('step1Next').disabled = false;
+  });
+});
+document.getElementById('step1Next').addEventListener('click', () => goStep(2));
+
+// Step 2 — date
+const dateMin = new Date(); dateMin.setDate(dateMin.getDate() + 7);
+document.getElementById('examDateInput').min = dateMin.toISOString().split('T')[0];
+document.getElementById('examDateInput').addEventListener('change', e => {
+  state.examDate = e.target.value;
+  document.getElementById('step2Next').disabled = !state.examDate;
+});
+document.getElementById('step2Next').addEventListener('click', () => goStep(3));
+
+// Step 3 — study days
+document.querySelectorAll('#dayGrid .day-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('selected');
+    state.studyDays = Array.from(document.querySelectorAll('#dayGrid .day-toggle.selected'))
+                           .map(b => parseInt(b.dataset.day));
+    document.getElementById('step3Next').disabled = state.studyDays.length === 0;
+  });
+});
+document.getElementById('step3Next').addEventListener('click', () => goStep(4));
+
+// Step 4 — level
+document.querySelectorAll('#levelOptions .option-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('#levelOptions .option-pill').forEach(x => x.classList.remove('selected'));
+    p.classList.add('selected');
+    state.level = p.dataset.val;
+    document.getElementById('step4Next').disabled = false;
+  });
+});
+document.getElementById('step4Next').addEventListener('click', () => {
+  buildSummary();
+  goStep(5);
+});
+
+// Step 5 — summary
+function buildSummary() {
+  const exam   = new Date(state.examDate + 'T00:00:00');
+  const today  = new Date(); today.setHours(0,0,0,0);
+  const totalDays = Math.round((exam - today) / 86400000);
+  const studyDaysCount = state.studyDays.length;
+
+  // Count available study days until exam
+  let availableDays = 0;
+  const cur = new Date(today);
+  while (cur < exam) {
+    if (state.studyDays.includes(cur.getDay())) availableDays++;
+    cur.setDate(cur.getDate() + 1);
+  }
+
+  // Questions per day based on level and available days
+  const targetQ = { beginner: 600, some: 450, confident: 300 }[state.level] || 450;
+  const recommendedDailyQ = Math.max(10, Math.min(60, Math.ceil(targetQ / Math.max(availableDays, 1))));
+
+  state.dailyQuestions  = recommendedDailyQ;
+  state.availableDays   = availableDays;
+  state.totalTargetQ    = recommendedDailyQ * availableDays;
+
+  const dayNames = state.studyDays.map(d => ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d]).join(', ');
+  const levelLabel = { beginner: 'Starting fresh', some: 'Some knowledge', confident: 'Confident' }[state.level];
+
+  document.getElementById('planSummaryBox').innerHTML = `
+    <div class="plan-summary-row">
+      <span class="plan-summary-key">Exam</span>
+      <span class="plan-summary-val">${state.module}</span>
+    </div>
+    <div class="plan-summary-row">
+      <span class="plan-summary-key">Exam date</span>
+      <span class="plan-summary-val">${new Date(state.examDate + 'T00:00:00').toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})}</span>
+    </div>
+    <div class="plan-summary-row">
+      <span class="plan-summary-key">Days until exam</span>
+      <span class="plan-summary-val">${totalDays} days (${availableDays} study days)</span>
+    </div>
+    <div class="plan-summary-row">
+      <span class="plan-summary-key">Study days</span>
+      <span class="plan-summary-val">${dayNames}</span>
+    </div>
+    <div class="plan-summary-row">
+      <span class="plan-summary-key">Level</span>
+      <span class="plan-summary-val">${levelLabel}</span>
+    </div>
+    <div class="plan-summary-row">
+      <span class="plan-summary-key">Questions per study day</span>
+      <span class="plan-summary-val" style="color:#6366f1;font-size:16px">${recommendedDailyQ}</span>
+    </div>
+    <div class="plan-summary-row">
+      <span class="plan-summary-key">Total target questions</span>
+      <span class="plan-summary-val">${state.totalTargetQ}</span>
+    </div>
+  `;
+}
+
+// Build plan
+document.getElementById('buildBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('buildBtn');
+  btn.textContent = 'Building…';
+  btn.disabled = true;
+
+  const res = await fetch('/api/exam-plan', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      module:          state.module,
+      exam_date:       state.examDate,
+      daily_questions: state.dailyQuestions,
+      study_days:      state.studyDays,
+    })
+  });
+  const data = await res.json();
+  if (data.success) {
+    await loadPlan();
+  } else {
+    alert(data.error || 'Could not create plan');
+    btn.textContent = 'Build my plan →';
+    btn.disabled = false;
+  }
+});
+
+// ── Plan view ────────────────────────────────────────────────────────────────
+async function loadPlan() {
+  const res = await fetch('/api/exam-plan');
+  planData = await res.json();
+  if (!planData.plan) { showWizard(); return; }
+  showPlan();
+  loadReadiness();
+}
+
+function showWizard() {
+  document.getElementById('wizardView').classList.remove('hidden');
   document.getElementById('planView').classList.add('hidden');
 }
-
 function showPlan() {
-  document.getElementById('setupView').classList.add('hidden');
+  document.getElementById('wizardView').classList.add('hidden');
   document.getElementById('planView').classList.remove('hidden');
 
   const plan = planData.plan;
@@ -369,15 +860,9 @@ function showPlan() {
   document.getElementById('editDailyQ').value   = plan.daily_questions;
 
   const examDate = new Date(plan.exam_date + 'T00:00:00');
-  calYear  = examDate.getFullYear();
-  calMonth = examDate.getMonth();
-
-  // Jump to today's month if exam is further away
-  const today = new Date();
-  if (today < examDate) {
-    calYear  = today.getFullYear();
-    calMonth = today.getMonth();
-  }
+  const today    = new Date(); today.setHours(0,0,0,0);
+  calYear  = today.getFullYear();
+  calMonth = today.getMonth();
   renderCalendar();
 }
 
@@ -386,157 +871,101 @@ async function loadReadiness() {
   const data = await res.json();
   const score = data.score || 0;
 
-  document.getElementById('readinessNum').textContent = score;
-  document.getElementById('bAccuracy').textContent    = data.accuracy + '%';
-  document.getElementById('bVolume').textContent      = data.volume + '%';
-  document.getElementById('bConsistency').textContent = data.consistency + '%';
-  document.getElementById('bRecency').textContent     = data.recency + '%';
-
-  const band = document.getElementById('readinessBand');
-  band.textContent = data.band;
-  band.className   = 'readiness-band band-' + data.colour;
-
-  // Animate dial
-  const circumference = 2 * Math.PI * 60; // 377
-  const offset = circumference - (score / 100) * circumference;
-  const fill = document.getElementById('dialFill');
-  fill.style.strokeDashoffset = offset;
-  const colours = { red:'#ef4444', orange:'#f97316', yellow:'#d97706', green:'#10b981', 'dark-green':'#16a34a' };
-  fill.style.stroke = colours[data.colour] || '#4361ee';
+  document.getElementById('dialScore').textContent = score;
+  document.getElementById('readinessBand').textContent = data.band;
+  document.getElementById('readinessHeadline').textContent =
+    score === 0 ? 'Start practising to build your score' :
+    score >= 75 ? 'You\'re on track — keep going!' :
+    score >= 50 ? 'Good progress, keep practising' : 'Build your foundation with daily practice';
 
   if (data.accuracy_pct !== undefined) {
     document.getElementById('readinessDetail').textContent =
-      `${data.accuracy_pct}% accuracy across ${data.total_questions_attempted} questions attempted`;
+      `${data.accuracy_pct}% accuracy · ${data.total_questions_attempted} questions attempted`;
   }
 
-  if (data.days_until_exam !== null) {
+  const circ = 2 * Math.PI * 46;
+  document.getElementById('dialFill').style.strokeDashoffset = circ - (score / 100) * circ;
+
+  document.getElementById('rbarAccuracy').style.width    = data.accuracy + '%';
+  document.getElementById('rbarVolume').style.width      = data.volume + '%';
+  document.getElementById('rbarConsistency').style.width = data.consistency + '%';
+  document.getElementById('rbarTrend').style.width       = data.recency + '%';
+  document.getElementById('rbarAccuracyVal').textContent    = data.accuracy + '%';
+  document.getElementById('rbarVolumeVal').textContent      = data.volume + '%';
+  document.getElementById('rbarConsistencyVal').textContent = data.consistency + '%';
+  document.getElementById('rbarTrendVal').textContent       = data.recency + '%';
+
+  if (data.days_until_exam !== null && data.days_until_exam !== undefined) {
     document.getElementById('countdownDays').textContent = data.days_until_exam;
     const d = new Date(data.exam_date + 'T00:00:00');
     document.getElementById('countdownDate').textContent =
-      d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+      d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
   } else {
-    document.getElementById('examCountdown').style.display = 'none';
+    document.getElementById('countdownChip').style.display = 'none';
   }
 }
 
 function renderCalendar() {
   document.getElementById('calTitle').textContent = MONTHS[calMonth] + ' ' + calYear;
-
   const grid = document.getElementById('calGrid');
   grid.innerHTML = '';
 
-  // Day headers
-  DAYS.forEach(d => {
+  DAYS_SHORT.forEach(d => {
     const el = document.createElement('div');
-    el.className = 'cal-day-header';
+    el.className = 'cal-hdr';
     el.textContent = d;
     grid.appendChild(el);
   });
 
   const firstDay = new Date(calYear, calMonth, 1).getDay();
   const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
+  const today = new Date(); today.setHours(0,0,0,0);
   const examDate = planData ? new Date(planData.plan.exam_date + 'T00:00:00') : null;
 
-  // Build session lookup by date string
   const sessionMap = {};
-  if (planData) {
-    planData.sessions.forEach(s => { sessionMap[s.date] = s; });
-  }
+  if (planData) planData.sessions.forEach(s => { sessionMap[s.date] = s; });
 
-  // Empty cells
   for (let i = 0; i < firstDay; i++) {
     const el = document.createElement('div');
-    el.className = 'cal-day empty';
+    el.className = 'cal-cell empty';
     grid.appendChild(el);
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const el    = document.createElement('div');
-    const dateObj = new Date(calYear, calMonth, day);
-    dateObj.setHours(0,0,0,0);
-    const iso   = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    const sess  = sessionMap[iso];
+    const el = document.createElement('div');
+    const dateObj = new Date(calYear, calMonth, day); dateObj.setHours(0,0,0,0);
+    const iso = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const sess = sessionMap[iso];
 
-    let cls = 'cal-day';
+    let cls = 'cal-cell';
     let typeLabel = '';
 
     if (examDate && dateObj.getTime() === examDate.getTime()) {
-      cls += ' exam-day';
-      typeLabel = 'EXAM';
+      cls += ' exam-day'; typeLabel = 'EXAM';
     } else if (sess) {
-      if (sess.completed) {
-        cls += ' completed-day';
-        typeLabel = '✓';
-      } else if (sess.session_type === 'mock_exam') {
-        cls += ' mock-exam';
-        typeLabel = 'Mock';
-      } else if (sess.session_type === 'rest') {
-        cls += ' rest';
-        typeLabel = 'Rest';
-      } else {
-        cls += ' practice';
-        typeLabel = sess.target_questions + 'Q';
-      }
+      if (sess.completed)                 { cls += ' done';      typeLabel = '✓'; }
+      else if (sess.session_type === 'mock_exam') { cls += ' mock-exam'; typeLabel = 'Mock'; }
+      else if (sess.session_type === 'rest')      { cls += ' rest';      typeLabel = 'Rest'; }
+      else                                { cls += ' practice';  typeLabel = sess.target_questions + 'Q'; }
     }
-
     if (dateObj.getTime() === today.getTime()) cls += ' today';
 
     el.className = cls;
-    el.innerHTML = `<span class="cal-day-num">${day}</span>${typeLabel ? `<span class="cal-day-type">${typeLabel}</span>` : ''}`;
+    el.innerHTML = `<span class="cn">${day}</span>${typeLabel ? `<span class="ct">${typeLabel}</span>` : ''}`;
     grid.appendChild(el);
   }
 }
 
-// Navigation
 document.getElementById('calPrev').addEventListener('click', () => {
-  calMonth--;
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  renderCalendar();
+  calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar();
 });
 document.getElementById('calNext').addEventListener('click', () => {
-  calMonth++;
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  renderCalendar();
+  calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar();
 });
 
-// Setup form
-document.getElementById('setupForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.textContent = 'Building…';
-  btn.disabled = true;
-
-  const res = await fetch('/api/exam-plan', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({
-      module:          document.getElementById('setupModule').value,
-      exam_date:       document.getElementById('setupExamDate').value,
-      daily_questions: parseInt(document.getElementById('setupDailyQ').value),
-    })
-  });
-  const data = await res.json();
-  if (data.success) {
-    const planRes = await fetch('/api/exam-plan');
-    planData = await planRes.json();
-    showPlan();
-    loadReadiness();
-  } else {
-    alert(data.error || 'Could not create plan');
-    btn.textContent = 'Build my plan →';
-    btn.disabled = false;
-  }
-});
-
-// Update plan
 document.getElementById('updatePlanBtn').addEventListener('click', async () => {
   const btn = document.getElementById('updatePlanBtn');
-  btn.textContent = 'Updating…';
-  btn.disabled = true;
-
+  btn.textContent = 'Updating…'; btn.disabled = true;
   const res = await fetch('/api/exam-plan', {
     method: 'PUT',
     headers: {'Content-Type':'application/json'},
@@ -545,26 +974,23 @@ document.getElementById('updatePlanBtn').addEventListener('click', async () => {
       daily_questions: parseInt(document.getElementById('editDailyQ').value),
     })
   });
-  const data = await res.json();
-  if (data.success) {
-    const planRes = await fetch('/api/exam-plan');
-    planData = await planRes.json();
-    showPlan();
-    loadReadiness();
+  if ((await res.json()).success) {
+    await loadPlan();
   }
-  btn.textContent = 'Update schedule';
-  btn.disabled = false;
+  btn.textContent = 'Update schedule'; btn.disabled = false;
 });
 
-// New plan
 document.getElementById('newPlanBtn').addEventListener('click', () => {
-  if (confirm('Starting a new plan will archive your current one. Continue?')) {
+  if (confirm('Starting a new plan will archive the current one. Continue?')) {
     planData = null;
-    showSetup();
+    currentStep = 1;
+    goStep(1);
+    showWizard();
   }
 });
 
-init();
+// Init
+loadPlan();
 </script>
 </body>
 </html>

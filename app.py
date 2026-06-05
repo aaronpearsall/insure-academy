@@ -2687,7 +2687,7 @@ def get_readiness():
     if user_id:
         cur.execute("""
             SELECT exam_date, daily_questions FROM exam_plans
-            WHERE user_id = %s AND status = 'active'
+            WHERE user_id IS NOT DISTINCT FROM %s AND status = 'active'
             ORDER BY created_at DESC LIMIT 1
         """, (user_id,))
     else:
@@ -2794,7 +2794,7 @@ def get_exam_plan():
     cur = conn.cursor()
     if user_id:
         cur.execute("""
-            SELECT * FROM exam_plans WHERE user_id = %s AND status = 'active'
+            SELECT * FROM exam_plans WHERE user_id IS NOT DISTINCT FROM %s AND status = 'active'
             ORDER BY created_at DESC LIMIT 1
         """, (user_id,))
     else:
@@ -2837,14 +2837,14 @@ def create_exam_plan():
     """Create a new exam plan. Archives any existing active plan."""
     from datetime import date, timedelta
     import math
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'error': 'Login required'}), 401
+    user_id = session.get('user_id')  # May be None for legacy users — that's fine
 
     data = request.json or {}
     module = data.get('module', '').upper()
     exam_date_str = data.get('exam_date', '')
     daily_questions = int(data.get('daily_questions', 20))
+
+    study_days = data.get('study_days', [0,1,2,3,4,5,6])  # default: every day
 
     if not module or not exam_date_str:
         return jsonify({'error': 'module and exam_date required'}), 400
@@ -2864,7 +2864,7 @@ def create_exam_plan():
     # Archive existing active plans
     cur.execute("""
         UPDATE exam_plans SET status = 'archived', updated_at = NOW()
-        WHERE user_id = %s AND status = 'active'
+        WHERE user_id IS NOT DISTINCT FROM %s AND status = 'active'
     """, (user_id,))
 
     # Create new plan
@@ -2875,7 +2875,7 @@ def create_exam_plan():
     plan_id = cur.fetchone()['id']
 
     # Generate study schedule
-    sessions = _generate_study_schedule(plan_id, user_id, module, today, exam_date, daily_questions)
+    sessions = _generate_study_schedule(plan_id, user_id, module, today, exam_date, daily_questions, study_days)
     for s in sessions:
         cur.execute("""
             INSERT INTO study_sessions (plan_id, user_id, session_date, module, target_questions, session_type)
@@ -2894,14 +2894,12 @@ def update_exam_plan():
     """Update exam date or daily questions — reshuffles schedule."""
     from datetime import date
     user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'error': 'Login required'}), 401
 
     data = request.json or {}
     conn = get_db()
     cur = conn.cursor()
     cur.execute("""
-        SELECT * FROM exam_plans WHERE user_id = %s AND status = 'active'
+        SELECT * FROM exam_plans WHERE user_id IS NOT DISTINCT FROM %s AND status = 'active'
         ORDER BY created_at DESC LIMIT 1
     """, (user_id,))
     plan = cur.fetchone()
@@ -2945,43 +2943,48 @@ def update_exam_plan():
     return jsonify({'success': True, 'sessions_regenerated': len(sessions)})
 
 
-def _generate_study_schedule(plan_id, user_id, module, start_date, exam_date, daily_questions):
+def _generate_study_schedule(plan_id, user_id, module, start_date, exam_date, daily_questions, study_days=None):
     """Generate study sessions from start_date to exam_date.
 
-    Pattern: 5 days study, 1 rest, then a mock exam every 4 weeks.
+    Only schedules sessions on user's chosen study days.
+    Every 4th study session is a mock exam (60 questions).
     """
     from datetime import timedelta
+    if study_days is None:
+        study_days = [0, 1, 2, 3, 4, 5, 6]  # all days
+    study_days_set = set(study_days)
     sessions = []
     current = start_date
-    day_count = 0
-    total_days = (exam_date - start_date).days
+    study_count = 0
 
     while current < exam_date:
-        day_count += 1
-        days_from_start = (current - start_date).days
+        dow = current.weekday()  # Monday=0 … Sunday=6
+        # Convert to JS day-of-week convention (Sunday=0) for consistency
+        js_dow = (dow + 1) % 7
 
-        # Mock exam every 28 days
-        if day_count > 1 and days_from_start % 28 == 0:
-            sessions.append({
-                'date': current,
-                'module': module,
-                'target_questions': 60,
-                'session_type': 'mock_exam',
-            })
-        # Rest every 6th day
-        elif day_count % 6 == 0:
+        if js_dow in study_days_set:
+            study_count += 1
+            # Every 4th study session = mock exam
+            if study_count % 4 == 0:
+                sessions.append({
+                    'date': current,
+                    'module': module,
+                    'target_questions': 60,
+                    'session_type': 'mock_exam',
+                })
+            else:
+                sessions.append({
+                    'date': current,
+                    'module': module,
+                    'target_questions': daily_questions,
+                    'session_type': 'practice',
+                })
+        else:
             sessions.append({
                 'date': current,
                 'module': module,
                 'target_questions': 0,
                 'session_type': 'rest',
-            })
-        else:
-            sessions.append({
-                'date': current,
-                'module': module,
-                'target_questions': daily_questions,
-                'session_type': 'practice',
             })
         current += timedelta(days=1)
 
