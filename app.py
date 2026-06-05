@@ -157,6 +157,34 @@ def init_db():
         )
     """)
     cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_planner_user ON planner_items(user_id)")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS exam_plans (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            module TEXT NOT NULL,
+            exam_date DATE NOT NULL,
+            daily_questions INTEGER NOT NULL DEFAULT 20,
+            status TEXT NOT NULL DEFAULT 'active',
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_exam_plans_user ON exam_plans(user_id)")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS study_sessions (
+            id SERIAL PRIMARY KEY,
+            plan_id INTEGER REFERENCES exam_plans(id) ON DELETE CASCADE,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            session_date DATE NOT NULL,
+            module TEXT NOT NULL,
+            target_questions INTEGER NOT NULL DEFAULT 20,
+            session_type TEXT NOT NULL DEFAULT 'practice',
+            completed BOOLEAN DEFAULT FALSE,
+            completed_at TIMESTAMPTZ
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_study_sessions_plan ON study_sessions(plan_id)")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_study_sessions_user ON study_sessions(user_id)")
     conn.commit()
     cur.close()
     conn.close()
@@ -2621,8 +2649,367 @@ def reload_questions():
 def submit_results():
     """Save quiz results"""
     data = request.json
-    # Store results (could save to file/database)
     return jsonify({'success': True, 'message': 'Results saved'})
+
+
+# ─── Exam Readiness Score ────────────────────────────────────────────────────
+
+@app.route('/api/readiness')
+@login_required
+def get_readiness():
+    """Compute exam readiness score for current user.
+
+    Formula:
+        Readiness = Accuracy(50%) + Volume(25%) + Consistency(15%) + Recency(10%)
+    """
+    from datetime import datetime, timezone, timedelta
+
+    user_id = session.get('user_id')
+    conn = get_db()
+    cur = conn.cursor()
+
+    # Fetch last 100 quiz results
+    if user_id:
+        cur.execute("""
+            SELECT score, total, created_at
+            FROM quiz_results WHERE user_id = %s
+            ORDER BY created_at DESC LIMIT 100
+        """, (user_id,))
+    else:
+        cur.execute("""
+            SELECT score, total, created_at
+            FROM quiz_results WHERE user_id IS NULL
+            ORDER BY created_at DESC LIMIT 100
+        """)
+    rows = cur.fetchall()
+
+    # Fetch active exam plan
+    if user_id:
+        cur.execute("""
+            SELECT exam_date, daily_questions FROM exam_plans
+            WHERE user_id = %s AND status = 'active'
+            ORDER BY created_at DESC LIMIT 1
+        """, (user_id,))
+    else:
+        cur.execute("SELECT NULL, NULL WHERE FALSE")
+    plan = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    now = datetime.now(timezone.utc)
+    today = now.date()
+
+    if not rows:
+        return jsonify({
+            'score': 0, 'band': 'Not Ready', 'colour': 'red',
+            'accuracy': 0, 'volume': 0, 'consistency': 0, 'recency': 0,
+            'days_until_exam': None, 'exam_date': plan['exam_date'].isoformat() if plan and plan['exam_date'] else None
+        })
+
+    # ── Accuracy (50%) ──────────────────────────────────────────────────────
+    total_correct = sum(r['score'] for r in rows)
+    total_qs = sum(r['total'] for r in rows)
+    accuracy_pct = (total_correct / total_qs * 100) if total_qs > 0 else 0
+    accuracy_score = min(accuracy_pct, 100)
+
+    # ── Volume (25%) ────────────────────────────────────────────────────────
+    # Target: 500 questions before exam (or default if no plan)
+    target_volume = 500
+    if plan and plan['exam_date']:
+        days_left = (plan['exam_date'] - today).days
+        daily_q = plan['daily_questions'] or 20
+        target_volume = max(days_left * daily_q + total_qs, 500)
+    volume_score = min((total_qs / target_volume) * 100, 100)
+
+    # ── Consistency (15%) ───────────────────────────────────────────────────
+    dates_with_activity = set(r['created_at'].date() for r in rows if r['created_at'])
+    if plan and plan['exam_date']:
+        days_elapsed = max((today - min(dates_with_activity)).days, 1) if dates_with_activity else 1
+        consistency_score = min((len(dates_with_activity) / days_elapsed) * 100, 100)
+    else:
+        # Without plan: consecutive streak as proxy
+        streak = 0
+        for i in range(30):
+            if (today - timedelta(days=i)) in dates_with_activity:
+                streak += 1
+            else:
+                break
+        consistency_score = min(streak / 7 * 100, 100)  # 7 day streak = 100%
+
+    # ── Recency (10%) ───────────────────────────────────────────────────────
+    week_ago = now - timedelta(days=7)
+    two_weeks_ago = now - timedelta(days=14)
+    recent = [r for r in rows if r['created_at'] and r['created_at'].replace(tzinfo=timezone.utc) >= week_ago]
+    older = [r for r in rows if r['created_at'] and two_weeks_ago <= r['created_at'].replace(tzinfo=timezone.utc) < week_ago]
+    recent_acc = (sum(r['score'] for r in recent) / sum(r['total'] for r in recent) * 100) if recent and sum(r['total'] for r in recent) > 0 else accuracy_pct
+    older_acc = (sum(r['score'] for r in older) / sum(r['total'] for r in older) * 100) if older and sum(r['total'] for r in older) > 0 else accuracy_pct
+    trend = recent_acc - older_acc  # positive = improving
+    recency_score = min(max(50 + trend * 2.5, 0), 100)
+
+    # ── Final score ─────────────────────────────────────────────────────────
+    score = round(
+        accuracy_score * 0.50 +
+        volume_score   * 0.25 +
+        consistency_score * 0.15 +
+        recency_score  * 0.10
+    )
+
+    if score >= 90:
+        band, colour = 'Exam Ready', 'dark-green'
+    elif score >= 75:
+        band, colour = 'Almost Ready', 'green'
+    elif score >= 60:
+        band, colour = 'Getting There', 'yellow'
+    elif score >= 40:
+        band, colour = 'Building', 'orange'
+    else:
+        band, colour = 'Not Ready', 'red'
+
+    days_until_exam = (plan['exam_date'] - today).days if plan and plan['exam_date'] else None
+
+    return jsonify({
+        'score': score,
+        'band': band,
+        'colour': colour,
+        'accuracy': round(accuracy_score),
+        'volume': round(volume_score),
+        'consistency': round(consistency_score),
+        'recency': round(recency_score),
+        'accuracy_pct': round(accuracy_pct, 1),
+        'total_questions_attempted': total_qs,
+        'days_until_exam': days_until_exam,
+        'exam_date': plan['exam_date'].isoformat() if plan and plan['exam_date'] else None,
+    })
+
+
+# ─── Exam Plan ───────────────────────────────────────────────────────────────
+
+@app.route('/api/exam-plan', methods=['GET'])
+@login_required
+def get_exam_plan():
+    """Get active exam plan and generated study schedule."""
+    from datetime import date, timedelta
+    user_id = session.get('user_id')
+    conn = get_db()
+    cur = conn.cursor()
+    if user_id:
+        cur.execute("""
+            SELECT * FROM exam_plans WHERE user_id = %s AND status = 'active'
+            ORDER BY created_at DESC LIMIT 1
+        """, (user_id,))
+    else:
+        cur.execute("SELECT NULL WHERE FALSE")
+    plan = cur.fetchone()
+    if not plan:
+        cur.close()
+        conn.close()
+        return jsonify({'plan': None, 'sessions': []})
+
+    cur.execute("""
+        SELECT * FROM study_sessions WHERE plan_id = %s ORDER BY session_date
+    """, (plan['id'],))
+    sessions = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    return jsonify({
+        'plan': {
+            'id': plan['id'],
+            'module': plan['module'],
+            'exam_date': plan['exam_date'].isoformat(),
+            'daily_questions': plan['daily_questions'],
+            'status': plan['status'],
+        },
+        'sessions': [{
+            'id': s['id'],
+            'date': s['session_date'].isoformat(),
+            'module': s['module'],
+            'target_questions': s['target_questions'],
+            'session_type': s['session_type'],
+            'completed': s['completed'],
+        } for s in sessions]
+    })
+
+
+@app.route('/api/exam-plan', methods=['POST'])
+@login_required
+def create_exam_plan():
+    """Create a new exam plan. Archives any existing active plan."""
+    from datetime import date, timedelta
+    import math
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'Login required'}), 401
+
+    data = request.json or {}
+    module = data.get('module', '').upper()
+    exam_date_str = data.get('exam_date', '')
+    daily_questions = int(data.get('daily_questions', 20))
+
+    if not module or not exam_date_str:
+        return jsonify({'error': 'module and exam_date required'}), 400
+
+    try:
+        exam_date = date.fromisoformat(exam_date_str)
+    except ValueError:
+        return jsonify({'error': 'Invalid exam_date format (use YYYY-MM-DD)'}), 400
+
+    today = date.today()
+    if exam_date <= today:
+        return jsonify({'error': 'Exam date must be in the future'}), 400
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    # Archive existing active plans
+    cur.execute("""
+        UPDATE exam_plans SET status = 'archived', updated_at = NOW()
+        WHERE user_id = %s AND status = 'active'
+    """, (user_id,))
+
+    # Create new plan
+    cur.execute("""
+        INSERT INTO exam_plans (user_id, module, exam_date, daily_questions, status)
+        VALUES (%s, %s, %s, %s, 'active') RETURNING id
+    """, (user_id, module, exam_date, daily_questions))
+    plan_id = cur.fetchone()['id']
+
+    # Generate study schedule
+    sessions = _generate_study_schedule(plan_id, user_id, module, today, exam_date, daily_questions)
+    for s in sessions:
+        cur.execute("""
+            INSERT INTO study_sessions (plan_id, user_id, session_date, module, target_questions, session_type)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (plan_id, user_id, s['date'], s['module'], s['target_questions'], s['session_type']))
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({'success': True, 'plan_id': plan_id, 'sessions_created': len(sessions)})
+
+
+@app.route('/api/exam-plan', methods=['PUT'])
+@login_required
+def update_exam_plan():
+    """Update exam date or daily questions — reshuffles schedule."""
+    from datetime import date
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'Login required'}), 401
+
+    data = request.json or {}
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT * FROM exam_plans WHERE user_id = %s AND status = 'active'
+        ORDER BY created_at DESC LIMIT 1
+    """, (user_id,))
+    plan = cur.fetchone()
+    if not plan:
+        cur.close()
+        conn.close()
+        return jsonify({'error': 'No active plan'}), 404
+
+    new_exam_date_str = data.get('exam_date', plan['exam_date'].isoformat())
+    new_daily_q = int(data.get('daily_questions', plan['daily_questions']))
+    try:
+        new_exam_date = date.fromisoformat(new_exam_date_str)
+    except ValueError:
+        cur.close()
+        conn.close()
+        return jsonify({'error': 'Invalid exam_date'}), 400
+
+    today = date.today()
+
+    # Delete future incomplete sessions and regenerate
+    cur.execute("""
+        DELETE FROM study_sessions
+        WHERE plan_id = %s AND session_date >= %s AND completed = FALSE
+    """, (plan['id'], today))
+
+    cur.execute("""
+        UPDATE exam_plans SET exam_date = %s, daily_questions = %s, updated_at = NOW()
+        WHERE id = %s
+    """, (new_exam_date, new_daily_q, plan['id']))
+
+    sessions = _generate_study_schedule(plan['id'], user_id, plan['module'], today, new_exam_date, new_daily_q)
+    for s in sessions:
+        cur.execute("""
+            INSERT INTO study_sessions (plan_id, user_id, session_date, module, target_questions, session_type)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (plan['id'], user_id, s['date'], s['module'], s['target_questions'], s['session_type']))
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({'success': True, 'sessions_regenerated': len(sessions)})
+
+
+def _generate_study_schedule(plan_id, user_id, module, start_date, exam_date, daily_questions):
+    """Generate study sessions from start_date to exam_date.
+
+    Pattern: 5 days study, 1 rest, then a mock exam every 4 weeks.
+    """
+    from datetime import timedelta
+    sessions = []
+    current = start_date
+    day_count = 0
+    total_days = (exam_date - start_date).days
+
+    while current < exam_date:
+        day_count += 1
+        days_from_start = (current - start_date).days
+
+        # Mock exam every 28 days
+        if day_count > 1 and days_from_start % 28 == 0:
+            sessions.append({
+                'date': current,
+                'module': module,
+                'target_questions': 60,
+                'session_type': 'mock_exam',
+            })
+        # Rest every 6th day
+        elif day_count % 6 == 0:
+            sessions.append({
+                'date': current,
+                'module': module,
+                'target_questions': 0,
+                'session_type': 'rest',
+            })
+        else:
+            sessions.append({
+                'date': current,
+                'module': module,
+                'target_questions': daily_questions,
+                'session_type': 'practice',
+            })
+        current += timedelta(days=1)
+
+    return sessions
+
+
+@app.route('/api/exam-plan/session/<int:session_id>/complete', methods=['POST'])
+@login_required
+def complete_session(session_id):
+    """Mark a study session as completed."""
+    user_id = session.get('user_id')
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("""
+        UPDATE study_sessions SET completed = TRUE, completed_at = NOW()
+        WHERE id = %s AND user_id = %s
+    """, (session_id, user_id))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({'success': True})
+
+
+@app.route('/exam-plan')
+@login_required
+def exam_plan_page():
+    return render_template('exam_plan.html')
+
 
 if __name__ == '__main__':
     init_db()
