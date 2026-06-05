@@ -10,7 +10,8 @@ import os
 import json
 import re
 import secrets
-import sqlite3
+import hashlib
+import psycopg2
 from pathlib import Path
 from functools import wraps
 from urllib.parse import urlencode
@@ -34,12 +35,7 @@ _default_password = os.environ.get('APP_PASSWORD', 'insagent2025')
 DEFAULT_PASSWORD_HASH = os.environ.get('APP_PASSWORD_HASH', generate_password_hash(_default_password, method='pbkdf2:sha256'))
 
 # Auth & subscription config
-_db_url = os.environ.get('DATABASE_URL', 'sqlite:///insure_academy.db')
-DATABASE_PATH = _db_url.replace('sqlite:///', '').split('?')[0]
-if not DATABASE_PATH or DATABASE_PATH == _db_url:
-    DATABASE_PATH = str(Path(__file__).parent / 'insure_academy.db')
-elif not os.path.isabs(DATABASE_PATH):
-    DATABASE_PATH = str(Path(__file__).parent / DATABASE_PATH)
+DATABASE_URL = os.environ.get('DATABASE_URL', '')
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
@@ -82,91 +78,164 @@ def get_module_names():
 
 
 def get_db():
-    """Get SQLite connection."""
-    conn = sqlite3.connect(DATABASE_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+    """Get Postgres connection."""
+    return psycopg2.connect(DATABASE_URL)
+
+
+def _row_to_dict(row, cursor):
+    if row is None:
+        return None
+    cols = [desc[0] for desc in cursor.description]
+    return dict(zip(cols, row))
 
 
 def init_db():
-    """Create users table if not exists."""
+    """Create tables if not exists."""
     conn = get_db()
-    conn.execute("""
+    cur = conn.cursor()
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             email TEXT UNIQUE NOT NULL,
             password_hash TEXT,
             google_id TEXT UNIQUE,
             stripe_customer_id TEXT,
             subscription_status TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMPTZ DEFAULT NOW()
         )
     """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS questions (
+            id TEXT PRIMARY KEY,
+            module TEXT NOT NULL,
+            source_file TEXT NOT NULL,
+            question_number TEXT,
+            question_text TEXT NOT NULL,
+            options JSONB,
+            correct_answer TEXT,
+            is_multiple_choice BOOLEAN DEFAULT FALSE,
+            is_curve_ball BOOLEAN DEFAULT FALSE,
+            explanation TEXT,
+            original_order INTEGER,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_questions_module ON questions(module)")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS quiz_results (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            module TEXT,
+            score INTEGER NOT NULL DEFAULT 0,
+            total INTEGER NOT NULL DEFAULT 0,
+            percentage NUMERIC(5,2),
+            incorrect INTEGER DEFAULT 0,
+            mode TEXT,
+            learning_objective_breakdown JSONB,
+            questions JSONB,
+            answers JSONB,
+            created_at TIMESTAMPTZ DEFAULT NOW()
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_quiz_results_user ON quiz_results(user_id)")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS user_wrong_questions (
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            question_id TEXT REFERENCES questions(id) ON DELETE CASCADE,
+            added_at TIMESTAMPTZ DEFAULT NOW(),
+            PRIMARY KEY (user_id, question_id)
+        )
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS planner_items (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            enrolled_units JSONB DEFAULT '[]',
+            plan JSONB DEFAULT '[]',
+            exemptions JSONB DEFAULT '{}',
+            active_modules JSONB DEFAULT '[]',
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        )
+    """)
+    cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_planner_user ON planner_items(user_id)")
     conn.commit()
+    cur.close()
     conn.close()
 
 
 def get_user_by_id(user_id):
-    """Get user by id."""
     conn = get_db()
-    row = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    row = _row_to_dict(cur.fetchone(), cur)
+    cur.close()
     conn.close()
-    return dict(row) if row else None
+    return row
 
 
 def get_user_by_email(email):
-    """Get user by email."""
     conn = get_db()
-    row = conn.execute("SELECT * FROM users WHERE email = ?", (email.lower().strip(),)).fetchone()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE email = %s", (email.lower().strip(),))
+    row = _row_to_dict(cur.fetchone(), cur)
+    cur.close()
     conn.close()
-    return dict(row) if row else None
+    return row
 
 
 def get_user_by_google_id(google_id):
-    """Get user by Google ID."""
     conn = get_db()
-    row = conn.execute("SELECT * FROM users WHERE google_id = ?", (google_id,)).fetchone()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE google_id = %s", (google_id,))
+    row = _row_to_dict(cur.fetchone(), cur)
+    cur.close()
     conn.close()
-    return dict(row) if row else None
+    return row
 
 
 def create_user(email, password_hash=None, google_id=None):
     """Create a new user. Returns user dict or None if email exists."""
     email = email.lower().strip()
     conn = get_db()
+    cur = conn.cursor()
     try:
-        conn.execute(
-            "INSERT INTO users (email, password_hash, google_id) VALUES (?, ?, ?)",
+        cur.execute(
+            "INSERT INTO users (email, password_hash, google_id) VALUES (%s, %s, %s) RETURNING *",
             (email, password_hash, google_id)
         )
+        row = _row_to_dict(cur.fetchone(), cur)
         conn.commit()
-        row = conn.execute("SELECT * FROM users WHERE id = last_insert_rowid()").fetchone()
-        return dict(row) if row else None
-    except sqlite3.IntegrityError:
+        return row
+    except psycopg2.IntegrityError:
+        conn.rollback()
         return None
     finally:
+        cur.close()
         conn.close()
 
 
 def update_user_subscription(user_id, status, stripe_customer_id=None):
-    """Update user subscription status."""
     conn = get_db()
+    cur = conn.cursor()
     if stripe_customer_id:
-        conn.execute(
-            "UPDATE users SET subscription_status = ?, stripe_customer_id = ? WHERE id = ?",
+        cur.execute(
+            "UPDATE users SET subscription_status = %s, stripe_customer_id = %s WHERE id = %s",
             (status, stripe_customer_id, user_id)
         )
     else:
-        conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (status, user_id))
+        cur.execute("UPDATE users SET subscription_status = %s WHERE id = %s", (status, user_id))
     conn.commit()
+    cur.close()
     conn.close()
 
 
 def update_user_password(user_id, password_hash):
-    """Update user password."""
     conn = get_db()
-    conn.execute("UPDATE users SET password_hash = ? WHERE id = ?", (password_hash, user_id))
+    cur = conn.cursor()
+    cur.execute("UPDATE users SET password_hash = %s WHERE id = %s", (password_hash, user_id))
     conn.commit()
+    cur.close()
     conn.close()
 
 
@@ -176,6 +245,12 @@ def user_has_active_subscription(user):
         return True  # legacy
     status = (user.get('subscription_status') or '').strip().lower()
     return status in ('active', 'trialing')
+
+
+def _question_hash(module, source_file, question_number, question_text):
+    """Stable question ID — never regenerated on restart."""
+    key = f"{module}|{source_file}|{question_number}|{question_text[:200]}"
+    return hashlib.sha256(key.encode('utf-8')).hexdigest()[:32]
 
 
 class QuestionParser:
@@ -809,7 +884,6 @@ class QuestionParser:
     def load_questions_from_files():
         """Load questions from modules/<name>/past_papers and modules/<name>/study_text (curveballs)."""
         all_questions = []
-        global_id_counter = 1
         global_explanations = QuestionExplanations()
 
         for module in get_module_names():
@@ -852,8 +926,7 @@ class QuestionParser:
                     question['source_file'] = file_path.name
                     question['module'] = module
                     question['original_order'] = int(q_num) if q_num.isdigit() else 999999
-                    question['id'] = global_id_counter
-                    global_id_counter += 1
+                    question['id'] = _question_hash(module, file_path.name, q_num, question['question'])
                 all_questions.extend(questions)
 
             # Curveballs from modules/<name>/study_text/
@@ -884,13 +957,14 @@ class QuestionParser:
                         question['source_file'] = file_path.name
                         question['module'] = module
                         question['original_order'] = int(question.get('question_number', '0')) if (question.get('question_number') or '0').isdigit() else 999999
-                        question['id'] = global_id_counter
-                        global_id_counter += 1
+                        q_num_cb = question.get('question_number', '')
+                        question['id'] = _question_hash(module, file_path.name, q_num_cb, question['question'])
                     all_questions.extend(questions)
                 except Exception as e:
                     print(f"Error loading curveball from {file_path}: {e}")
 
         return all_questions
+
 
 class QuestionExplanations:
     """Load and match pre-written explanations for questions, scoped by module."""
@@ -1897,8 +1971,10 @@ def auth_google_callback():
         if user:
             # Link Google to existing email account
             conn = get_db()
-            conn.execute("UPDATE users SET google_id = ? WHERE id = ?", (google_id, user['id']))
+            cur = conn.cursor()
+            cur.execute("UPDATE users SET google_id = %s WHERE id = %s", (google_id, user['id']))
             conn.commit()
+            cur.close()
             conn.close()
             user = get_user_by_id(user['id'])
         else:
@@ -1985,8 +2061,10 @@ def create_checkout_session():
             customer = stripe.Customer.create(email=user['email'])
             customer_id = customer.id
             conn = get_db()
-            conn.execute("UPDATE users SET stripe_customer_id = ? WHERE id = ?", (customer_id, user_id))
+            cur = conn.cursor()
+            cur.execute("UPDATE users SET stripe_customer_id = %s WHERE id = %s", (customer_id, user_id))
             conn.commit()
+            cur.close()
             conn.close()
         
         session_obj = stripe.checkout.Session.create(
@@ -2042,26 +2120,35 @@ def stripe_webhook():
             if status == 'active':
                 customer_id = sub.get('customer')
                 conn = get_db()
-                rows = conn.execute("SELECT id FROM users WHERE stripe_customer_id = ?", (str(customer_id),)).fetchall()
+                cur = conn.cursor()
+                cur.execute("SELECT id FROM users WHERE stripe_customer_id = %s", (str(customer_id),))
+                rows = cur.fetchall()
+                cur.close()
                 conn.close()
                 for row in rows:
                     update_user_subscription(row[0], 'active')
-    
+
     elif event['type'] == 'customer.subscription.updated':
         sub = event['data']['object']
         status = (sub.get('status') or '').lower()
         customer_id = sub.get('customer')
         conn = get_db()
-        rows = conn.execute("SELECT id FROM users WHERE stripe_customer_id = ?", (str(customer_id),)).fetchall()
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM users WHERE stripe_customer_id = %s", (str(customer_id),))
+        rows = cur.fetchall()
+        cur.close()
         conn.close()
         for row in rows:
             update_user_subscription(row[0], status)
-    
+
     elif event['type'] == 'customer.subscription.deleted':
         sub = event['data']['object']
         customer_id = sub.get('customer')
         conn = get_db()
-        rows = conn.execute("SELECT id FROM users WHERE stripe_customer_id = ?", (str(customer_id),)).fetchall()
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM users WHERE stripe_customer_id = %s", (str(customer_id),))
+        rows = cur.fetchall()
+        cur.close()
         conn.close()
         for row in rows:
             update_user_subscription(row[0], 'canceled')
