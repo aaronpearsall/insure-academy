@@ -11,7 +11,8 @@ import json
 import re
 import secrets
 import hashlib
-import psycopg2
+import psycopg as psycopg2
+from psycopg.rows import dict_row
 from pathlib import Path
 from functools import wraps
 from urllib.parse import urlencode
@@ -78,15 +79,12 @@ def get_module_names():
 
 
 def get_db():
-    """Get Postgres connection."""
-    return psycopg2.connect(DATABASE_URL)
+    """Get Postgres connection with dict rows."""
+    return psycopg2.connect(DATABASE_URL, row_factory=dict_row)
 
 
-def _row_to_dict(row, cursor):
-    if row is None:
-        return None
-    cols = [desc[0] for desc in cursor.description]
-    return dict(zip(cols, row))
+def _row_to_dict(row, cursor=None):
+    return row  # already a dict with dict_row factory
 
 
 def init_db():
@@ -207,7 +205,7 @@ def create_user(email, password_hash=None, google_id=None):
         row = _row_to_dict(cur.fetchone(), cur)
         conn.commit()
         return row
-    except psycopg2.IntegrityError:
+    except psycopg2.errors.UniqueViolation:
         conn.rollback()
         return None
     finally:
@@ -2126,7 +2124,7 @@ def stripe_webhook():
                 cur.close()
                 conn.close()
                 for row in rows:
-                    update_user_subscription(row[0], 'active')
+                    update_user_subscription(row['id'], 'active')
 
     elif event['type'] == 'customer.subscription.updated':
         sub = event['data']['object']
@@ -2139,7 +2137,7 @@ def stripe_webhook():
         cur.close()
         conn.close()
         for row in rows:
-            update_user_subscription(row[0], status)
+            update_user_subscription(row['id'], status)
 
     elif event['type'] == 'customer.subscription.deleted':
         sub = event['data']['object']
@@ -2151,7 +2149,7 @@ def stripe_webhook():
         cur.close()
         conn.close()
         for row in rows:
-            update_user_subscription(row[0], 'canceled')
+            update_user_subscription(row['id'], 'canceled')
     
     return '', 200
 
